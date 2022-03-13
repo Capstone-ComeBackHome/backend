@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    include:
+      - oauth
+      - jwt
+    active: dev
+
   h2:
     console:
       enabled: true
@@ -16,7 +22,43 @@ spring:
       hibernate:
         format_sql: true
 
+
+
+server:
+  error:
+    include-stacktrace: never
+
+
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  redis:
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+    port: 6379
+    host: 172.31.34.29
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  redis:
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+    port: 6379
+    host: localhost
+

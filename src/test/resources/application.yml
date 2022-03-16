@@ -21,3 +21,9 @@ spring:
       hibernate:
         format_sql: true
 
+  sql:
+    init:
+      data-locations: classpath:data.sql
+      username:
+      password:
+      mode: never

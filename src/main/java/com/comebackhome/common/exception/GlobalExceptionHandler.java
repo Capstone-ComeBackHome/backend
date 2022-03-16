@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,7 @@ public class GlobalExceptionHandler {
 
     private static final String LOG_FORMAT = "Class : {}, Message : {}";
     private static final String LOG_CODE_FORMAT = "Class : {}, Code : {}, Message : {}";
+    private static final String LOG_CODE_FIELD_FORMAT = "Class : {}, Code : {}, field : {} ,Message : {}";
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> bindException(BindException e) {
@@ -32,8 +34,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingRequestHeaderException.class)
     public ResponseEntity handleMissingParams(MissingRequestHeaderException e) {
 
-        String code = ErrorCode.MISSING_REQUEST_HEADER.getCode();
-        String message = ErrorCode.MISSING_REQUEST_HEADER.getMessage();
+        final String code = ErrorCode.MISSING_REQUEST_HEADER.getCode();
+        final String message = ErrorCode.MISSING_REQUEST_HEADER.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message);
 
@@ -47,9 +49,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponse> applicationException(ApplicationException e) {
 
-        String errorCode = e.getErrorCode();
-        String exceptionClassName = e.getClass().getSimpleName();
-        String message = e.getMessage();
+        final String errorCode = e.getErrorCode();
+        final String exceptionClassName = e.getClass().getSimpleName();
+        final String message = e.getMessage();
         ErrorResponse errorResponse = null;
 
         if (e.getErrors() != null) {
@@ -63,5 +65,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(e.getHttpStatus())
                 .body(errorResponse);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> missingServletRequestParameterException(MissingServletRequestParameterException e) {
+        final String message = ErrorCode.MISSING_REQUEST_PARAM.getMessage();
+        final String code = ErrorCode.MISSING_REQUEST_PARAM.getCode();
+
+        log.warn(LOG_CODE_FIELD_FORMAT,
+                e.getClass().getSimpleName(),
+                code,
+                e.getParameterName(),
+                message);
+
+        ErrorResponse response = ErrorResponse.of(message,code);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(response);
     }
 }

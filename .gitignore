@@ -39,3 +39,6 @@ out/
 ## secret yml
 !/src/main/resources/application.yml
 /src/main/resources/*.yml
+
+## generated file (query dsl)
+/src/main/generated/

@@ -16,12 +16,13 @@ spring:
     password:
 
   jpa:
+    # data.sql이 jpa 테이블 생성되기 전에 시작되는 것의 기본 순서를 바꿔주는 옵션
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         format_sql: true
-
 
 
 server:

@@ -46,6 +46,15 @@ operation::auth-rest-controller-test/토큰_재발급[snippets='http-request,req
 include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_재발급_시도/response-body.adoc[]
 include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/response-body.adoc[]
 
+== Disease API
+=== 질병 상세 조회
+
+==== 질병 상세 조회 성공
+operation::disease-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-parameters,http-response,response-fields']
+
+==== 질병 상세 조회 실패
+include::{snippets}/disease-controller-test/disease-id_파라미터_없이_상세조회/response-body.adoc[]
+include::{snippets}/disease-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
 
 
 

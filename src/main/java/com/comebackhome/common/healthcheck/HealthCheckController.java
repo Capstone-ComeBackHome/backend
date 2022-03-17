@@ -1,4 +1,4 @@
-package com.comebackhome.common;
+package com.comebackhome.common.healthcheck;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

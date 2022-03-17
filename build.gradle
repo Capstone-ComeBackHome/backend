@@ -3,6 +3,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id 'jacoco'
 }
 
 
@@ -29,13 +30,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
 
+    // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    // for test lombok
+    // lombok for test
     implementation 'org.projectlombok:lombok:1.18.18'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
@@ -45,13 +54,12 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
-    runtimeOnly 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    // spring rest docs
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
+// spring rest docs
 ext {
     snippetsDir = file('build/generated-snippets')
 }
@@ -59,6 +67,7 @@ ext {
 tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
+    finalizedBy 'jacocoTestReport'
 }
 
 tasks.named('asciidoctor') {
@@ -71,10 +80,86 @@ tasks.named('asciidoctor') {
     baseDirFollowsSourceFile()
 }
 
-
 bootJar {
     dependsOn asciidoctor
     from ("${asciidoctor.outputDir}") {
         into 'static/docs'
+    }
+}
+
+
+// jacoco
+jacoco {
+    toolVersion = '0.8.7'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+        xml.enabled false
+        csv.enabled false
+    }
+
+    def Qdomains = []
+    for(qPattern in "**/QA" .. "**/QZ"){
+        Qdomains.add(qPattern+"*")
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [
+                            'com/comebackhome/config/**',
+                            '**/*exception*',
+                            '**/healthcheck',
+                            '**/*ComeBackHomeApplication*'
+                    ] + Qdomains)
+        }))
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    def Qdomains = []
+
+    for (qPattern in '*.QA'..'*.QZ') {
+        Qdomains.add(qPattern + '*')
+    }
+
+    violationRules {
+        rule {
+            enabled = true
+            element = 'METHOD'
+
+            // 라인 커버리지 제한을 80%로 설정
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            // 브랜치 커버리지 제한을 80%로 설정
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 200
+            }
+
+            excludes = [
+                    'com.comebackhome.config.**',
+                    'com.comebackhome.common.exception.**',
+                    'com.comebackhome.common.healthcheck.**',
+                    '*.*ComeBackHomeApplication*',
+            ] + Qdomains
+        }
+
     }
 }

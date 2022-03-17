@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SimpleDiseaseResponse {
 
+    private Long diseaseId;
+
     private String name;
 
     private String definition;
@@ -20,6 +22,7 @@ public class SimpleDiseaseResponse {
 
     public static SimpleDiseaseResponse from(SimpleDiseaseResponseDto simpleDiseaseResponseDto){
         return SimpleDiseaseResponse.builder()
+                .diseaseId(simpleDiseaseResponseDto.getDiseaseId())
                 .name(simpleDiseaseResponseDto.getName())
                 .definition(simpleDiseaseResponseDto.getDefinition())
                 .recommendDepartment(simpleDiseaseResponseDto.getRecommendDepartment())

@@ -28,6 +28,7 @@ public class DiseaseQuerydslRepository {
             return Optional.empty();
 
         return Optional.ofNullable(query.select(Projections.fields(SimpleDiseaseQueryDto.class,
+                disease.id.as("diseaseId"),
                 disease.name,
                 disease.definition,
                 disease.recommendDepartment

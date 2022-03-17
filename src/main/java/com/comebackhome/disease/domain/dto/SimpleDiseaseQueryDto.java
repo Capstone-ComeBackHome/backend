@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SimpleDiseaseQueryDto {
 
+    private Long diseaseId;
+
     private String name;
 
     private String definition;

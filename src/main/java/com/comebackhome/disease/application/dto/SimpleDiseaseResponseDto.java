@@ -11,6 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SimpleDiseaseResponseDto {
 
+    private Long diseaseId;
+
     private String name;
 
     private String definition;
@@ -19,6 +21,7 @@ public class SimpleDiseaseResponseDto {
 
     public static SimpleDiseaseResponseDto from(SimpleDiseaseQueryDto simpleDiseaseQueryDto){
         return SimpleDiseaseResponseDto.builder()
+                .diseaseId(simpleDiseaseQueryDto.getDiseaseId())
                 .name(simpleDiseaseQueryDto.getName())
                 .definition(simpleDiseaseQueryDto.getDefinition())
                 .recommendDepartment(simpleDiseaseQueryDto.getRecommendDepartment())

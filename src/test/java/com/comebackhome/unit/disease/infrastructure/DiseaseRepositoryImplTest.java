@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
+
 import static com.comebackhome.support.helper.DiseaseGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -22,6 +24,7 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
     @Autowired CauseJpaRepository causeJpaRepository;
     @Autowired HomeCareJpaRepository homeCareJpaRepository;
     @Autowired DiseaseRepositoryImpl diseaseRepository;
+    @Autowired EntityManager em;
 
     @BeforeEach
     void setup(){
@@ -70,6 +73,7 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         SimpleDiseaseQueryDto result = diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
 
         //then
+        assertThat(result.getDiseaseId()).isEqualTo(disease.getId());
         assertThat(result.getName()).isEqualTo(disease.getName());
         assertThat(result.getDefinition()).isEqualTo(disease.getDefinition());
         assertThat(result.getRecommendDepartment()).isEqualTo(disease.getRecommendDepartment());

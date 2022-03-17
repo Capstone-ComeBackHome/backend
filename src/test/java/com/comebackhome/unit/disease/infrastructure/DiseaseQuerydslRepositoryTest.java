@@ -33,6 +33,7 @@ public class DiseaseQuerydslRepositoryTest extends QuerydslRepositoryTest {
         SimpleDiseaseQueryDto result = diseaseQuerydslRepository.findDiseaseSimpleQueryDtoByName(disease.getName()).get();
 
         //then
+        assertThat(result.getDiseaseId()).isEqualTo(disease.getId());
         assertThat(result.getName()).isEqualTo(disease.getName());
         assertThat(result.getDefinition()).isEqualTo(disease.getDefinition());
         assertThat(result.getRecommendDepartment()).isEqualTo(disease.getRecommendDepartment());

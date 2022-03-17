@@ -59,6 +59,7 @@ public class DiseaseServiceTest {
 
         //then
         assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getDiseaseId()).isEqualTo(simpleDiseaseQueryDto.getDiseaseId());
         assertThat(result.get(0).getName()).isEqualTo(simpleDiseaseQueryDto.getName());
         assertThat(result.get(0).getDefinition()).isEqualTo(simpleDiseaseQueryDto.getDefinition());
         assertThat(result.get(0).getRecommendDepartment()).isEqualTo(simpleDiseaseQueryDto.getRecommendDepartment());

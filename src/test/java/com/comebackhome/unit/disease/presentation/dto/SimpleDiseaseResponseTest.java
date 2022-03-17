@@ -18,6 +18,7 @@ public class SimpleDiseaseResponseTest {
         SimpleDiseaseResponse result = SimpleDiseaseResponse.from(simpleDiseaseResponseDto);
 
         //then
+        assertThat(result.getDiseaseId()).isEqualTo(simpleDiseaseResponseDto.getDiseaseId());
         assertThat(result.getName()).isEqualTo(simpleDiseaseResponseDto.getName());
         assertThat(result.getDefinition()).isEqualTo(simpleDiseaseResponseDto.getDefinition());
         assertThat(result.getRecommendDepartment()).isEqualTo(simpleDiseaseResponseDto.getRecommendDepartment());

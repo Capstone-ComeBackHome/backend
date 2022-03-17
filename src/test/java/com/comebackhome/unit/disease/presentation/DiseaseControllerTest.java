@@ -13,8 +13,7 @@ import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDiseaseRes
 import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
-import static org.springframework.restdocs.payload.JsonFieldType.STRING;
+import static org.springframework.restdocs.payload.JsonFieldType.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -101,6 +100,7 @@ public class DiseaseControllerTest extends RestDocsTestSupport {
                                 parameterWithName("diseaseNameList").description("질병 이름 리스트")
                         ),
                         responseFields(
+                                fieldWithPath("simpleDiseaseList[0].diseaseId").type(NUMBER).description("질병 ID"),
                                 fieldWithPath("simpleDiseaseList[0].name").type(STRING).description("질병 이름"),
                                 fieldWithPath("simpleDiseaseList[0].definition").type(STRING).description("질병 정의"),
                                 fieldWithPath("simpleDiseaseList[0].recommendDepartment").type(STRING).description("추천 진료과")

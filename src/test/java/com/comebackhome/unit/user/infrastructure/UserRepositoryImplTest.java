@@ -1,7 +1,5 @@
 package com.comebackhome.unit.user.infrastructure;
 
-// todo 이거 sql 찍히는지 봐야 yml이 main것 적용되는지 test것 적용되는지 알듯
-
 import com.comebackhome.support.JpaRepositoryTest;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;

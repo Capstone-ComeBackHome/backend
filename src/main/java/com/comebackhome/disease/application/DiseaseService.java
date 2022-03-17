@@ -5,6 +5,7 @@ import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,12 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class DiseaseService implements DiseaseQueryUseCase{
 
     private final DiseaseRepository diseaseRepository;
 
+    @Cacheable(value = "disease",
+            key = "#diseaseId",
+            unless = "#result == null"
+    )
     @Override
     public DiseaseResponseDto getDisease(Long diseaseId) {
         return DiseaseResponseDto.from(diseaseRepository.findDiseaseQueryDtoById(diseaseId));

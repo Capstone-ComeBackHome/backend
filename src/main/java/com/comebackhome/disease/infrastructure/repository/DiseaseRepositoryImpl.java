@@ -8,6 +8,7 @@ import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.CauseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.HomeCareQueryDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,6 +35,10 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
     }
 
     @Override
+    @Cacheable(value = "simpleDisease",
+            key = "#diseaseName",
+            unless = "#result == null"
+    )
     public SimpleDiseaseQueryDto findSimpleDiseaseQueryDtoByName(String diseaseName) {
         return diseaseQuerydslRepository.findDiseaseSimpleQueryDtoByName(diseaseName)
                 .orElseThrow(() -> new DiseaseNotFoundException());

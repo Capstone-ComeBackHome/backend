@@ -1,4 +1,4 @@
-package com.comebackhome.support;
+package com.comebackhome.support.helper;
 
 import com.comebackhome.config.security.dto.UserPrincipal;
 import com.comebackhome.user.domain.AuthProvider;

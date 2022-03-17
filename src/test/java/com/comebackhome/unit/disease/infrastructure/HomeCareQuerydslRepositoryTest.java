@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.comebackhome.support.DiseaseGivenHelper.givenDisease;
-import static com.comebackhome.support.DiseaseGivenHelper.givenHomeCare;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDisease;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenHomeCare;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HomeCareQuerydslRepositoryTest extends QuerydslRepositoryTest {

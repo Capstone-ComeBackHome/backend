@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-import static com.comebackhome.support.UserGivenHelper.givenUser;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserRepositoryImplTest extends JpaRepositoryTest {

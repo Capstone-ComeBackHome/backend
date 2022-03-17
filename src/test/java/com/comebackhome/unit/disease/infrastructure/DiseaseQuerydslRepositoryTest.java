@@ -8,7 +8,7 @@ import com.comebackhome.support.QuerydslRepositoryTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.comebackhome.support.DiseaseGivenHelper.givenDisease;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDisease;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DiseaseQuerydslRepositoryTest extends QuerydslRepositoryTest {

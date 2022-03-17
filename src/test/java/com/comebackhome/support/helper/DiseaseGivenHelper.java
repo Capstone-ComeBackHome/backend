@@ -1,4 +1,4 @@
-package com.comebackhome.support;
+package com.comebackhome.support.helper;
 
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;

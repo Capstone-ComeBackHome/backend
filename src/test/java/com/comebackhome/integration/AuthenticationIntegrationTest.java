@@ -11,8 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.comebackhome.support.UserGivenHelper.createAuthentication;
-import static com.comebackhome.support.UserGivenHelper.givenUser;
+import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

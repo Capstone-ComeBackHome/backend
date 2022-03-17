@@ -4,7 +4,7 @@ import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.support.DiseaseGivenHelper.givenSimpleDiseaseQueryDto;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseQueryDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SimpleDiseaseResponseDtoTest {

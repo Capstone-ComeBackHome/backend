@@ -3,7 +3,7 @@ package com.comebackhome.unit.user.domain;
 import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.support.UserGivenHelper.givenUser;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTest {

@@ -6,8 +6,8 @@ import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.support.UserGivenHelper.createAuthentication;
-import static com.comebackhome.support.UserGivenHelper.givenUser;
+import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TokenProviderTest {

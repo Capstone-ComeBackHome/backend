@@ -9,8 +9,8 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import java.util.List;
 
-import static com.comebackhome.support.DiseaseGivenHelper.givenDiseaseResponseDto;
-import static com.comebackhome.support.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDiseaseResponseDto;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;

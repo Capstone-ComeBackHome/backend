@@ -1,12 +1,16 @@
 package com.comebackhome.unit.disease.presentation;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
+import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
+import java.util.List;
+
 import static com.comebackhome.support.DiseaseGivenHelper.givenDiseaseResponseDto;
+import static com.comebackhome.support.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
@@ -76,7 +80,69 @@ public class DiseaseControllerTest extends RestDocsTestSupport {
                                 errorDescriptors()
                         )
                 ));
+    }
 
+    @Test
+    void 여러_질병명으로_간략하게_질병_조회하기() throws Exception{
+        // given
+        List<SimpleDiseaseResponseDto> simpleDiseaseResponseDtoList = List.of(
+                        givenSimpleDiseaseResponseDto("부정맥"),
+                        givenSimpleDiseaseResponseDto("후두염"),
+                        givenSimpleDiseaseResponseDto("편도염"));
+
+        given(diseaseQueryUseCase.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=부정맥,후두염,편도염")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestParameters(
+                                parameterWithName("diseaseNameList").description("질병 이름 리스트")
+                        ),
+                        responseFields(
+                                fieldWithPath("simpleDiseaseList[0].name").type(STRING).description("질병 이름"),
+                                fieldWithPath("simpleDiseaseList[0].definition").type(STRING).description("질병 정의"),
+                                fieldWithPath("simpleDiseaseList[0].recommendDepartment").type(STRING).description("추천 진료과")
+                        )
+                ))
+                ;
+    }
+
+    @Test
+    void 질병명이_콤마를_기준으로_빈칸으로_들어온_경우_실패() throws Exception{
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=,,")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+        ;
+    }
+
+    @Test
+    void 질병명이_빈칸으로_들어온_경우_실패() throws Exception{
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+        ;
+    }
+
+    @Test
+    void 질병명_파라미터가_들어오지_않은_경우_실패() throws Exception{
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+        ;
     }
 
 }

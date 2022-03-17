@@ -2,15 +2,20 @@ package com.comebackhome.unit.disease.application;
 
 import com.comebackhome.disease.application.DiseaseService;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
+import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
+import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static com.comebackhome.support.DiseaseGivenHelper.givenDiseaseQueryDto;
+import static com.comebackhome.support.DiseaseGivenHelper.givenSimpleDiseaseQueryDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -39,6 +44,23 @@ public class DiseaseServiceTest {
         assertThat(result.getHospitalCare()).isEqualTo(diseaseQueryDto.getHospitalCare());
         assertThat(result.getHomeCareList().size()).isEqualTo(2);
         assertThat(result.getComplications()).isEqualTo(diseaseQueryDto.getComplications());
+    }
 
+    @Test
+    void diseaseNameList에_있는_이름들로_SimpleDiseaseResponseDto_찾기() throws Exception{
+        //given
+        List<String> diseaseNameList = List.of("부정맥");
+        SimpleDiseaseQueryDto simpleDiseaseQueryDto = givenSimpleDiseaseQueryDto(diseaseNameList.get(0));
+        given(diseaseRepository.findSimpleDiseaseQueryDtoByName(any()))
+                .willReturn(simpleDiseaseQueryDto);
+
+        //when
+        List<SimpleDiseaseResponseDto> result = diseaseService.getSimpleDiseaseList(diseaseNameList);
+
+        //then
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getName()).isEqualTo(simpleDiseaseQueryDto.getName());
+        assertThat(result.get(0).getDefinition()).isEqualTo(simpleDiseaseQueryDto.getDefinition());
+        assertThat(result.get(0).getRecommendDepartment()).isEqualTo(simpleDiseaseQueryDto.getRecommendDepartment());
     }
 }

@@ -1,10 +1,12 @@
 package com.comebackhome.support;
 
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
+import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.Cause;
 import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.HomeCare;
 import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
+import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.CauseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.HomeCareQueryDto;
 
@@ -34,6 +36,17 @@ public class DiseaseGivenHelper {
                 .build();
     }
 
+    public static Disease givenDisease(String name) {
+        return Disease.builder()
+                .name(name)
+                .definition("정의")
+                .recommendDepartment("내과")
+                .symptom("증상")
+                .complications("합병증")
+                .hospitalCare("병원 치료 방법")
+                .build();
+    }
+
     public static HomeCare givenHomeCare(Disease disease, String solution) {
         return HomeCare.builder()
                 .disease(disease)
@@ -47,4 +60,30 @@ public class DiseaseGivenHelper {
                 .reason(reason)
                 .build();
     }
+
+    public static SimpleDiseaseResponseDto givenSimpleDiseaseResponseDto(String name){
+        return SimpleDiseaseResponseDto.from(givenSimpleDiseaseQueryDto(name));
+    }
+
+    public static SimpleDiseaseResponseDto givenSimpleDiseaseResponseDto(){
+        return SimpleDiseaseResponseDto.from(givenSimpleDiseaseQueryDto());
+    }
+
+    public static SimpleDiseaseQueryDto givenSimpleDiseaseQueryDto(){
+        return SimpleDiseaseQueryDto.builder()
+                .name("부정맥")
+                .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
+                .recommendDepartment("내과")
+                .build();
+    }
+
+    public static SimpleDiseaseQueryDto givenSimpleDiseaseQueryDto(String name){
+        return SimpleDiseaseQueryDto.builder()
+                .name(name)
+                .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
+                .recommendDepartment("내과")
+                .build();
+    }
+
+
 }

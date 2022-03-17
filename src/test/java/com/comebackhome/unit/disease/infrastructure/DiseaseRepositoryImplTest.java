@@ -3,6 +3,7 @@ package com.comebackhome.unit.disease.infrastructure;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
+import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.*;
 import com.comebackhome.support.QuerydslRepositoryTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +58,28 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         //when then
         assertThatThrownBy(
                 () -> diseaseRepository.findDiseaseQueryDtoById(-1L))
+                .isInstanceOf(DiseaseNotFoundException.class);
+    }
+
+    @Test
+    void 질병이름으로_SimpleDiseaseQueryDto_찾기() throws Exception{
+        //given
+        Disease disease = diseaseJpaRepository.save(givenDisease());
+
+        //when
+        SimpleDiseaseQueryDto result = diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
+
+        //then
+        assertThat(result.getName()).isEqualTo(disease.getName());
+        assertThat(result.getDefinition()).isEqualTo(disease.getDefinition());
+        assertThat(result.getRecommendDepartment()).isEqualTo(disease.getRecommendDepartment());
+    }
+
+    @Test
+    void 없는_질병이름으로_SimpleDiseaseQueryDto_찾기() throws Exception{
+        //when then
+        assertThatThrownBy(
+                () -> diseaseRepository.findSimpleDiseaseQueryDtoByName(""))
                 .isInstanceOf(DiseaseNotFoundException.class);
     }
 

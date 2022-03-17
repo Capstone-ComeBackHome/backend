@@ -45,4 +45,23 @@ public class DiseaseIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.complications",is("합병증")))
         ;
     }
+
+    @Test
+    void 여러_질병명으로_간략하게_질병_조회하기() throws Exception{
+        // given
+        diseaseJpaRepository.save(givenDisease("부정맥"));
+        diseaseJpaRepository.save(givenDisease("후두염"));
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/simple?diseaseNameList=부정맥,후두염")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.simpleDiseaseList[0].name",is("부정맥")))
+                .andExpect(jsonPath("$.simpleDiseaseList[0].definition",is("정의")))
+                .andExpect(jsonPath("$.simpleDiseaseList[0].recommendDepartment",is("내과")))
+                .andExpect(jsonPath("$.simpleDiseaseList[1].name",is("후두염")))
+                .andExpect(jsonPath("$.simpleDiseaseList[1].definition",is("정의")))
+                .andExpect(jsonPath("$.simpleDiseaseList[1].recommendDepartment",is("내과")))
+        ;
+    }
 }

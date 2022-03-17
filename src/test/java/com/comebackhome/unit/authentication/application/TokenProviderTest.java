@@ -67,7 +67,7 @@ public class TokenProviderTest {
         long remainingMilliSecondsFromToken = tokenProvider.getRemainingMilliSecondsFromToken(accessToken);
 
         //then
-        assertThat(remainingMilliSecondsFromToken).isGreaterThan(3599000L);
+        assertThat(remainingMilliSecondsFromToken).isGreaterThan(3400000L);
         assertThat(remainingMilliSecondsFromToken).isLessThan(3600001L);
     }
 

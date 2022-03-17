@@ -25,3 +25,45 @@ values (1, '온몸의 근육을 풀어줄 수 있는 체조나 요가등도 권�
 INSERT INTO home_care(disease_id,solution)
 values (1, '수면부족, 스트레스, 피로와 같은 자극을 줄 수 있는 요인들은 피하는 것이 좋아요.');
 
+INSERT INTO disease (id, name, definition, recommend_department, symptom, hospital_care)
+values (2,
+        '후두염',
+        '후두염은 바이러스나 세균이 후두 점막에 침투하면서 염증을 일으켜 발생하는 질병으로 1~3세의 유하에서 흔히 나타나요. 어떤 원인에 의해 후두점막의 부종이 심해져 기도가 좁아지면서 증상이 나타나요',
+        '내과',
+        '초기에는 발열을 동반한 산기도 감영증의 증상이 나타나요. 수일 후 특징적인 개 기침소리가 나요.',
+        '습기가 많은 침실에 앉히면 도움이 돼요. 기도 염증을 줄이기 위해 약을 복용해야 하고, 증상이 아주 심하면 입원해야 해요.'
+       );
+
+INSERT INTO cause(disease_id,reason)
+values (2, '폐쇄성 후두염은 파라인플루엔자 바이러스의 감염에 의한 경우가 대부분인데, 세균 감염에 의한 경우도 많이 있어요.');
+
+INSERT INTO home_care(disease_id,solution)
+values (2, '습하고 찬 공기를 쐬는 것이 좋아요.');
+INSERT INTO home_care(disease_id,solution)
+values (2, '적절한 습도와 온도를 유지하는 것이 중요해요.');
+INSERT INTO home_care(disease_id,solution)
+values (2, '가습기를 틀어 습도를 조절해요.');
+INSERT INTO home_care(disease_id,solution)
+values (2, '밤에 갑자기 호흡곤란이 오면 위험할 수 있으므로 부모가 아기 곁에서 잠을 자야해요.');
+
+INSERT INTO disease (id, name, definition, recommend_department, symptom, hospital_care, complications)
+values (3,
+        '편도염',
+        '편도염이란 편도를 구성하는 허편도, 인두편도, 구개편도 중 주로 구개편도에 발생하는 급성 염증을 말해요.',
+        '내과',
+        '급선 편도염은 갑작스러운 고열과 오한이 나타나요.',
+        '비수술적 치료로 1일 정도는 항생제를 사용해서 치료할 수 있어요.',
+        '편도염으로 인한 흔한 합병증은 편도주위농양이에요.'
+       );
+
+INSERT INTO cause(disease_id,reason)
+values (3, '급성 편도염의 가장 흔한 원인균은 B용혈성 연쇄상구균이며, 이외에도 포도상구균 등 다양한 균들이 원인이 될 수 있어요.');
+INSERT INTO cause(disease_id,reason)
+values (3, '인플루엔자 바이러스, 파라인플루엔자 바이러스 등의 바이러스도 역시 원인이 될 수 있어요.');
+
+INSERT INTO home_care(disease_id,solution)
+values (3, '평소 구강위생을 유지하고 자주 손을 씻어요.');
+INSERT INTO home_care(disease_id,solution)
+values (3, '수분 공급을 충분히 하고 휴식을 취해요.');
+INSERT INTO home_care(disease_id,solution)
+values (3, '목구멍의 자극성과 기침을 줄이기 위해 가습기를 이용해요.');

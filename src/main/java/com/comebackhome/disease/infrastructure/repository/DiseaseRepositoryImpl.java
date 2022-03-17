@@ -4,6 +4,7 @@ import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
+import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.CauseQueryDto;
 import com.comebackhome.disease.infrastructure.repository.dto.HomeCareQueryDto;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
     private final DiseaseJpaRepository diseaseJpaRepository;
     private final HomeCareQuerydslRepository homeCareQuerydslRepository;
     private final CauseQuerydslRepository causeQuerydslRepository;
+    private final DiseaseQuerydslRepository diseaseQuerydslRepository;
 
     @Override
     public DiseaseQueryDto findDiseaseQueryDtoById(Long diseaseId) {
@@ -29,5 +31,11 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
                 = homeCareQuerydslRepository.findHomeCareByDiseaseId(diseaseId);
 
         return DiseaseQueryDto.of(disease, causeQueryDtoList, homeCareQueryDtoList);
+    }
+
+    @Override
+    public SimpleDiseaseQueryDto findSimpleDiseaseQueryDtoByName(String diseaseName) {
+        return diseaseQuerydslRepository.findDiseaseSimpleQueryDtoByName(diseaseName)
+                .orElseThrow(() -> new DiseaseNotFoundException());
     }
 }

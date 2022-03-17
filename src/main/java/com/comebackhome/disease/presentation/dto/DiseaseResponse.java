@@ -1,13 +1,15 @@
 package com.comebackhome.disease.presentation.dto;
 
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.util.List;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DiseaseResponse {
 

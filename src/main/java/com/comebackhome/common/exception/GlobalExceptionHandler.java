@@ -9,19 +9,24 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
+import static com.comebackhome.common.exception.ErrorCode.*;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final String LOG_FORMAT = "Class : {}, Message : {}";
     private static final String LOG_CODE_FORMAT = "Class : {}, Code : {}, Message : {}";
+    private static final String LOG_FIELD_FORMAT = "Class : {}, field : {} ,Message : {}";
     private static final String LOG_CODE_FIELD_FORMAT = "Class : {}, Code : {}, field : {} ,Message : {}";
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> bindException(BindException e) {
 
-        final String code = ErrorCode.BINDING_EXCEPTION.getCode();
-        final String message = ErrorCode.BINDING_EXCEPTION.getMessage();
+        final String code = BINDING_EXCEPTION.getCode();
+        final String message = BINDING_EXCEPTION.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message);
 
@@ -34,8 +39,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingRequestHeaderException.class)
     public ResponseEntity handleMissingParams(MissingRequestHeaderException e) {
 
-        final String code = ErrorCode.MISSING_REQUEST_HEADER.getCode();
-        final String message = ErrorCode.MISSING_REQUEST_HEADER.getMessage();
+        final String code = MISSING_REQUEST_HEADER.getCode();
+        final String message = MISSING_REQUEST_HEADER.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message);
 
@@ -69,8 +74,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> missingServletRequestParameterException(MissingServletRequestParameterException e) {
-        final String message = ErrorCode.MISSING_REQUEST_PARAM.getMessage();
-        final String code = ErrorCode.MISSING_REQUEST_PARAM.getCode();
+        final String message = MISSING_REQUEST_PARAM.getMessage();
+        final String code = MISSING_REQUEST_PARAM.getCode();
 
         log.warn(LOG_CODE_FIELD_FORMAT,
                 e.getClass().getSimpleName(),
@@ -79,6 +84,20 @@ public class GlobalExceptionHandler {
                 message);
 
         ErrorResponse response = ErrorResponse.of(message,code);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> constraintViolationException(ConstraintViolationException e) {
+
+        log.warn(LOG_FIELD_FORMAT,
+                e.getClass().getSimpleName(),
+                e.getConstraintViolations(),
+                e.getMessage());
+
+        ErrorResponse response = ErrorResponse.of(BINDING_EXCEPTION.getMessage(), BINDING_EXCEPTION.getCode());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);

@@ -43,12 +43,13 @@ include::{snippets}/auth-rest-controller-test/authorization헤더_없이_로그�
 operation::auth-rest-controller-test/토큰_재발급[snippets='http-request,request-headers,http-response,response-fields']
 
 ==== 토큰 재발급 실패
+토큰이 유효하지 않으면 실패합니다.
 include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_재발급_시도/response-body.adoc[]
+
+Authorization, refreshToken 헤더가 들어오지 않으면 싪패합니다.
 include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/response-body.adoc[]
 
 == Disease API
-
-
 === 간략한 질병 조회
 ==== 간략한 질병 조회 성공
 아래 request에서 diseaseNameList 값이 한글이라 인코딩되서 나오는데 diseaseNameList=부정맥,후두염,편도염 이렇게 넣으시면 됩니다.
@@ -60,16 +61,17 @@ diseaseNameList 파라미터 자체가 들어오지 않거나, 공백으로 들�
 
 include::{snippets}/disease-controller-test/질병명이_빈칸으로_들어온_경우_실패/response-body.adoc[]
 
-
 ---
 
 === 질병 상세 조회
-
 ==== 질병 상세 조회 성공
 operation::disease-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-parameters,http-response,response-fields']
 
 ==== 질병 상세 조회 실패
+diseaseId 파라미터가 들어오지 않으면 실패합니다.
 include::{snippets}/disease-controller-test/disease-id_파라미터_없이_상세조회/response-body.adoc[]
+
+DB에 존재하지 않은 diseaseId인 경우 실패합니다.
 include::{snippets}/disease-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
 
 ---

@@ -17,13 +17,23 @@ public class DiseaseQuerydslRepository {
     private final JPAQueryFactory query;
 
     public Optional<SimpleDiseaseQueryDto> findDiseaseSimpleQueryDtoByName(String diseaseName){
+
+        // diseaseName이 index이므로 커버링 인덱스 방식 사용
+        Long id = query.select(disease.id)
+                .from(disease)
+                .where(disease.name.eq(diseaseName))
+                .fetchOne();
+
+        if (id == null)
+            return Optional.empty();
+
         return Optional.ofNullable(query.select(Projections.fields(SimpleDiseaseQueryDto.class,
                 disease.name,
                 disease.definition,
                 disease.recommendDepartment
                 ))
                 .from(disease)
-                .where(disease.name.eq(diseaseName))
+                .where(disease.id.eq(id))
                 .fetchOne());
     }
 }

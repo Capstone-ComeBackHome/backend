@@ -50,7 +50,7 @@ public class DiseaseServiceTest {
     void diseaseNameList에_있는_이름들로_SimpleDiseaseResponseDto_찾기() throws Exception{
         //given
         List<String> diseaseNameList = List.of("부정맥");
-        SimpleDiseaseQueryDto simpleDiseaseQueryDto = givenSimpleDiseaseQueryDto(diseaseNameList.get(0));
+        SimpleDiseaseQueryDto simpleDiseaseQueryDto = givenSimpleDiseaseQueryDto(diseaseNameList.get(0),1L);
         given(diseaseRepository.findSimpleDiseaseQueryDtoByName(any()))
                 .willReturn(simpleDiseaseQueryDto);
 

@@ -61,9 +61,19 @@ public class DiseaseGivenHelper {
                 .build();
     }
 
-    public static SimpleDiseaseResponseDto givenSimpleDiseaseResponseDto(String name){
-        return SimpleDiseaseResponseDto.from(givenSimpleDiseaseQueryDto(name));
+    public static SimpleDiseaseResponseDto givenSimpleDiseaseResponseDto(String name, Long diseaseId){
+        return SimpleDiseaseResponseDto.from(givenSimpleDiseaseQueryDto(name, diseaseId));
     }
+
+    public static SimpleDiseaseQueryDto givenSimpleDiseaseQueryDto(String name, Long diseaseId){
+        return SimpleDiseaseQueryDto.builder()
+                .diseaseId(diseaseId)
+                .name(name)
+                .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
+                .recommendDepartment("내과")
+                .build();
+    }
+
 
     public static SimpleDiseaseResponseDto givenSimpleDiseaseResponseDto(){
         return SimpleDiseaseResponseDto.from(givenSimpleDiseaseQueryDto());
@@ -73,15 +83,6 @@ public class DiseaseGivenHelper {
         return SimpleDiseaseQueryDto.builder()
                 .diseaseId(1L)
                 .name("부정맥")
-                .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
-                .recommendDepartment("내과")
-                .build();
-    }
-
-    public static SimpleDiseaseQueryDto givenSimpleDiseaseQueryDto(String name){
-        return SimpleDiseaseQueryDto.builder()
-                .diseaseId(1L)
-                .name(name)
                 .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
                 .recommendDepartment("내과")
                 .build();

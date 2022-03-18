@@ -85,9 +85,9 @@ public class DiseaseControllerTest extends RestDocsTestSupport {
     void 여러_질병명으로_간략하게_질병_조회하기() throws Exception{
         // given
         List<SimpleDiseaseResponseDto> simpleDiseaseResponseDtoList = List.of(
-                        givenSimpleDiseaseResponseDto("부정맥"),
-                        givenSimpleDiseaseResponseDto("후두염"),
-                        givenSimpleDiseaseResponseDto("편도염"));
+                        givenSimpleDiseaseResponseDto("부정맥",1L),
+                        givenSimpleDiseaseResponseDto("후두염",2L),
+                        givenSimpleDiseaseResponseDto("편도염",3L));
 
         given(diseaseQueryUseCase.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
 

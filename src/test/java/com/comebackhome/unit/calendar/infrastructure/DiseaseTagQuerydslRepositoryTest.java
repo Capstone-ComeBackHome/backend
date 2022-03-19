@@ -2,8 +2,10 @@ package com.comebackhome.unit.calendar.infrastructure;
 
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
+import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
 import com.comebackhome.calendar.infrastructure.DiseaseTagJpaRepository;
-import com.comebackhome.support.JpaRepositoryTest;
+import com.comebackhome.calendar.infrastructure.DiseaseTagQuerydslRepository;
+import com.comebackhome.support.QuerydslRepositoryTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,10 +15,10 @@ import java.util.List;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DiseaseTagJpaRepositoryTest extends JpaRepositoryTest {
+public class DiseaseTagQuerydslRepositoryTest extends QuerydslRepositoryTest {
 
-    @Autowired
-    DiseaseTagJpaRepository diseaseTagJpaRepository;
+    @Autowired DiseaseTagQuerydslRepository diseaseTagQuerydslRepository;
+    @Autowired DiseaseTagJpaRepository diseaseTagJpaRepository;
 
     @Test
     void 특정_diseaseType을_제외한_diseaseTag_모두_가져오기() throws Exception{
@@ -29,7 +31,7 @@ public class DiseaseTagJpaRepositoryTest extends JpaRepositoryTest {
         diseaseTagJpaRepository.saveAll(diseaseTagList);
 
         //when
-        List<DiseaseTag> result = diseaseTagJpaRepository.findAllDiseaseTagExcludeDiseaseType(DiseaseType.CHEST);
+        List<DiseaseTagQueryDto> result = diseaseTagQuerydslRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CHEST);
 
         //then
         assertThat(result.size()).isEqualTo(2);

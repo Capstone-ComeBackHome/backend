@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DiseaseTagRestControllerTest extends IntegrationTest {
+public class DiseaseTagIntegrationTest extends IntegrationTest {
 
     private final String URL = "/api/v1/diseaseTags";
     private final String TOKEN_TYPE = "Bearer ";

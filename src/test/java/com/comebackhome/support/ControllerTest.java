@@ -2,6 +2,8 @@ package com.comebackhome.support;
 
 import com.comebackhome.authentication.application.AuthCommandUseCase;
 import com.comebackhome.authentication.presentation.AuthRestController;
+import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
+import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
 import com.comebackhome.disease.presentation.DiseaseController;
@@ -18,7 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest({
         AuthRestController.class,
         DocsController.class,
-        DiseaseController.class
+        DiseaseController.class,
+        DiseaseTagRestController.class
 })
 public abstract class ControllerTest {
 
@@ -29,6 +32,8 @@ public abstract class ControllerTest {
     @MockBean protected AuthCommandUseCase authCommandUseCase;
 
     @MockBean protected DiseaseQueryUseCase diseaseQueryUseCase;
+
+    @MockBean protected DiseaseTagQueryUseCase diseaseTagQueryUseCase;
 
     protected String createJson(Object dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);

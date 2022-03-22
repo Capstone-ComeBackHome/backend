@@ -43,8 +43,10 @@ public class CalendarService implements CalendarCommandUseCase{
                     = diseaseTagRepository.findDiseaseTagListByDiseaseTagNameList(customTypeDiseaseTagName);
             diseaseTagIdList.addAll(getAlreadyExistCustomTypeDiseaseTagIdList(alreadyExistCustomTypeDiseaseTagList));
 
+            List<DiseaseTag> newCustomTypeDiseaseTagList
+                    = extractNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistCustomTypeDiseaseTagList);
             List<Long> newCustomTypeDiseaseTagIdList
-                    = saveNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistCustomTypeDiseaseTagList);
+                    = saveNewCustomTypeDiseaseTagList(newCustomTypeDiseaseTagList);
             diseaseTagIdList.addAll(newCustomTypeDiseaseTagIdList);
         }
 
@@ -73,7 +75,7 @@ public class CalendarService implements CalendarCommandUseCase{
         return alreadyExistCustomTypeDiseaseTagIdList;
     }
 
-    private List<Long> saveNewCustomTypeDiseaseTagList(List<String> customTypeDiseaseTagName, List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
+    private List<DiseaseTag> extractNewCustomTypeDiseaseTagList(List<String> customTypeDiseaseTagName, List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
         List<String> alreadyExistCustomTypeDiseaseTagNameList = alreadyExistCustomTypeDiseaseTagList.parallelStream()
                 .map(DiseaseTag::getName)
                 .collect(Collectors.toList());
@@ -82,6 +84,11 @@ public class CalendarService implements CalendarCommandUseCase{
                 .filter(name -> !alreadyExistCustomTypeDiseaseTagNameList.contains(name))
                 .map(name -> DiseaseTag.of(DiseaseType.CUSTOM, name))
                 .collect(Collectors.toList());
+        return newCustomTypeDiseaseTagList;
+    }
+
+    private List<Long> saveNewCustomTypeDiseaseTagList(List<DiseaseTag> newCustomTypeDiseaseTagList) {
+
 
         if (newCustomTypeDiseaseTagList.isEmpty())
             return new ArrayList<>();

@@ -16,7 +16,8 @@ public class DiseaseTag extends BaseEntity {
     @TableGenerator(
             name = "DISEASE_TAG_SEQ_GENERATOR",
             table = "DISEASE_TAG_SEQUENCE",
-            pkColumnName = "DISEASE_TAG_SEQ"
+            pkColumnName = "DISEASE_TAG_SEQ",
+            initialValue = 60
     )
     @GeneratedValue(strategy = GenerationType.TABLE,
             generator = "DISEASE_TAG_SEQ_GENERATOR")

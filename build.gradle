@@ -39,7 +39,9 @@ dependencies {
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+    implementation ('it.ozimov:embedded-redis:0.7.3') {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
 
     // lombok
     compileOnly 'org.projectlombok:lombok'
@@ -75,7 +77,7 @@ tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     configurations 'asciidoctorExtensions'
     sources{
-        include("**/index.adoc")
+        include("**/index.adoc","**/*-type.adoc")
     }
     baseDirFollowsSourceFile()
 }

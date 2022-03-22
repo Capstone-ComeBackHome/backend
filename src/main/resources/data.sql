@@ -88,7 +88,7 @@ values (8, 'HEAD', '편두통');
 INSERT INTO disease_tag (id, disease_type, name)
 values (9, 'HEAD', '기민상태');
 INSERT INTO disease_tag (id, disease_type, name)
-values (10, 'HEAD', '인지장1');
+values (10, 'HEAD', '인지장애');
 
 INSERT INTO disease_tag (id, disease_type, name)
 values (11, 'BRONCHUS', '코막힘');

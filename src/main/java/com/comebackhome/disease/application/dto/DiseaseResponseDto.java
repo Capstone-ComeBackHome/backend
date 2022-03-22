@@ -1,9 +1,7 @@
 package com.comebackhome.disease.application.dto;
 
-import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
+import com.comebackhome.disease.domain.Disease;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Builder
@@ -19,24 +17,19 @@ public class DiseaseResponseDto {
 
     private String symptom;
 
-    private List<String> causeList;
+    private String cause;
 
     private String hospitalCare;
 
-    private List<String> homeCareList;
 
-    private String complications;
-
-    public static DiseaseResponseDto from(DiseaseQueryDto diseaseQueryDto) {
+    public static DiseaseResponseDto from(Disease disease) {
         return DiseaseResponseDto.builder()
-                .name(diseaseQueryDto.getName())
-                .definition(diseaseQueryDto.getDefinition())
-                .recommendDepartment(diseaseQueryDto.getRecommendDepartment())
-                .symptom(diseaseQueryDto.getSymptom())
-                .causeList(diseaseQueryDto.getCauseList())
-                .hospitalCare(diseaseQueryDto.getHospitalCare())
-                .homeCareList(diseaseQueryDto.getHomeCareList())
-                .complications(diseaseQueryDto.getComplications())
+                .name(disease.getName())
+                .definition(disease.getDefinition())
+                .recommendDepartment(disease.getRecommendDepartment())
+                .symptom(disease.getSymptom())
+                .cause(disease.getCause())
+                .hospitalCare(disease.getHospitalCare())
                .build();
     }
 

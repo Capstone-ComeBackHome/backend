@@ -22,9 +22,7 @@ public class DiseaseResponseTest {
         assertThat(result.getDefinition()).isEqualTo(diseaseResponseDto.getDefinition());
         assertThat(result.getRecommendDepartment()).isEqualTo(diseaseResponseDto.getRecommendDepartment());
         assertThat(result.getSymptom()).isEqualTo(diseaseResponseDto.getSymptom());
-        assertThat(result.getCauseList().size()).isEqualTo(2);
+        assertThat(result.getCause()).isEqualTo(diseaseResponseDto.getCause());
         assertThat(result.getHospitalCare()).isEqualTo(diseaseResponseDto.getHospitalCare());
-        assertThat(result.getHomeCareList().size()).isEqualTo(2);
-        assertThat(result.getComplications()).isEqualTo(diseaseResponseDto.getComplications());
     }
 }

@@ -7,13 +7,11 @@ import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.infrastructure.repository.ScheduleDiseaseTagJpaRepository;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.support.IntegrationTest;
-import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
@@ -22,8 +20,6 @@ import java.util.stream.Collectors;
 
 import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
-import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

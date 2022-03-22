@@ -28,9 +28,10 @@ public class Disease extends BaseEntity {
     private String symptom;
 
     @Column(nullable = false)
-    private String hospitalCare;
+    private String cause;
 
-    private String complications;
+    @Column(nullable = false)
+    private String hospitalCare;
 
 
 }

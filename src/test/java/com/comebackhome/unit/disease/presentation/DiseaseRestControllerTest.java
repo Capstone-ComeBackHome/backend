@@ -13,7 +13,8 @@ import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDiseaseRes
 import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.payload.JsonFieldType.*;
+import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
+import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -42,10 +43,8 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("definition").type(STRING).description("질병 정의"),
                                 fieldWithPath("recommendDepartment").type(STRING).description("추천 진료과"),
                                 fieldWithPath("symptom").type(STRING).description("질병의 증상"),
-                                fieldWithPath("causeList").type(ARRAY).description("질병의 원인 리스트"),
-                                fieldWithPath("hospitalCare").type(STRING).description("병원에서 제시하는 치료 방법"),
-                                fieldWithPath("homeCareList").type(ARRAY).description("홈 케어 해결책 리스트"),
-                                fieldWithPath("complications").type(STRING).description("합병증")
+                                fieldWithPath("cause").type(STRING).description("질병의 원인"),
+                                fieldWithPath("hospitalCare").type(STRING).description("병원에서 제시하는 치료 방법")
                         )
                 ))
                 ;

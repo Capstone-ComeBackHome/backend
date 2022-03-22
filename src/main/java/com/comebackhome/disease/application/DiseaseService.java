@@ -1,5 +1,6 @@
 package com.comebackhome.disease.application;
 
+import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.DiseaseRepository;
@@ -25,7 +26,8 @@ public class DiseaseService implements DiseaseQueryUseCase{
     )
     @Override
     public DiseaseResponseDto getDisease(Long diseaseId) {
-        return DiseaseResponseDto.from(diseaseRepository.findDiseaseQueryDtoById(diseaseId));
+        return DiseaseResponseDto.from(diseaseRepository.findDiseaseById(diseaseId)
+                .orElseThrow(() -> new DiseaseNotFoundException()));
     }
 
     @Override

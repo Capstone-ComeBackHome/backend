@@ -1,10 +1,11 @@
 package com.comebackhome.unit.disease.application;
 
+import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.application.DiseaseService;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
+import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.DiseaseRepository;
-import com.comebackhome.disease.domain.dto.DiseaseQueryDto;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,10 +14,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDiseaseQueryDto;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDisease;
 import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseQueryDto;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -29,21 +32,31 @@ public class DiseaseServiceTest {
     @Test
     void diseaseId로_DiseaseResponseDto_가져오기() throws Exception{
         //given
-        DiseaseQueryDto diseaseQueryDto = givenDiseaseQueryDto();
-        given(diseaseRepository.findDiseaseQueryDtoById(any())).willReturn(diseaseQueryDto);
+        Disease disease = givenDisease();
+        given(diseaseRepository.findDiseaseById(any())).willReturn(Optional.of(disease));
 
         //when
         DiseaseResponseDto result = diseaseService.getDisease(1L);
 
         //then
-        assertThat(result.getName()).isEqualTo(diseaseQueryDto.getName());
-        assertThat(result.getDefinition()).isEqualTo(diseaseQueryDto.getDefinition());
-        assertThat(result.getRecommendDepartment()).isEqualTo(diseaseQueryDto.getRecommendDepartment());
-        assertThat(result.getSymptom()).isEqualTo(diseaseQueryDto.getSymptom());
-        assertThat(result.getCauseList().size()).isEqualTo(2);
-        assertThat(result.getHospitalCare()).isEqualTo(diseaseQueryDto.getHospitalCare());
-        assertThat(result.getHomeCareList().size()).isEqualTo(2);
-        assertThat(result.getComplications()).isEqualTo(diseaseQueryDto.getComplications());
+        assertThat(result.getName()).isEqualTo(disease.getName());
+        assertThat(result.getDefinition()).isEqualTo(disease.getDefinition());
+        assertThat(result.getRecommendDepartment()).isEqualTo(disease.getRecommendDepartment());
+        assertThat(result.getSymptom()).isEqualTo(disease.getSymptom());
+        assertThat(result.getCause()).isEqualTo(disease.getCause());
+        assertThat(result.getHospitalCare()).isEqualTo(disease.getHospitalCare());
+    }
+
+    @Test
+    void 없는_diseaseId로_DiseaseResponseDto_가져오기() throws Exception{
+        //given
+        given(diseaseRepository.findDiseaseById(any())).willReturn(Optional.empty());
+
+        //when then
+        assertThatThrownBy(
+                () -> diseaseService.getDisease(1L))
+                .isInstanceOf(DiseaseNotFoundException.class);
+
     }
 
     @Test

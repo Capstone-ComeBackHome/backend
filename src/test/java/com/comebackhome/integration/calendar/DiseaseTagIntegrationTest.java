@@ -4,21 +4,17 @@ import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
-import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
 import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
-import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

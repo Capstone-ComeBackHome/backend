@@ -47,4 +47,17 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
                 .isInstanceOf(DiseaseNotFoundException.class);
     }
 
+    @Test
+    void diseaseId값으로_Disease_찾기() throws Exception{
+        //given
+        Disease disease = diseaseJpaRepository.save(givenDisease());
+
+        //when
+        Disease result = diseaseRepository.findDiseaseById(disease.getId()).get();
+
+        //then
+        assertThat(result.getId()).isEqualTo(disease.getId());
+    }
+
+
 }

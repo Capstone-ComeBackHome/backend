@@ -39,22 +39,22 @@ public class DiseaseTagRestControllerTest extends RestDocsTestSupport {
                         ),
                         responseFields(
                                 fieldWithPath("headDiseaseTagList").type(ARRAY).description("머리 관련 태그 리스트"),
-                                fieldWithPath("headDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("headDiseaseTagList[0].diseaseType").type(STRING).description("머리 관련 태그 타입은 HEAD"),
                                 fieldWithPath("headDiseaseTagList[0].name").type(STRING).description("태그 이름"),
                                 fieldWithPath("bronchusDiseaseTagList").type(ARRAY).description("기관지 관련 태그 리스트"),
-                                fieldWithPath("bronchusDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("bronchusDiseaseTagList[0].diseaseType").type(STRING).description("기관지 관련 태그 타입은 BRONCHUS"),
                                 fieldWithPath("bronchusDiseaseTagList[0].name").type(STRING).description("태그 이름"),
                                 fieldWithPath("chestDiseaseTagList").type(ARRAY).description("가슴 관련 태그 리스트"),
-                                fieldWithPath("chestDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("chestDiseaseTagList[0].diseaseType").type(STRING).description("가슴 관련 태그 타입은 CHEST"),
                                 fieldWithPath("chestDiseaseTagList[0].name").type(STRING).description("태그 이름"),
                                 fieldWithPath("stomachDiseaseTagList").type(ARRAY).description("배 관련 태그 리스트"),
-                                fieldWithPath("stomachDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("stomachDiseaseTagList[0].diseaseType").type(STRING).description("배 관련 태그 타입은 STOMACH"),
                                 fieldWithPath("stomachDiseaseTagList[0].name").type(STRING).description("태그 이름"),
                                 fieldWithPath("limbDiseaseTagList").type(ARRAY).description("팔다리 관련 태그 리스트"),
-                                fieldWithPath("limbDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("limbDiseaseTagList[0].diseaseType").type(STRING).description("팔다리 관련 태그 타입은 LIMB"),
                                 fieldWithPath("limbDiseaseTagList[0].name").type(STRING).description("태그 이름"),
                                 fieldWithPath("skinDiseaseTagList").type(ARRAY).description("피부 관련 태그 리스트"),
-                                fieldWithPath("skinDiseaseTagList[0].diseaseType").type(STRING).description("태그 타입"),
+                                fieldWithPath("skinDiseaseTagList[0].diseaseType").type(STRING).description("피부 관련 태그 타입은 SKIN"),
                                 fieldWithPath("skinDiseaseTagList[0].name").type(STRING).description("태그 이름")
                         )
                 ))

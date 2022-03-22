@@ -10,7 +10,7 @@ import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
-import com.comebackhome.disease.presentation.DiseaseController;
+import com.comebackhome.disease.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
 import com.comebackhome.user.domain.Role;
@@ -33,7 +33,7 @@ import static org.mockito.BDDMockito.given;
 @WebMvcTest({
         AuthRestController.class,
         CommonDocsController.class,
-        DiseaseController.class,
+        DiseaseRestController.class,
         DiseaseTagRestController.class,
         CalendarRestController.class,
         EnumDocController.class

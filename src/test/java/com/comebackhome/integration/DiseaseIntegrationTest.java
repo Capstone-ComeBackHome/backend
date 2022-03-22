@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class DiseaseIntegrationTest extends IntegrationTest {
 
-    private final String URL = "/api/v1/disease";
+    private final String URL = "/api/v1/diseases";
 
     @Autowired DiseaseJpaRepository diseaseJpaRepository;
     @Autowired CauseJpaRepository causeJpaRepository;

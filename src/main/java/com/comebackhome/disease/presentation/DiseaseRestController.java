@@ -17,9 +17,9 @@ import java.util.List;
 
 @Validated
 @RestController
-@RequestMapping("/api/v1/disease")
+@RequestMapping("/api/v1/diseases")
 @RequiredArgsConstructor
-public class DiseaseController {
+public class DiseaseRestController {
 
     private final DiseaseQueryUseCase diseaseQueryUseCase;
 

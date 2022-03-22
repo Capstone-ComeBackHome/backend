@@ -20,9 +20,9 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DiseaseControllerTest extends RestDocsTestSupport {
+public class DiseaseRestControllerTest extends RestDocsTestSupport {
 
-    private final String URL = "/api/v1/disease";
+    private final String URL = "/api/v1/diseases";
 
     @Test
     void diseaseId로_상세정보_찾기() throws Exception{

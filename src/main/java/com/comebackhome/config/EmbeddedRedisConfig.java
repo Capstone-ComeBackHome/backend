@@ -15,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Profile(value = {"dev","test"})
+@Profile("!prod")
 @Configuration
 public class EmbeddedRedisConfig {
 

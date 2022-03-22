@@ -1,4 +1,4 @@
-package com.comebackhome.config;
+package com.comebackhome.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

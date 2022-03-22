@@ -1,4 +1,4 @@
-package com.comebackhome.config;
+package com.comebackhome.config.redis;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

@@ -1,4 +1,4 @@
-package com.comebackhome.integration;
+package com.comebackhome.integration.disease;
 
 import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.infrastructure.repository.CauseJpaRepository;

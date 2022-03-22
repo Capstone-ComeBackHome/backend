@@ -1,4 +1,4 @@
-package com.comebackhome.integration;
+package com.comebackhome.integration.calendar;
 
 import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseType;

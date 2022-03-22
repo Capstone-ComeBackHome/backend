@@ -1,4 +1,4 @@
-package com.comebackhome.integration;
+package com.comebackhome.integration.disease;
 
 import com.comebackhome.disease.application.DiseaseService;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;

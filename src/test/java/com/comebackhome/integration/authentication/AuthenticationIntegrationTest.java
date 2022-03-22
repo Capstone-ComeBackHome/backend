@@ -1,4 +1,4 @@
-package com.comebackhome.integration;
+package com.comebackhome.integration.authentication;
 
 import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.support.IntegrationTest;

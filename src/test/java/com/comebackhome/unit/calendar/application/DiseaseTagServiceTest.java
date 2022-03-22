@@ -2,9 +2,9 @@ package com.comebackhome.unit.calendar.application;
 
 import com.comebackhome.calendar.application.DiseaseTagService;
 import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
-import com.comebackhome.calendar.domain.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
+import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

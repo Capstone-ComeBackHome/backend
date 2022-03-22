@@ -1,7 +1,7 @@
 package com.comebackhome.support;
 
-import com.comebackhome.calendar.infrastructure.DiseaseTagQuerydslRepository;
-import com.comebackhome.calendar.infrastructure.DiseaseTagRepositoryImpl;
+import com.comebackhome.calendar.infrastructure.repository.DiseaseTagQuerydslRepository;
+import com.comebackhome.calendar.infrastructure.repository.DiseaseTagRepositoryImpl;
 import com.comebackhome.config.QuerydslConfig;
 import com.comebackhome.disease.infrastructure.repository.CauseQuerydslRepository;
 import com.comebackhome.disease.infrastructure.repository.DiseaseQuerydslRepository;

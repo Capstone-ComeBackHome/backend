@@ -3,12 +3,13 @@ package com.comebackhome.integration;
 import com.comebackhome.calendar.application.DiseaseTagService;
 import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
 import com.comebackhome.calendar.domain.DiseaseTag;
-import com.comebackhome.calendar.infrastructure.DiseaseTagJpaRepository;
+import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@EnableCaching
 public class DiseaseTagCachingTest extends IntegrationTest {
 
     @Autowired CacheManager cacheManager;

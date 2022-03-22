@@ -5,32 +5,6 @@ spring:
       - jwt
     active: dev
 
-  h2:
-    console:
-      enabled: true
-
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
-  jpa:
-    # data.sql이 jpa 테이블 생성되기 전에 시작되는 것의 기본 순서를 바꿔주는 옵션
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        default_batch_fetch_size: 100
-        format_sql: true
-        # 정렬 옵션
-        order_inserts: true
-        order_updates: true
-        # 배치 개수 옵션
-        jdbc.batch_size: 100
-
-
 server:
   error:
     include-stacktrace: never
@@ -47,11 +21,6 @@ spring:
     activate:
       on-profile: prod
   redis:
-    lettuce:
-      pool:
-        min-idle: 0
-        max-idle: 8
-        max-active: 8
     port: 6379
     host: 172.31.34.29
 
@@ -61,11 +30,67 @@ spring:
     activate:
       on-profile: dev
   redis:
-    lettuce:
-      pool:
-        min-idle: 0
-        max-idle: 8
-        max-active: 8
     port: 6379
     host: localhost
+
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    # data.sql이 jpa 테이블 생성되기 전에 시작되는 것의 기본 순서를 바꿔주는 옵션
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+    open-in-view: false
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  redis:
+    port: 6379
+    host: localhost
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999999
+    username: root
+    password: root
+
+  sql:
+    init:
+      data-locations: classpath:data.sql
+      username: root
+      password: root
+      mode: always
+
+  jpa:
+    # data.sql이 jpa 테이블 생성되기 전에 시작되는 것의 기본 순서를 바꿔주는 옵션
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true
+        # 정렬 옵션
+        order_inserts: true
+        order_updates: true
+        # 배치 개수 옵션
+        jdbc.batch_size: 100
+    open-in-view: false
 

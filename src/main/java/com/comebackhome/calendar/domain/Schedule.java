@@ -1,6 +1,8 @@
 package com.comebackhome.calendar.domain;
 
+import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
 import com.comebackhome.common.domain.BaseEntity;
+import com.comebackhome.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,11 +21,14 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID",nullable = false)
+    private User user;
+
     @OneToMany(mappedBy = "schedule")
     @Builder.Default
     private List<ScheduleDiseaseTag> scheduleDiseaseTagList = new ArrayList<>();
 
-    // todo serializer 필요할듯
     @Column(nullable = false)
     private LocalDate localDate;
 
@@ -31,5 +36,14 @@ public class Schedule extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private PainType painType;
+
+    public static Schedule from(ScheduleSaveRequestDto scheduleSaveRequestDto){
+        return Schedule.builder()
+                .localDate(scheduleSaveRequestDto.getLocalDate())
+                .dailyNote(scheduleSaveRequestDto.getDailyNote())
+                .painType(scheduleSaveRequestDto.getPainType())
+                .user(User.builder().id(scheduleSaveRequestDto.getUserId()).build())
+                .build();
+    }
 
 }

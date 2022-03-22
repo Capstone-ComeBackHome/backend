@@ -1,5 +1,8 @@
 package com.comebackhome.calendar.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum DiseaseType {
 
     HEAD("머리"),

@@ -1,5 +1,6 @@
-package com.comebackhome.calendar.infrastructure;
+package com.comebackhome.calendar.infrastructure.repository;
 
+import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
 import com.querydsl.core.types.Projections;
@@ -25,6 +26,18 @@ public class DiseaseTagQuerydslRepository {
                 .from(diseaseTag)
                 .where(diseaseTag.diseaseType.ne(diseaseType))
                 .fetch();
+    }
 
+    public List<Long> findDiseaseTagIdListByDiseaseTagNameList(List<String> diseaseTagNameList){
+        return query.select(diseaseTag.id)
+                .from(diseaseTag)
+                .where(diseaseTag.name.in(diseaseTagNameList))
+                .fetch();
+    }
+
+    public List<DiseaseTag> findDiseaseTagListByDiseaseTagNameList(List<String> diseaseTagNameList){
+        return query.selectFrom(diseaseTag)
+                .where(diseaseTag.name.in(diseaseTagNameList))
+                .fetch();
     }
 }

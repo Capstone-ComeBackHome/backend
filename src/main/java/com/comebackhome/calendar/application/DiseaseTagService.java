@@ -2,9 +2,9 @@ package com.comebackhome.calendar.application;
 
 import com.comebackhome.calendar.application.dto.DiseaseTagDto;
 import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
-import com.comebackhome.calendar.domain.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
+import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

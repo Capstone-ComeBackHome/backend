@@ -12,7 +12,13 @@ import javax.persistence.*;
 public class ScheduleDiseaseTag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(
+            name = "SCHEDULE_DISEASE_TAG_GENERATOR",
+            table = "SCHEDULE_DISEASE_TAG_SEQUENCE",
+            pkColumnName = "SCHEDULE_DISEASE_TAG_SEQ"
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE,
+            generator = "SCHEDULE_DISEASE_TAG_GENERATOR")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,4 +28,11 @@ public class ScheduleDiseaseTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DISEASE_TAG_ID", nullable = false)
     private DiseaseTag diseaseTag;
+
+    public static ScheduleDiseaseTag of(Long scheduleId, Long diseaseTagId){
+        return ScheduleDiseaseTag.builder()
+                .schedule(Schedule.builder().id(scheduleId).build())
+                .diseaseTag(DiseaseTag.builder().id(diseaseTagId).build())
+                .build();
+    }
 }

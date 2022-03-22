@@ -13,7 +13,13 @@ import javax.persistence.*;
 public class DiseaseTag extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(
+            name = "DISEASE_TAG_SEQ_GENERATOR",
+            table = "DISEASE_TAG_SEQUENCE",
+            pkColumnName = "DISEASE_TAG_SEQ"
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE,
+            generator = "DISEASE_TAG_SEQ_GENERATOR")
     private Long id;
 
     @Column(nullable = false)
@@ -22,4 +28,11 @@ public class DiseaseTag extends BaseEntity {
 
     @Column(nullable = false,unique = true)
     private String name;
+
+    public static DiseaseTag of(DiseaseType diseaseType, String name){
+        return DiseaseTag.builder()
+                .diseaseType(diseaseType)
+                .name(name)
+                .build();
+    }
 }

@@ -1,5 +1,8 @@
 package com.comebackhome.calendar.domain;
 
+import lombok.Getter;
+
+@Getter
 public enum PainType {
     WORST("매우 아픔"),
     BAD("더 아픔"),

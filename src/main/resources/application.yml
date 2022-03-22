@@ -22,7 +22,13 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
+        default_batch_fetch_size: 100
         format_sql: true
+        # 정렬 옵션
+        order_inserts: true
+        order_updates: true
+        # 배치 개수 옵션
+        jdbc.batch_size: 100
 
 
 server:

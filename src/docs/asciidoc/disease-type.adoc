@@ -1,0 +1,5 @@
+:doctype: book
+:icons: font
+
+[[disease-type]]
+include::{snippets}/enum-doc-controller-test/문서화에_사용할_enum_값들/custom-response-fields-diseaseType.adoc[]

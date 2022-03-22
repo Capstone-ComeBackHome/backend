@@ -67,3 +67,133 @@ INSERT INTO home_care(disease_id,solution)
 values (3, '수분 공급을 충분히 하고 휴식을 취해요.');
 INSERT INTO home_care(disease_id,solution)
 values (3, '목구멍의 자극성과 기침을 줄이기 위해 가습기를 이용해요.');
+
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (1, 'HEAD', '강박증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (2, 'HEAD', '건망증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (3, 'HEAD', '두통');
+INSERT INTO disease_tag (id, disease_type, name)
+values (4, 'HEAD', '두피 건조');
+INSERT INTO disease_tag (id, disease_type, name)
+values (5, 'HEAD', '두피 열상');
+INSERT INTO disease_tag (id, disease_type, name)
+values (6, 'HEAD', '어지러움');
+INSERT INTO disease_tag (id, disease_type, name)
+values (7, 'HEAD', '탈모');
+INSERT INTO disease_tag (id, disease_type, name)
+values (8, 'HEAD', '편두통');
+INSERT INTO disease_tag (id, disease_type, name)
+values (9, 'HEAD', '기민상태');
+INSERT INTO disease_tag (id, disease_type, name)
+values (10, 'HEAD', '인지장1');
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (11, 'BRONCHUS', '코막힘');
+INSERT INTO disease_tag (id, disease_type, name)
+values (12, 'BRONCHUS', '재채기');
+INSERT INTO disease_tag (id, disease_type, name)
+values (13, 'BRONCHUS', '콧물');
+INSERT INTO disease_tag (id, disease_type, name)
+values (14, 'BRONCHUS', '기침');
+INSERT INTO disease_tag (id, disease_type, name)
+values (15, 'BRONCHUS', '편도선 비대');
+INSERT INTO disease_tag (id, disease_type, name)
+values (16, 'BRONCHUS', '가래');
+INSERT INTO disease_tag (id, disease_type, name)
+values (17, 'BRONCHUS', '인후염');
+INSERT INTO disease_tag (id, disease_type, name)
+values (18, 'BRONCHUS', '후두염');
+INSERT INTO disease_tag (id, disease_type, name)
+values (19, 'BRONCHUS', '구내염');
+INSERT INTO disease_tag (id, disease_type, name)
+values (20, 'BRONCHUS', '잇몸염증');
+
+
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (21, 'CHEST', '가슴 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (22, 'CHEST', '가슴 답답');
+INSERT INTO disease_tag (id, disease_type, name)
+values (23, 'CHEST', '호흡 곤란');
+INSERT INTO disease_tag (id, disease_type, name)
+values (24, 'CHEST', '천식');
+INSERT INTO disease_tag (id, disease_type, name)
+values (25, 'CHEST', '부정맥');
+INSERT INTO disease_tag (id, disease_type, name)
+values (26, 'CHEST', '폐렴');
+INSERT INTO disease_tag (id, disease_type, name)
+values (27, 'CHEST', '잦은 딸꾹질');
+INSERT INTO disease_tag (id, disease_type, name)
+values (28, 'CHEST', '과호흡');
+INSERT INTO disease_tag (id, disease_type, name)
+values (29, 'CHEST', '빈맥');
+INSERT INTO disease_tag (id, disease_type, name)
+values (30, 'CHEST', '객혈');
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (31, 'STOMACH', '공복감');
+INSERT INTO disease_tag (id, disease_type, name)
+values (32, 'STOMACH', '구토');
+INSERT INTO disease_tag (id, disease_type, name)
+values (33, 'STOMACH', '담석');
+INSERT INTO disease_tag (id, disease_type, name)
+values (34, 'STOMACH', '복부 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (35, 'STOMACH', '소화불량');
+INSERT INTO disease_tag (id, disease_type, name)
+values (36, 'STOMACH', '옆구리 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (37, 'STOMACH', '위염');
+INSERT INTO disease_tag (id, disease_type, name)
+values (38, 'STOMACH', '장염');
+INSERT INTO disease_tag (id, disease_type, name)
+values (39, 'STOMACH', '잦은 트림');
+INSERT INTO disease_tag (id, disease_type, name)
+values (40, 'STOMACH', '복부 비만');
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (41, 'LIMB', '관절통');
+INSERT INTO disease_tag (id, disease_type, name)
+values (42, 'LIMB', '관절 경직');
+INSERT INTO disease_tag (id, disease_type, name)
+values (43, 'LIMB', '어깨 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (44, 'LIMB', '팔 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (45, 'LIMB', '다리 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (46, 'LIMB', '무릎 통증');
+INSERT INTO disease_tag (id, disease_type, name)
+values (47, 'LIMB', '다리 외상');
+INSERT INTO disease_tag (id, disease_type, name)
+values (48, 'LIMB', '팔 외상');
+INSERT INTO disease_tag (id, disease_type, name)
+values (49, 'LIMB', '저림');
+INSERT INTO disease_tag (id, disease_type, name)
+values (50, 'LIMB', '뻣뻣함');
+
+INSERT INTO disease_tag (id, disease_type, name)
+values (51, 'SKIN', '여드름');
+INSERT INTO disease_tag (id, disease_type, name)
+values (52, 'SKIN', '면포');
+INSERT INTO disease_tag (id, disease_type, name)
+values (53, 'SKIN', '각질');
+INSERT INTO disease_tag (id, disease_type, name)
+values (54, 'SKIN', '거친 피부');
+INSERT INTO disease_tag (id, disease_type, name)
+values (55, 'SKIN', '홍조');
+INSERT INTO disease_tag (id, disease_type, name)
+values (56, 'SKIN', '흉터');
+INSERT INTO disease_tag (id, disease_type, name)
+values (57, 'SKIN', '반점');
+INSERT INTO disease_tag (id, disease_type, name)
+values (58, 'SKIN', '색소 침착');
+INSERT INTO disease_tag (id, disease_type, name)
+values (59, 'SKIN', '습진');
+INSERT INTO disease_tag (id, disease_type, name)
+values (60, 'SKIN', '발진');
+

@@ -1,8 +1,9 @@
 package com.comebackhome.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.util.ObjectUtils;
@@ -14,7 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@TestConfiguration
+@Profile(value = {"dev","test"})
+@Configuration
 public class EmbeddedRedisConfig {
 
     @Value("${spring.redis.port}")
@@ -79,7 +81,7 @@ public class EmbeddedRedisConfig {
 
     @PreDestroy
     public void stopRedis() {
-        if (redisServer != null) {
+        if (redisServer != null && redisServer.isActive()) {
             redisServer.stop();
         }
     }

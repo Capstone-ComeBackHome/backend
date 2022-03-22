@@ -5,6 +5,7 @@
 :toc: left
 :toclevels: 2
 :sectlinks:
+:docinfo: shared-head
 
 == Overview
 include::overview.adoc[]
@@ -28,16 +29,19 @@ operation::docs-controller-test/소셜_로그인[snippets='http-request,path-par
 operation::auth-rest-controller-test/로그아웃[snippets='http-request,request-headers,http-response']
 
 ==== 로그아웃 실패
+Authorization 토큰이 유효하지 않은 토큰이면 로그아웃에 실패합니다.
 include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_로그아웃_시도/response-body.adoc[]
+
+Authorization, refreshToken 헤더가 들어오지 않으면 로그아웃에 실패합니다.
 include::{snippets}/auth-rest-controller-test/authorization헤더_없이_로그아웃_시도/response-body.adoc[]
 
 ---
 
 === 토큰 재발급
 
-인증이 필요한 API에 AccessToken으로 접근해서 LOGIN-401 코드 에러를 받으면 토큰이 만료된 것으로 토큰 재발급 API를 사용해서 토큰을 재발급 받고 다시 기존에 요청했던 API로 요청을 보내면 됩니다.
+인증이 필요한 API에 AccessToken으로 접근해서 LOGIN-401 코드 에러를 받으면 토큰이 만료된 것으로 토큰 재발급 API를 사용해서 토큰을 재발급 받고 다시 기존에 요청했던 API로 요청을 보내셔야 합니다.
 
-만약 재발급에서도 LOGIN-401 코드 에러를 받으면 RefreshToken도 만료된 것으로 다시 소셜 로그인을 진행해야 합니다.
+만약 재발급에서도 LOGIN-401 코드 에러를 받으면 RefreshToken도 만료된 것으로 다시 소셜 로그인을 진행해서 새로운 토큰을 발급받아야 합니다.
 
 ==== 토큰 재발급 성공
 operation::auth-rest-controller-test/토큰_재발급[snippets='http-request,request-headers,http-response,response-fields']
@@ -56,7 +60,7 @@ include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰
 
 operation::disease-controller-test/여러_질병명으로_간략하게_질병_조회하기[snippets='http-request,request-parameters,http-response,response-fields']
 
-==== 간략한 질변 조회 실패
+==== 간략한 질병 조회 실패
 diseaseNameList 파라미터 자체가 들어오지 않거나, 공백으로 들어오거나, 콤마를 기준으로 공백이 들어온 경우 실패합니다.
 
 include::{snippets}/disease-controller-test/질병명이_빈칸으로_들어온_경우_실패/response-body.adoc[]
@@ -74,4 +78,29 @@ include::{snippets}/disease-controller-test/disease-id_파라미터_없이_상�
 DB에 존재하지 않은 diseaseId인 경우 실패합니다.
 include::{snippets}/disease-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
 
+
+== Calendar API
+
+=== 질병 태그 조회
+==== 질병 태그 조회 성공
+operation::disease-tag-rest-controller-test/custom-type을_제외한_disease-tag_가져오기[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 질병 태그 조회 실패
+Authorization 헤더 없이 또는 유효하지 않은 토큰일 경우 실패합니다.
+include::{snippets}/disease-tag-rest-controller-test/토큰_없이_접근_시도_실패/response-body.adoc[]
+
 ---
+
+=== 스케줄 등록
+==== 스케줄 등록 성공
+operation::calendar-rest-controller-test/스케줄_저장하기_성공[snippets='http-request,request-headers,request-fields,http-response']
+
+==== 스케줄 등록 실패
+날짜 형식이 맞지 않거나 날짜가 들어오지 않은 경우
+include::{snippets}/calendar-rest-controller-test/날짜_없이_스케줄_저장하기_실패/response-body.adoc[]
+
+증상 값이 들어오지 않거나 제약조건에 맞지 않는 경우
+include::{snippets}/calendar-rest-controller-test/증상_없이_스케줄_저장하기_실패/response-body.adoc[]
+
+토근 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_저장하기_실패/response-body.adoc[]

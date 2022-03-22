@@ -1,8 +1,10 @@
-package com.comebackhome.support.restdocs;
+package com.comebackhome.support.restdocs.common;
 
 
 import com.comebackhome.common.exception.GlobalExceptionHandler;
 import com.comebackhome.config.RestDocsConfig;
+import com.comebackhome.support.restdocs.RestDocsTestSupport;
+import com.comebackhome.support.restdocs.SampleRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Import(RestDocsConfig.class)
 @ExtendWith(RestDocumentationExtension.class)
-public class DocsControllerTest {
+public class CommonDocsControllerTest {
 
 
     MockMvc mockMvc;
@@ -42,7 +45,7 @@ public class DocsControllerTest {
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                 Preprocessors.preprocessResponse(Preprocessors.prettyPrint()));
 
-        this.mockMvc = MockMvcBuilders.standaloneSetup(DocsController.class)
+        this.mockMvc = MockMvcBuilders.standaloneSetup(CommonDocsController.class)
                 .apply(MockMvcRestDocumentation.documentationConfiguration(provider))
                 .setControllerAdvice(GlobalExceptionHandler.class)
                 .alwaysDo(MockMvcResultHandlers.print())
@@ -89,7 +92,7 @@ public class DocsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
-                        responseFields(RestDocsTestSupport.errorDescriptorIncludeErrorFields())
+                        PayloadDocumentation.responseFields(RestDocsTestSupport.errorDescriptorIncludeErrorFields())
                 ));
     }
 }

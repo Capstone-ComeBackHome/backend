@@ -11,8 +11,8 @@ import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
 import com.comebackhome.disease.presentation.DiseaseController;
-import com.comebackhome.support.restdocs.DocsController;
-import com.comebackhome.support.restdocs.EnumDocController;
+import com.comebackhome.support.restdocs.common.CommonDocsController;
+import com.comebackhome.support.restdocs.enums.EnumDocController;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
@@ -32,7 +32,7 @@ import static org.mockito.BDDMockito.given;
 @Import(SecurityTestConfig.class)
 @WebMvcTest({
         AuthRestController.class,
-        DocsController.class,
+        CommonDocsController.class,
         DiseaseController.class,
         DiseaseTagRestController.class,
         CalendarRestController.class,

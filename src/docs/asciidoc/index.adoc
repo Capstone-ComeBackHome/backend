@@ -18,7 +18,7 @@ include::overview.adoc[]
 
 카카오는 계정이 한 개뿐이라 테스트를 못해봐서 다른 계정으로도 가능한지 모르겠습니다.
 
-operation::docs-controller-test/소셜_로그인[snippets='http-request,path-parameters,http-response,response-fields']
+operation::common-docs-controller-test/소셜_로그인[snippets='http-request,path-parameters,http-response,response-fields']
 
 로그인 이후 전달받은 JWT 토큰은 서버와 통신할 때 사용됩니다.
 

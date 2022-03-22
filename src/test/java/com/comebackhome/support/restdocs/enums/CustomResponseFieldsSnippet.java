@@ -1,4 +1,4 @@
-package com.comebackhome.support.restdocs;
+package com.comebackhome.support.restdocs.enums;
 
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.operation.Operation;

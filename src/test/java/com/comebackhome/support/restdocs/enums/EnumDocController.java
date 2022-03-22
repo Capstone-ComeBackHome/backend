@@ -1,4 +1,4 @@
-package com.comebackhome.support.restdocs;
+package com.comebackhome.support.restdocs.enums;
 
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.PainType;

@@ -1,4 +1,4 @@
-package com.comebackhome.support.restdocs;
+package com.comebackhome.support.restdocs.enums;
 
 import lombok.*;
 

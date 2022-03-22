@@ -1,5 +1,6 @@
-package com.comebackhome.support.restdocs;
+package com.comebackhome.support.restdocs.enums;
 
+import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 
-class EnumDocControllerTest extends RestDocsTestSupport{
+class EnumDocControllerTest extends RestDocsTestSupport {
 
     @Test
     public void 문서화에_사용할_enum_값들() throws Exception {

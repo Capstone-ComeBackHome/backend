@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,31 +26,31 @@ public class CalendarService implements CalendarCommandUseCase{
     private final DiseaseTagRepository diseaseTagRepository;
 
     /**
-     * CustomType인 DiseaseTag 중에서 저장되어 있지 않은 것들은 저장을 먼저 해주고
-     * 모든 DiseaseTag Id값을 구해서 scheduleDiseaseTag로 만들어서 저장한다.
-     * 모든 저장은 Bulk insert 처리한다.
+     * scheduleSaveRequestDto로 들어온 DiseaseTag 중 이미 DB에 있는 태그는 id값만 가져오고
+     * DB에 없는 태그들을 DB에 저장하고 ID값을 가져온다.
+     * 그리고 한번에 ScheduleDiseaseTag를 Bulk Insert 한다.
      */
     @Override
     public void saveMySchedule(ScheduleSaveRequestDto scheduleSaveRequestDto) {
         Long scheduleId = scheduleRepository.save(Schedule.from(scheduleSaveRequestDto));
 
-        List<Long> diseaseTagIdList = new ArrayList<>();
-        diseaseTagIdList.addAll(getDiseaseTagIdListExceptCustomType(scheduleSaveRequestDto));
+        Set<Long> diseaseTagIdSet = new HashSet<>();
+        diseaseTagIdSet.addAll(getDiseaseTagIdListExceptCustomType(scheduleSaveRequestDto));
 
         List<String> customTypeDiseaseTagName = getCustomTypeDiseaseTagNameList(scheduleSaveRequestDto);
         if (!customTypeDiseaseTagName.isEmpty()){
-            List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList
+            List<DiseaseTag> alreadyExistDiseaseTagList
                     = diseaseTagRepository.findDiseaseTagListByDiseaseTagNameList(customTypeDiseaseTagName);
-            diseaseTagIdList.addAll(getAlreadyExistCustomTypeDiseaseTagIdList(alreadyExistCustomTypeDiseaseTagList));
+            diseaseTagIdSet.addAll(getIdList(alreadyExistDiseaseTagList));
 
             List<DiseaseTag> newCustomTypeDiseaseTagList
-                    = extractNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistCustomTypeDiseaseTagList);
+                    = extractNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistDiseaseTagList);
             List<Long> newCustomTypeDiseaseTagIdList
                     = saveNewCustomTypeDiseaseTagList(newCustomTypeDiseaseTagList);
-            diseaseTagIdList.addAll(newCustomTypeDiseaseTagIdList);
+            diseaseTagIdSet.addAll(newCustomTypeDiseaseTagIdList);
         }
 
-        saveDiseaseTagList(scheduleId, diseaseTagIdList);
+        saveScheduleDiseaseTagList(scheduleId, diseaseTagIdSet);
     }
 
     private List<Long> getDiseaseTagIdListExceptCustomType(ScheduleSaveRequestDto scheduleSaveRequestDto) {
@@ -68,7 +68,7 @@ public class CalendarService implements CalendarCommandUseCase{
                 .collect(Collectors.toList());
     }
 
-    private List<Long> getAlreadyExistCustomTypeDiseaseTagIdList(List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
+    private List<Long> getIdList(List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
         List<Long> alreadyExistCustomTypeDiseaseTagIdList = alreadyExistCustomTypeDiseaseTagList.parallelStream()
                 .map(DiseaseTag::getId)
                 .collect(Collectors.toList());
@@ -96,8 +96,8 @@ public class CalendarService implements CalendarCommandUseCase{
         return diseaseTagRepository.saveAll(newCustomTypeDiseaseTagList);
     }
 
-    private void saveDiseaseTagList(Long scheduleId, List<Long> diseaseTagIdList) {
-        List<ScheduleDiseaseTag> scheduleDiseaseTagList = diseaseTagIdList.parallelStream()
+    private void saveScheduleDiseaseTagList(Long scheduleId, Set<Long> diseaseTagIdSet) {
+        List<ScheduleDiseaseTag> scheduleDiseaseTagList = diseaseTagIdSet.parallelStream()
                 .map(id -> ScheduleDiseaseTag.of(scheduleId, id))
                 .collect(Collectors.toList());
 

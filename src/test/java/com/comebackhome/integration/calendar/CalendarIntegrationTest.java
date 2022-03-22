@@ -129,9 +129,5 @@ public class CalendarIntegrationTest extends IntegrationTest {
         assertThat(scheduleIdSet.size()).isEqualTo(1);
     }
 
-    private String createAccessToken() {
-        User user = userRepository.save(givenUser());
-        Authentication authentication = createAuthentication(user);
-        return tokenProvider.createAccessToken(authentication);
-    }
+
 }

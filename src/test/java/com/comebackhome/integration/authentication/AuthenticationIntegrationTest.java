@@ -27,9 +27,6 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
     @Autowired UserRepository userRepository;
     @Autowired TokenProvider tokenProvider;
 
-
-
-
     @Test
     void 로그아웃() throws Exception{
 

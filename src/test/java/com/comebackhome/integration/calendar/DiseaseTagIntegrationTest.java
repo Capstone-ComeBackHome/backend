@@ -75,10 +75,4 @@ public class DiseaseTagIntegrationTest extends IntegrationTest {
         diseaseTagJpaRepository.saveAll(diseaseTagList);
     }
 
-    private String createAccessToken() {
-        User user = userRepository.save(givenUser());
-        Authentication authentication = createAuthentication(user);
-        String accessToken = tokenProvider.createAccessToken(authentication);
-        return accessToken;
-    }
 }

@@ -5,6 +5,7 @@ import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.authentication.domain.TokenRepository;
 import com.comebackhome.authentication.presentation.AuthRestController;
 import com.comebackhome.calendar.application.CalendarCommandUseCase;
+import com.comebackhome.calendar.application.CalendarQueryUseCase;
 import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
 import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
@@ -43,15 +44,16 @@ public abstract class ControllerTest {
     protected MockMvc mockMvc;
 
     @Autowired protected ObjectMapper objectMapper;
-    // security
-    @MockBean protected TokenProvider tokenProvider;
-    @MockBean protected UserRepository userRepository;
-    @MockBean protected TokenRepository tokenRepository;
-
     @MockBean protected AuthCommandUseCase authCommandUseCase;
     @MockBean protected DiseaseQueryUseCase diseaseQueryUseCase;
     @MockBean protected DiseaseTagQueryUseCase diseaseTagQueryUseCase;
     @MockBean protected CalendarCommandUseCase calendarCommandUseCase;
+    @MockBean protected CalendarQueryUseCase calendarQueryUseCase;
+
+    // security
+    @MockBean protected TokenProvider tokenProvider;
+    @MockBean protected UserRepository userRepository;
+    @MockBean protected TokenRepository tokenRepository;
 
 
     protected String createJson(Object dto) throws JsonProcessingException {

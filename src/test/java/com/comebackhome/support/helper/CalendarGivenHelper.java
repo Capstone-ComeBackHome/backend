@@ -1,16 +1,15 @@
 package com.comebackhome.support.helper;
 
-import com.comebackhome.calendar.application.dto.DiseaseTagDto;
-import com.comebackhome.calendar.application.dto.DiseaseTagRequestDto;
-import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.application.dto.*;
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
+import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
 import com.comebackhome.calendar.presentation.dto.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
+import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
 import com.comebackhome.user.domain.User;
 
 import java.time.LocalDate;
@@ -77,6 +76,22 @@ public class CalendarGivenHelper {
                 .localDate(LocalDate.now())
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
+                .build();
+    }
+
+    public static SimpleScheduleResponseList givenSimpleScheduleResponseList(List<SimpleScheduleResponseDto> simpleScheduleResponseDtoList) {
+        return SimpleScheduleResponseList.from(simpleScheduleResponseDtoList);
+    }
+
+    public static SimpleScheduleResponseDto givenSimpleScheduleResponseDto(Long scheduleId, LocalDate localDate, int diseaseTagCount) {
+        return SimpleScheduleResponseDto.from(givenSimpleScheduleQueryDto(scheduleId,localDate,diseaseTagCount));
+    }
+
+    public static SimpleScheduleQueryDto givenSimpleScheduleQueryDto(Long scheduleId, LocalDate localDate, int diseaseTagCount) {
+        return SimpleScheduleQueryDto.builder()
+                .scheduleId(scheduleId)
+                .localDate(localDate)
+                .diseaseTagCount(diseaseTagCount)
                 .build();
     }
 

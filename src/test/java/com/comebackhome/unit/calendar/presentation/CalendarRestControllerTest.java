@@ -1,5 +1,6 @@
 package com.comebackhome.unit.calendar.presentation;
 
+import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
@@ -9,21 +10,21 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.comebackhome.config.RestDocsConfig.field;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagRequest;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenScheduleSaveRequest;
+import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.DISEASE_TYPE;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.PAIN_TYPE;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.generateLinkCode;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
-import static org.springframework.restdocs.payload.JsonFieldType.STRING;
+import static org.springframework.restdocs.payload.JsonFieldType.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CalendarRestControllerTest extends RestDocsTestSupport {
@@ -153,6 +154,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void 스케줄_삭제_성공() throws Exception{
         // given
         mockingSecurityFilterForLoginUserAnnotation();
@@ -200,6 +202,71 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                 ));
         ;
     }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 특정_월의_자신의_스케줄_조회() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        List<SimpleScheduleResponseDto> simpleScheduleResponseDtoList = List.of(
+                givenSimpleScheduleResponseDto(1L, LocalDate.of(2022, 3, 1), 1),
+                givenSimpleScheduleResponseDto(2L, LocalDate.of(2022, 3, 2), 2),
+                givenSimpleScheduleResponseDto(3L, LocalDate.of(2022, 3, 3), 3)
+        );
+        given(calendarQueryUseCase.getMyMonthSchedule(any(),any())).willReturn(simpleScheduleResponseDtoList);
+
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?yearMonth=2022-03")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        requestParameters(
+                                parameterWithName("yearMonth").description("yyyy-MM 형식의 년, 월")
+                        ),
+                        responseFields(
+                                fieldWithPath("simpleScheduleResponseList").type(ARRAY).description("요청한 달의 나의 스케줄 리스트"),
+                                fieldWithPath("simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID"),
+                                fieldWithPath("simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜"),
+                                fieldWithPath("simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수")
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void yearMonth_없이_월_스케줄_요청() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    void 토근_없이_월_스케줄_요청() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?yearMonth=2022-03")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
 
 
 

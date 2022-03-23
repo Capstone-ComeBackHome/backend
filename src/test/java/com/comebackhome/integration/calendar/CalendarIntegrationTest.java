@@ -17,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +27,8 @@ import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CalendarIntegrationTest extends IntegrationTest {
@@ -152,6 +156,42 @@ public class CalendarIntegrationTest extends IntegrationTest {
         scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTagId1));
         scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTagId2));
         return scheduleId;
+    }
+
+    @Test
+    void 특정_월의_나의_스케줄_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+        Long scheduleId1 = scheduleRepository.save(givenSchedule(user));
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId1,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId1,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId1,diseaseTagId3)
+        ));
+
+        Long scheduleId2 = scheduleRepository.save(givenSchedule(user));
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId2,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId2,diseaseTagId2)
+        ));
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"?yearMonth="+ YearMonth.now())
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.simpleScheduleResponseList[0].scheduleId").value(scheduleId1))
+                .andExpect(jsonPath("$.simpleScheduleResponseList[0].localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.simpleScheduleResponseList[0].diseaseTagCount").value(3))
+                .andExpect(jsonPath("$.simpleScheduleResponseList[1].scheduleId").value(scheduleId2))
+                .andExpect(jsonPath("$.simpleScheduleResponseList[1].localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.simpleScheduleResponseList[1].diseaseTagCount").value(2))
+        ;
     }
 
 

@@ -1,6 +1,6 @@
 package com.comebackhome.unit.calendar.application;
 
-import com.comebackhome.calendar.application.CalendarService;
+import com.comebackhome.calendar.application.CalendarCommandService;
 import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
@@ -25,9 +25,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class CalendarServiceTest {
+public class CalendarCommandServiceTest {
 
-    @InjectMocks CalendarService calendarService;
+    @InjectMocks
+    CalendarCommandService calendarCommandService;
     @Mock ScheduleRepository scheduleRepository;
     @Mock ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
     @Mock DiseaseTagRepository diseaseTagRepository;
@@ -40,7 +41,7 @@ public class CalendarServiceTest {
         scheduleSaveRequestDto.setDiseaseTagRequestDtoList(List.of(givenDiseaseTagRequestDto(HEAD,"두통")));
 
         //when
-        calendarService.saveMySchedule(scheduleSaveRequestDto);
+        calendarCommandService.saveMySchedule(scheduleSaveRequestDto);
 
         //then
         then(scheduleRepository).should().save(any());
@@ -59,7 +60,7 @@ public class CalendarServiceTest {
                 .willReturn(List.of(givenDiseaseTag(CUSTOM,"교통사고")));
 
         //when
-        calendarService.saveMySchedule(scheduleSaveRequestDto);
+        calendarCommandService.saveMySchedule(scheduleSaveRequestDto);
 
         //then
         then(scheduleDiseaseTagRepository).should().saveAll(any());
@@ -72,7 +73,7 @@ public class CalendarServiceTest {
         given(scheduleRepository.save(any())).willReturn(1L);
 
         //when
-        calendarService.saveMySchedule(scheduleSaveRequestDto);
+        calendarCommandService.saveMySchedule(scheduleSaveRequestDto);
 
         //then
         then(scheduleDiseaseTagRepository).should().saveAll(any());
@@ -85,7 +86,7 @@ public class CalendarServiceTest {
                 .willReturn(Optional.of(givenSchedule(User.builder().id(1L).build())));
 
         //when
-        calendarService.deleteSchedule(any(),1L);
+        calendarCommandService.deleteSchedule(any(),1L);
 
         //then
         then(scheduleDiseaseTagRepository).should().deleteByScheduleId(any());
@@ -100,7 +101,7 @@ public class CalendarServiceTest {
 
         //when then
         assertThatThrownBy(
-                () -> calendarService.deleteSchedule(1L,1L))
+                () -> calendarCommandService.deleteSchedule(1L,1L))
                 .isInstanceOf(ScheduleNotFoundException.class);
     }
 
@@ -112,7 +113,7 @@ public class CalendarServiceTest {
 
         //when then
         assertThatThrownBy(
-                () -> calendarService.deleteSchedule(any(),2L))
+                () -> calendarCommandService.deleteSchedule(any(),2L))
                 .isInstanceOf(ScheduleIsNotMineException.class);
         ;
 

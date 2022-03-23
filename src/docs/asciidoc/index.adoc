@@ -120,6 +120,23 @@ include::{snippets}/calendar-rest-controller-test/year-month_없이_월_스케�
 
 ---
 
+=== 특정 스케줄 상세 조회
+==== 특정 스케줄 상세 조회 성공
+operation::calendar-rest-controller-test/schedule-id로_스케줄_상세_조회[snippets='http-request,path-parameters,request-headers,http-response,response-fields']
+
+==== 특정 스케줄 상세 조회 실패
+토큰 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토큰_없이_schedule-id로_스케줄_상세_조회/response-body.adoc[]
+
+파라미터로 scheduleId가 들어오지 않은 경우
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_상세_조회/response-body.adoc[]
+
+자신의 스케줄 중 없는 스케줄 Id인 경우
+include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_상세_조회/response-body.adoc[]
+
+
+---
+
 === 스케줄 삭제
 ==== 스케줄 삭제 성공
 operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-request,path-parameters,request-headers,http-response']

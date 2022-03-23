@@ -3,6 +3,8 @@ package com.comebackhome.unit.calendar.presentation;
 import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
+import com.comebackhome.common.exception.schedule.ScheduleIsNotMineException;
+import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +22,7 @@ import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocU
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.generateLinkCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.JsonFieldType.*;
@@ -193,8 +196,47 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     void 스케줄_id_없이_스케줄_삭제_실패() throws Exception{
         // when then
         mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isMethodNotAllowed())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 자신의_스케줄이_아닌_경우_실패() throws Exception{
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new ScheduleIsNotMineException()).given(calendarCommandUseCase).deleteSchedule(any(),any());
+
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "1")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+   }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 존재하지_않는_scheduleId안_경우_실패() throws Exception{
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new ScheduleNotFoundException()).given(calendarCommandUseCase).deleteSchedule(any(),any());
+
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "1")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
                         responseFields(
                                 errorDescriptors()

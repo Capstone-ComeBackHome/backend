@@ -13,6 +13,7 @@ import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDiseaseRes
 import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseResponseDto;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -53,7 +54,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
    @Test
    void 없는_diseaseId로_상세조회() throws Exception{
        // given
-       given(diseaseQueryUseCase.getDisease(any())).willThrow(new DiseaseNotFoundException());
+       willThrow(new DiseaseNotFoundException()).given(diseaseQueryUseCase).getDisease(any());
 
        // when then docs
        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")

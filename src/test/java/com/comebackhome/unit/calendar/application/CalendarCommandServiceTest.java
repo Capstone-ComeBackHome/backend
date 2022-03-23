@@ -5,9 +5,7 @@ import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
-import com.comebackhome.common.exception.schedule.ScheduleIsNotMineException;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
-import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.comebackhome.calendar.domain.DiseaseType.CUSTOM;
 import static com.comebackhome.calendar.domain.DiseaseType.HEAD;
@@ -27,8 +24,7 @@ import static org.mockito.BDDMockito.*;
 @ExtendWith(MockitoExtension.class)
 public class CalendarCommandServiceTest {
 
-    @InjectMocks
-    CalendarCommandService calendarCommandService;
+    @InjectMocks CalendarCommandService calendarCommandService;
     @Mock ScheduleRepository scheduleRepository;
     @Mock ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
     @Mock DiseaseTagRepository diseaseTagRepository;
@@ -82,41 +78,27 @@ public class CalendarCommandServiceTest {
     @Test
     void scheduleId로_스케줄_삭제() throws Exception{
         //given
-        given(scheduleRepository.findById(any()))
-                .willReturn(Optional.of(givenSchedule(User.builder().id(1L).build())));
+        given(scheduleRepository.existsByIdAndUserId(any(),any()))
+                .willReturn(true);
 
         //when
-        calendarCommandService.deleteSchedule(any(),1L);
+        calendarCommandService.deleteSchedule(any(),any());
 
         //then
-        then(scheduleDiseaseTagRepository).should().deleteByScheduleId(any());
+        then(scheduleRepository).should().existsByIdAndUserId(any(),any());
         then(scheduleRepository).should().deleteById(any());
     }
 
     @Test
-    void 존재하지_않는_스케줄의_scheduleId() throws Exception{
+    void 내_스케줄_중_존재하지_않는_스케줄의_scheduleId() throws Exception{
         //given
-        given(scheduleRepository.findById(any()))
-                .willReturn(Optional.empty());
+        given(scheduleRepository.existsByIdAndUserId(any(),any()))
+                .willReturn(false);
 
         //when then
         assertThatThrownBy(
                 () -> calendarCommandService.deleteSchedule(1L,1L))
                 .isInstanceOf(ScheduleNotFoundException.class);
-    }
-
-    @Test
-    void 내_schedule이_아닌_경우_삭제_실패() throws Exception{
-        //given
-        given(scheduleRepository.findById(any()))
-                .willReturn(Optional.of(givenSchedule(User.builder().id(1L).build())));
-
-        //when then
-        assertThatThrownBy(
-                () -> calendarCommandService.deleteSchedule(any(),2L))
-                .isInstanceOf(ScheduleIsNotMineException.class);
-        ;
-
     }
 
 }

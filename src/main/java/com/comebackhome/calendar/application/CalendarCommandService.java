@@ -8,7 +8,6 @@ import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
-import com.comebackhome.common.exception.schedule.ScheduleIsNotMineException;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -111,20 +110,16 @@ public class CalendarCommandService implements CalendarCommandUseCase{
 
 
     @Override
-    public void deleteSchedule(Long scheduleId, Long UserId) {
-        checkIsMyScheduleOrThrow(scheduleId, UserId);
+    public void deleteSchedule(Long scheduleId, Long userId) {
+        checkIsMyScheduleOrThrow(scheduleId, userId);
 
         scheduleDiseaseTagRepository.deleteByScheduleId(scheduleId);
         scheduleRepository.deleteById(scheduleId);
     }
 
-    // todo 이거 그냥 쿼리 한번에 땡겨서 낫파운드로 처리할 수 있을듯 여기서 그냥 exsits쿼리로 날리면 될거같은데
-    private void checkIsMyScheduleOrThrow(Long scheduleId, Long UserId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new ScheduleNotFoundException());
-
-        if (!schedule.getUser().getId().equals(UserId)){
-            throw new ScheduleIsNotMineException();
+    private void checkIsMyScheduleOrThrow(Long scheduleId, Long userId) {
+        if (!scheduleRepository.existsByIdAndUserId(scheduleId,userId)){
+            throw new ScheduleNotFoundException();
         }
     }
 }

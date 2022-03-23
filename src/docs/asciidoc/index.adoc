@@ -145,11 +145,8 @@ operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-
 토근 없이 접근하는 경우
 include::{snippets}/calendar-rest-controller-test/토근_없이_스케줄_삭제_실패/response-body.adoc[]
 
-calendars/ 이런식으로 scheduleId가 들어오지 않았을 경우
+scheduleId파라미터가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
 include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_삭제_실패/response-body.adoc[]
 
-내 스케줄이 아닌데 삭제 요청을 하는 경우
-include::{snippets}/calendar-rest-controller-test/자신의_스케줄이_아닌_경우_실패/response-body.adoc[]
-
-존재하지 않는 scheduleId인 경우
-include::{snippets}/calendar-rest-controller-test/존재하지_않는_schedule-id안_경우_실패/response-body.adoc[]
+내 스케줄 중 존재하지 않는 scheduleId인 경우
+include::{snippets}/calendar-rest-controller-test/내_스케줄_중_존재하지_않는_schedule-id안_경우_실패/response-body.adoc[]

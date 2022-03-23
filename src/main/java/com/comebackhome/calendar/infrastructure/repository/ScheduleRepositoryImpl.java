@@ -23,8 +23,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public Optional<Schedule> findById(Long id) {
-        return scheduleJpaRepository.findById(id);
+    public boolean existsByIdAndUserId(Long id, Long userId) {
+        return scheduleJpaRepository.existsByIdAndUserId(id, userId);
     }
 
     @Override

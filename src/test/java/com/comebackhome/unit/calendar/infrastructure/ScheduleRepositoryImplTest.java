@@ -56,7 +56,7 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
 
         //when
-        Schedule result = scheduleRepository.findById(schedule.getId()).get();
+        Schedule result = scheduleJpaRepository.findById(schedule.getId()).get();
 
         //then
         assertThat(result.getId()).isEqualTo(schedule.getId());
@@ -72,7 +72,7 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         scheduleRepository.deleteById(schedule.getId());
 
         //then
-        Optional<Schedule> result = scheduleRepository.findById(schedule.getId());
+        Optional<Schedule> result = scheduleJpaRepository.findById(schedule.getId());
 
         assertThat(result).isEmpty();
     }
@@ -140,6 +140,18 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(3);
     }
 
+    @Test
+    void scheduleId와_userId로_스케줄이_존재하는지_확인하기() throws Exception{
+        //given
+        User user = userJpaRepository.save(givenUser());
+        Long scheduleId = scheduleRepository.save(givenSchedule(user));
+
+        //when
+        boolean result = scheduleRepository.existsByIdAndUserId(scheduleId, user.getId());
+
+        //then
+        assertThat(result).isTrue();
+    }
 
 }
 

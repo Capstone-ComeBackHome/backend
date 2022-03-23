@@ -4,7 +4,6 @@ import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
 import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
-import com.comebackhome.common.exception.schedule.ScheduleIsNotMineException;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
@@ -210,26 +209,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
 
     @Test
     @WithMockUser(roles = "USER")
-    void 자신의_스케줄이_아닌_경우_실패() throws Exception{
-        mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new ScheduleIsNotMineException()).given(calendarCommandUseCase).deleteSchedule(any(),any());
-
-        // when then
-        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "1")
-                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden())
-                .andDo(restDocumentationResultHandler.document(
-                        responseFields(
-                                errorDescriptors()
-                        )
-                ));
-        ;
-   }
-
-    @Test
-    @WithMockUser(roles = "USER")
-    void 존재하지_않는_scheduleId안_경우_실패() throws Exception{
+    void 내_스케줄_중_존재하지_않는_scheduleId안_경우_실패() throws Exception{
         mockingSecurityFilterForLoginUserAnnotation();
         willThrow(new ScheduleNotFoundException()).given(calendarCommandUseCase).deleteSchedule(any(),any());
 

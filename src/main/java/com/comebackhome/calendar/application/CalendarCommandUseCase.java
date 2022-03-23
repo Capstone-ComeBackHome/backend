@@ -7,5 +7,5 @@ public interface CalendarCommandUseCase {
 
     void saveMySchedule(ScheduleSaveRequestDto scheduleSaveRequestDto);
 
-    void deleteSchedule(Long scheduleId, Long UserId);
+    void deleteSchedule(Long scheduleId, Long userId);
 }

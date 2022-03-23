@@ -11,7 +11,7 @@ public interface ScheduleRepository {
 
     Long save(Schedule schedule);
 
-    Optional<Schedule> findById(Long id);
+    boolean existsByIdAndUserId(Long id, Long userId);
 
     Optional<Schedule> findWithScheduleDiseaseTagByIdAndUserId(Long id,Long userId);
 

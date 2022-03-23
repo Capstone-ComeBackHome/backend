@@ -14,6 +14,7 @@ import com.comebackhome.user.infrastructure.repository.UserJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
 import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
     @Autowired ScheduleJpaRepository scheduleJpaRepository;
     @Autowired ScheduleDiseaseTagJpaRepository scheduleDiseaseTagJpaRepository;
     @Autowired DiseaseTagJpaRepository diseaseTagJpaRepository;
+    @Autowired EntityManager em;
 
     @Test
     void schedule_저장() throws Exception{
@@ -110,6 +112,32 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         assertThat(result.get(1).getScheduleId()).isEqualTo(schedule2.getId());
         assertThat(result.get(1).getLocalDate()).isEqualTo(schedule2.getLocalDate());
         assertThat(result.get(1).getDiseaseTagCount()).isEqualTo(2);
+    }
+
+    @Test
+    void scheduleId와_userId로_스케줄_찾기() throws Exception{
+        //given
+        User user = userJpaRepository.save(givenUser());
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크"));
+        DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
+
+        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(schedule.getId(),diseaseTag1.getId()),
+                ScheduleDiseaseTag.of(schedule.getId(),diseaseTag2.getId()),
+                ScheduleDiseaseTag.of(schedule.getId(),diseaseTag3.getId())
+        ));
+        em.flush();
+        em.clear();
+
+        //when
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(user.getId(), schedule.getId()).get();
+
+        //then
+        assertThat(result.getId()).isEqualTo(schedule.getId());
+        assertThat(result.getUser().getId()).isEqualTo(user.getId());
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(3);
     }
 
 

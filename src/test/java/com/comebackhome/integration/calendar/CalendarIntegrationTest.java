@@ -2,6 +2,7 @@ package com.comebackhome.integration.calendar;
 
 import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseType;
+import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
@@ -27,7 +28,6 @@ import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -184,13 +184,48 @@ public class CalendarIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$.simpleScheduleResponseList[0].scheduleId").value(scheduleId1))
                 .andExpect(jsonPath("$.simpleScheduleResponseList[0].localDate").value(LocalDate.now().toString()))
                 .andExpect(jsonPath("$.simpleScheduleResponseList[0].diseaseTagCount").value(3))
                 .andExpect(jsonPath("$.simpleScheduleResponseList[1].scheduleId").value(scheduleId2))
                 .andExpect(jsonPath("$.simpleScheduleResponseList[1].localDate").value(LocalDate.now().toString()))
                 .andExpect(jsonPath("$.simpleScheduleResponseList[1].diseaseTagCount").value(2))
+        ;
+    }
+
+    @Test
+    void 나의_특정_스케줄_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.scheduleId").value(scheduleId))
+                .andExpect(jsonPath("$.localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.dailyNote").value(schedule.getDailyNote()))
+                .andExpect(jsonPath("$.painType").value(schedule.getPainType().name()))
+                .andExpect(jsonPath("$.diseaseTagResponseList[0].diseaseType").value("HEAD"))
+                .andExpect(jsonPath("$.diseaseTagResponseList[0].name").value("두통"))
+                .andExpect(jsonPath("$.diseaseTagResponseList[1].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.diseaseTagResponseList[1].name").value("디스크"))
+                .andExpect(jsonPath("$.diseaseTagResponseList[2].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.diseaseTagResponseList[2].name").value("교통사고"))
         ;
     }
 

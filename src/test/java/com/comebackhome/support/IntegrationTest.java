@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 
@@ -25,6 +27,7 @@ public abstract class IntegrationTest {
 
     @Autowired protected MockMvc mockMvc;
     @Autowired protected ObjectMapper objectMapper;
+    @Autowired protected EntityManager em;
 
     @Autowired UserJpaRepository userJpaRepository;
     @Autowired LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
@@ -51,6 +54,11 @@ public abstract class IntegrationTest {
     protected String createAccessToken(User user) {
         Authentication authentication = createAuthentication(user);
         return tokenProvider.createAccessToken(authentication);
+    }
+
+    protected void flushAndClear(){
+        em.flush();
+        em.clear();
     }
 
 }

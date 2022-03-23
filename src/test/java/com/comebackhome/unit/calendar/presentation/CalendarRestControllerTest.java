@@ -1,5 +1,6 @@
 package com.comebackhome.unit.calendar.presentation;
 
+import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
 import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
@@ -309,7 +310,86 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
         ;
     }
 
+    @Test
+    @WithMockUser(roles = "USER")
+    void scheduleId로_스케줄_상세_조회() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        ScheduleResponseDto scheduleResponseDto = givenScheduleResponseDto();
+        given(calendarQueryUseCase.getMySchedule(any(),any())).willReturn(scheduleResponseDto);
 
 
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        pathParameters(
+                                parameterWithName("scheduleId").description("조회할 스케줄 ID")
+                        ),
+                        responseFields(
+                                fieldWithPath("scheduleId").type(NUMBER).description("스케줄 Id"),
+                                fieldWithPath("localDate").type(STRING).description("스케줄 날짜"),
+                                fieldWithPath("diseaseTagResponseList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
+                                fieldWithPath("diseaseTagResponseList[0].name").type(STRING).description("질병 이름"),
+                                fieldWithPath("dailyNote").type(STRING).description("하루 일기").optional(),
+                                fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)).optional()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_scheduleId로_스케줄_상세_조회() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{scheduleId}",1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    void 스케줄_id_없이_스케줄_상세_조회() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{scheduleId}","")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 자신의_스케줄_중_존재하지_않는_scheduleId로_스케줄_상세_조회() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new ScheduleNotFoundException()).given(calendarQueryUseCase).getMySchedule(any(),any());
+
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{scheduleId}",-1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
 
 }

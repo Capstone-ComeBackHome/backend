@@ -104,3 +104,16 @@ include::{snippets}/calendar-rest-controller-test/증상_없이_스케줄_저장
 
 토근 없이 접근하는 경우
 include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_저장하기_실패/response-body.adoc[]
+
+---
+
+=== 스케줄 삭제
+==== 스케줄 삭제 성공
+operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-request,path-parameters,request-headers,http-response']
+
+==== 스케줄 삭제 실패
+토근 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토근_없이_스케줄_삭제_실패/response-body.adoc[]
+
+calendars/ 이런식으로 scheduleId가 들어오지 않았을 경우
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_삭제_실패/response-body.adoc[]

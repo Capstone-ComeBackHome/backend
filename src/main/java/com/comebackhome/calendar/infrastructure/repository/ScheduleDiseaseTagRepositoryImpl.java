@@ -21,4 +21,9 @@ public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepos
                 .map(ScheduleDiseaseTag::getId)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteByScheduleId(Long scheduleId) {
+        scheduleDiseaseTagJpaRepository.deleteByScheduleId(scheduleId);
+    }
 }

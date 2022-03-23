@@ -5,6 +5,8 @@ import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class ScheduleRepositoryImpl implements ScheduleRepository {
@@ -14,5 +16,15 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     @Override
     public Long save(Schedule schedule) {
         return scheduleJpaRepository.save(schedule).getId();
+    }
+
+    @Override
+    public Optional<Schedule> findById(Long id) {
+        return scheduleJpaRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        scheduleJpaRepository.deleteById(id);
     }
 }

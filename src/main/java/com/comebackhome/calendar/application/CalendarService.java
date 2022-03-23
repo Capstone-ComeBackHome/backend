@@ -8,6 +8,8 @@ import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.common.exception.schedule.ScheduleIsNotMineException;
+import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,5 +106,23 @@ public class CalendarService implements CalendarCommandUseCase{
                 .collect(Collectors.toList());
 
         scheduleDiseaseTagRepository.saveAll(scheduleDiseaseTagList);
+    }
+
+
+    @Override
+    public void deleteSchedule(Long scheduleId, Long UserId) {
+        checkIsMyScheduleOrThrow(scheduleId, UserId);
+
+        scheduleDiseaseTagRepository.deleteByScheduleId(scheduleId);
+        scheduleRepository.deleteById(scheduleId);
+    }
+
+    private void checkIsMyScheduleOrThrow(Long scheduleId, Long UserId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new ScheduleNotFoundException());
+
+        if (!schedule.getUser().getId().equals(UserId)){
+            throw new ScheduleIsNotMineException();
+        }
     }
 }

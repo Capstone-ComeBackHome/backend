@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CalendarService implements CalendarCommandUseCase{
+public class CalendarCommandService implements CalendarCommandUseCase{
 
     private final ScheduleRepository scheduleRepository;
     private final ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;

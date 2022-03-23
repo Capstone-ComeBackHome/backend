@@ -107,6 +107,19 @@ include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_저장
 
 ---
 
+=== 월별 스케줄 조회
+==== 월별 스케줄 조회 성공
+operation::calendar-rest-controller-test/특정_월의_자신의_스케줄_조회[snippets='http-request,request-parameters,request-headers,http-response,response-fields']
+
+==== 월별 스케줄 조회 실패
+토근 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토근_없이_월_스케줄_요청/response-body.adoc[]
+
+yearMonth 파라미터 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/year-month_없이_월_스케줄_요청/response-body.adoc[]
+
+---
+
 === 스케줄 삭제
 ==== 스케줄 삭제 성공
 operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-request,path-parameters,request-headers,http-response']

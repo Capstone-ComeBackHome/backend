@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
@@ -34,4 +35,34 @@ public class ScheduleRepositoryImplTest extends JpaRepositoryTest {
 
         assertThat(result.size()).isEqualTo(1);
     }
+
+    @Test
+    void schedule_id로_찾기() throws Exception{
+        //given
+        User user = userJpaRepository.save(givenUser());
+        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
+
+        //when
+        Schedule result = scheduleRepository.findById(schedule.getId()).get();
+
+        //then
+        assertThat(result.getId()).isEqualTo(schedule.getId());
+    }
+
+    @Test
+    void schedule_id로_제거() throws Exception{
+        //given
+        User user = userJpaRepository.save(givenUser());
+        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
+
+        //when
+        scheduleRepository.deleteById(schedule.getId());
+
+        //then
+        Optional<Schedule> result = scheduleRepository.findById(schedule.getId());
+
+        assertThat(result).isEmpty();
+    }
+
+
 }

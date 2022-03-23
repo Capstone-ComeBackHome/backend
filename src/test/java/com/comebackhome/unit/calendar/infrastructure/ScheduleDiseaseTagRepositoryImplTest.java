@@ -35,13 +35,7 @@ public class ScheduleDiseaseTagRepositoryImplTest extends JpaRepositoryTest {
     @Test
     void scheduleDiseaseTagList_한번에_save() throws Exception{
         //given
-        User user = userJpaRepository.save(givenUser());
-        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
-        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
-        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
-
-        List<ScheduleDiseaseTag> scheduleDiseaseTagList = List.of(ScheduleDiseaseTag.of(schedule.getId(), diseaseTag1.getId()),
-                ScheduleDiseaseTag.of(schedule.getId(), diseaseTag2.getId()));
+        List<ScheduleDiseaseTag> scheduleDiseaseTagList = getScheduleDiseaseTagList();
 
         //when
         scheduleDiseaseTagRepository.saveAll(scheduleDiseaseTagList);
@@ -53,5 +47,38 @@ public class ScheduleDiseaseTagRepositoryImplTest extends JpaRepositoryTest {
 
         assertThat(result.size()).isEqualTo(2);
         assertThat(resultIdSet.size()).isEqualTo(1);
+    }
+
+    private List<ScheduleDiseaseTag> getScheduleDiseaseTagList() {
+        User user = userJpaRepository.save(givenUser());
+        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
+
+        return List.of(ScheduleDiseaseTag.of(schedule.getId(), diseaseTag1.getId()),
+                ScheduleDiseaseTag.of(schedule.getId(), diseaseTag2.getId()));
+    }
+
+    @Test
+    void scheduleId값으로_scheduleDiseaseTag_삭제() throws Exception{
+        //given
+        Long scheduleId = saveSchedule();
+
+        //when
+        scheduleDiseaseTagRepository.deleteByScheduleId(scheduleId);
+
+        //then
+        List<ScheduleDiseaseTag> result = scheduleDiseaseTagJpaRepository.findAll();
+        assertThat(result).isEmpty();
+    }
+
+    private Long saveSchedule() {
+        User user = userJpaRepository.save(givenUser());
+        Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag2.getId()));
+        return schedule.getId();
     }
 }

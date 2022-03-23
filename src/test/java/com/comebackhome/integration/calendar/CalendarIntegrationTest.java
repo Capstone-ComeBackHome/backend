@@ -4,9 +4,12 @@ import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.ScheduleDiseaseTagJpaRepository;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.support.IntegrationTest;
+import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.comebackhome.calendar.domain.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +36,8 @@ public class CalendarIntegrationTest extends IntegrationTest {
     @Autowired TokenProvider tokenProvider;
     @Autowired DiseaseTagRepository diseaseTagRepository;
     @Autowired ScheduleDiseaseTagJpaRepository scheduleDiseaseTagJpaRepository;
+    @Autowired ScheduleRepository scheduleRepository;
+    @Autowired DiseaseTagJpaRepository diseaseTagJpaRepository;
 
     @Test
     void 이미_존재하는_diseaseTag로_스케줄_저장하기() throws Exception{
@@ -123,6 +129,29 @@ public class CalendarIntegrationTest extends IntegrationTest {
 
         assertThat(result.size()).isEqualTo(2);
         assertThat(scheduleIdSet.size()).isEqualTo(1);
+    }
+
+    @Test
+    void 스케줄_삭제() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long scheduleId = saveSchedule(user);
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/"+scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+    }
+
+    private Long saveSchedule(User user) {
+        Long scheduleId = scheduleRepository.save(givenSchedule(user));
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름")).getId();
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTagId1));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTagId2));
+        return scheduleId;
     }
 
 

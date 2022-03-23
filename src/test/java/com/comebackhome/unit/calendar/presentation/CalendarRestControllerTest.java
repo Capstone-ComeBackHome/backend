@@ -22,6 +22,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.requestHe
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CalendarRestControllerTest extends RestDocsTestSupport {
@@ -149,5 +151,56 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                 ));
         ;
     }
+
+    @Test
+    void 스케줄_삭제_성공() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        pathParameters(
+                                parameterWithName("scheduleId").description("삭제할 스케줄 ID")
+                        )
+                ))
+                ;
+    }
+
+    @Test
+    void 토근_없이_스케줄_삭제_실패() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    void 스케줄_id_없이_스케줄_삭제_실패() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isMethodNotAllowed())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+
 
 }

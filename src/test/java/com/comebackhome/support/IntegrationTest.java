@@ -48,4 +48,9 @@ public abstract class IntegrationTest {
         return tokenProvider.createAccessToken(authentication);
     }
 
+    protected String createAccessToken(User user) {
+        Authentication authentication = createAuthentication(user);
+        return tokenProvider.createAccessToken(authentication);
+    }
+
 }

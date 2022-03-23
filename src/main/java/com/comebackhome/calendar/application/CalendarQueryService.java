@@ -1,7 +1,10 @@
 package com.comebackhome.calendar.application;
 
+import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
 import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,4 +26,13 @@ public class CalendarQueryService implements CalendarQueryUseCase{
                 .map(SimpleScheduleResponseDto::from)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ScheduleResponseDto getMySchedule(Long scheduleId, Long userId) {
+        Schedule schedule = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, userId)
+                .orElseThrow(() -> new ScheduleNotFoundException());
+
+        return ScheduleResponseDto.from(schedule);
+    }
+
 }

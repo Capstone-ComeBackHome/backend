@@ -1,10 +1,8 @@
 package com.comebackhome.calendar.presentation.dto;
 
 import com.comebackhome.calendar.application.dto.DiseaseTagDto;
-import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.DiseaseType;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Builder
@@ -12,27 +10,14 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DiseaseTagResponse {
 
-    private List<DiseaseTagDto> headDiseaseTagList;
+    private DiseaseType diseaseType;
 
-    private List<DiseaseTagDto> bronchusDiseaseTagList;
+    private String name;
 
-    private List<DiseaseTagDto> chestDiseaseTagList;
-
-    private List<DiseaseTagDto> stomachDiseaseTagList;
-
-    private List<DiseaseTagDto> limbDiseaseTagList;
-
-    private List<DiseaseTagDto> skinDiseaseTagList;
-
-    public static DiseaseTagResponse from(DiseaseTagResponseDto diseaseTagResponseDto){
+    public static DiseaseTagResponse from(DiseaseTagDto diseaseTagDto){
         return DiseaseTagResponse.builder()
-                .headDiseaseTagList(diseaseTagResponseDto.getHeadDiseaseTagList())
-                .bronchusDiseaseTagList(diseaseTagResponseDto.getBronchusDiseaseTagList())
-                .chestDiseaseTagList(diseaseTagResponseDto.getChestDiseaseTagList())
-                .stomachDiseaseTagList(diseaseTagResponseDto.getStomachDiseaseTagList())
-                .limbDiseaseTagList(diseaseTagResponseDto.getLimbDiseaseTagList())
-                .skinDiseaseTagList(diseaseTagResponseDto.getSkinDiseaseTagList())
+                .diseaseType(diseaseTagDto.getDiseaseType())
+                .name(diseaseTagDto.getName())
                 .build();
     }
-
 }

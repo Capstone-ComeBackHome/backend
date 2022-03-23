@@ -1,5 +1,6 @@
 package com.comebackhome.calendar.application.dto;
 
+import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
 import lombok.*;
@@ -20,4 +21,12 @@ public class DiseaseTagDto {
                 .name(diseaseTagQueryDto.getName())
                 .build();
     }
+
+    public static DiseaseTagDto from(DiseaseTag diseaseTag){
+        return DiseaseTagDto.builder()
+                .diseaseType(diseaseTag.getDiseaseType())
+                .name(diseaseTag.getName())
+                .build();
+    }
+
 }

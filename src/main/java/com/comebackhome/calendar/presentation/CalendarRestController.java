@@ -2,6 +2,7 @@ package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.CalendarCommandUseCase;
 import com.comebackhome.calendar.application.CalendarQueryUseCase;
+import com.comebackhome.calendar.presentation.dto.ScheduleResponse;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
 import com.comebackhome.common.LoginUser;
@@ -44,6 +45,12 @@ public class CalendarRestController {
 
         return ResponseEntity.ok(SimpleScheduleResponseList
                 .from(calendarQueryUseCase.getMyMonthSchedule(yearMonth,user.getId())));
+    }
+
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleResponse> getMySchedule(@PathVariable Long scheduleId,
+                                                          @LoginUser User user){
+        return ResponseEntity.ok(ScheduleResponse.from(calendarQueryUseCase.getMySchedule(scheduleId, user.getId())));
     }
 
 }

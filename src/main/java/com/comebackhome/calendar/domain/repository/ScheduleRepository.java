@@ -13,8 +13,11 @@ public interface ScheduleRepository {
 
     Optional<Schedule> findById(Long id);
 
-    void deleteById(Long id);
+    Optional<Schedule> findWithScheduleDiseaseTagByIdAndUserId(Long id,Long userId);
 
     List<SimpleScheduleQueryDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId);
+
+    void deleteById(Long id);
+
 
 }

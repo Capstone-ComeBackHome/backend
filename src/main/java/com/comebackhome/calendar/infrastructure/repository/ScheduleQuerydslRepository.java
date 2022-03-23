@@ -1,5 +1,6 @@
 package com.comebackhome.calendar.infrastructure.repository;
 
+import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -8,8 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Optional;
 
+import static com.comebackhome.calendar.domain.QDiseaseTag.diseaseTag;
 import static com.comebackhome.calendar.domain.QSchedule.schedule;
+import static com.comebackhome.calendar.domain.QScheduleDiseaseTag.scheduleDiseaseTag;
 
 @Repository
 @RequiredArgsConstructor
@@ -27,6 +31,15 @@ public class ScheduleQuerydslRepository {
                 .where(schedule.user.id.eq(userId),
                         schedule.localDate.between(yearMonth.atDay(1),yearMonth.atEndOfMonth()))
                 .fetch();
+    }
+
+    Optional<Schedule> findWithScheduleDiseaseTagByIdAndUserId(Long id, Long userId){
+        return Optional.ofNullable(query.selectFrom(schedule).distinct()
+                .leftJoin(schedule.scheduleDiseaseTagList, scheduleDiseaseTag).fetchJoin()
+                .leftJoin(scheduleDiseaseTag.diseaseTag, diseaseTag).fetchJoin()
+                .where(schedule.user.id.eq(userId),
+                        schedule.id.eq(id))
+                .fetchOne());
     }
 
 }

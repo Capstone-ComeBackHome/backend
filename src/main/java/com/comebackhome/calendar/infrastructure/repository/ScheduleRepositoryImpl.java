@@ -28,6 +28,11 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
+    public Optional<Schedule> findWithScheduleDiseaseTagByIdAndUserId(Long id, Long userId) {
+        return scheduleQuerydslRepository.findWithScheduleDiseaseTagByIdAndUserId(id,userId);
+    }
+
+    @Override
     public void deleteById(Long id) {
         scheduleJpaRepository.deleteById(id);
     }

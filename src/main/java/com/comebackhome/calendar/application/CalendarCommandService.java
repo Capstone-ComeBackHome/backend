@@ -109,6 +109,7 @@ public class CalendarCommandService implements CalendarCommandUseCase{
     }
 
 
+
     @Override
     public void deleteSchedule(Long scheduleId, Long UserId) {
         checkIsMyScheduleOrThrow(scheduleId, UserId);
@@ -117,6 +118,7 @@ public class CalendarCommandService implements CalendarCommandUseCase{
         scheduleRepository.deleteById(scheduleId);
     }
 
+    // todo 이거 그냥 쿼리 한번에 땡겨서 낫파운드로 처리할 수 있을듯 여기서 그냥 exsits쿼리로 날리면 될거같은데
     private void checkIsMyScheduleOrThrow(Long scheduleId, Long UserId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new ScheduleNotFoundException());

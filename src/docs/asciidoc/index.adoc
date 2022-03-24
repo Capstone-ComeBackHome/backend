@@ -137,6 +137,25 @@ include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재
 
 ---
 
+=== 특정 스케줄 수정
+==== 특정 스케줄 수정 성공
+operation::calendar-rest-controller-test/나의_스케줄_수정_성공[snippets='http-request,path-parameters,request-headers,request-fields,http-response']
+
+==== 특정 스케줄 수정 실패
+토큰 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_수정/response-body.adoc[]
+
+자신의 스케줄 중 존재하지 않는 scheduleId인 경우
+include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_수정/response-body.adoc[]
+
+scheduleId path 가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_수정/response-body.adoc[]
+
+증상이 1개 미만 혹은 5개 초과로 들어온 경우
+include::{snippets}/calendar-rest-controller-test/나의_스케줄_수정_증상이_6개_들어온_경우_실패/response-body.adoc[]
+
+---
+
 === 스케줄 삭제
 ==== 스케줄 삭제 성공
 operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-request,path-parameters,request-headers,http-response']
@@ -145,7 +164,7 @@ operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-
 토근 없이 접근하는 경우
 include::{snippets}/calendar-rest-controller-test/토근_없이_스케줄_삭제_실패/response-body.adoc[]
 
-scheduleId파라미터가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
+scheduleId path 가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
 include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_삭제_실패/response-body.adoc[]
 
 내 스케줄 중 존재하지 않는 scheduleId인 경우

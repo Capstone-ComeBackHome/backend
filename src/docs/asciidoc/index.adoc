@@ -152,7 +152,7 @@ scheduleId path 가 들어오지 않았을 경우 Path 자체가 없기 때문�
 include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_수정/response-body.adoc[]
 
 증상이 1개 미만 혹은 5개 초과로 들어온 경우
-include::{snippets}/calendar-rest-controller-test/나의_스케줄_수정_증상이_6개_들어온_경우_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/나의_스케줄_수정_증상이_0개_들어온_경우_실패/response-body.adoc[]
 
 ---
 

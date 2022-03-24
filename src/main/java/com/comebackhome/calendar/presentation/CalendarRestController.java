@@ -7,10 +7,12 @@ import com.comebackhome.calendar.presentation.dto.ScheduleResponse;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
 import com.comebackhome.common.LoginUser;
+import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +59,11 @@ public class CalendarRestController {
     @PatchMapping("/{scheduleId}")
     public ResponseEntity<Void> modifyMySchedule(@PathVariable Long scheduleId,
                                                  @Validated @RequestBody ScheduleModifyRequest scheduleModifyRequest,
+                                                          BindingResult errors,
                                                           @LoginUser User user){
+        if (errors.hasErrors()){
+            throw new ValidatedException(errors);
+        }
         calendarCommandUseCase.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
         return ResponseEntity.ok().build();
     }

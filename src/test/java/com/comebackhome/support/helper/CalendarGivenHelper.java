@@ -5,6 +5,7 @@ import com.comebackhome.calendar.domain.*;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
 import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
 import com.comebackhome.calendar.presentation.dto.DiseaseTagRequest;
+import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
 import com.comebackhome.user.domain.User;
@@ -113,6 +114,21 @@ public class CalendarGivenHelper {
                 .diseaseType(diseaseType)
                 .name(name)
                 .build();
+    }
+
+    public static ScheduleModifyRequest givenScheduleModifyRequest(){
+        return ScheduleModifyRequest.builder()
+                .dailyNote("오늘은 조금 아프네요.")
+                .painType(PainType.BAD)
+                .diseaseTagRequestList(List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크")
+                ))
+                .build();
+    }
+
+    public static ScheduleModifyRequestDto givenScheduleModifyRequestDto(){
+        return givenScheduleModifyRequest().toScheduleModifyRequestDto();
     }
 
 }

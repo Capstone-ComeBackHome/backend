@@ -8,6 +8,7 @@ import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.ScheduleDiseaseTagJpaRepository;
+import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
@@ -228,6 +229,274 @@ public class CalendarIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.diseaseTagResponseList[2].name").value("교통사고"))
         ;
     }
+
+    @Test
+    void 증상_변경_없이_일기와_증상_정도만_수정() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"교통사고")
+                )
+        );
+
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getDailyNote()).isEqualTo(scheduleModifyRequest.getDailyNote());
+        assertThat(result.getPainType()).isEqualTo(scheduleModifyRequest.getPainType());
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(3);
+    }
+
+
+    @Test
+    void 디폴트_증상_하나만_추가된_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+        Long diseaseTagId4 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름")).getId();
+
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"교통사고"),
+                        givenDiseaseTagRequest(SKIN,"여드름")
+                )
+        );
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(4);
+    }
+
+    @Test
+    void 없는_커스텀_증상이_추가된_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"교통사고"),
+                        givenDiseaseTagRequest(CUSTOM,"목디스크")
+                )
+        );
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(4);
+    }
+
+
+    @Test
+    void 하나는_등록된_커스텀_하나는_등록되지_않은_커스텀_증상이_추가된_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+        Long diseaseTagId4 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "목디스크")).getId();
+
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"교통사고"),
+                        givenDiseaseTagRequest(CUSTOM,"목디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"식곤증")
+                )
+        );
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(5);
+    }
+
+    @Test
+    void 증상이_하나_삭제된_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크")
+                )
+        );
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(2);
+    }
+
+    @Test
+    void 증상이_하나_삭제_하나_추가된_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long diseaseTagId1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통")).getId();
+        Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
+        Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
+
+
+        Schedule schedule = givenSchedule(user);
+        Long scheduleId = scheduleRepository.save(schedule);
+        scheduleDiseaseTagJpaRepository.saveAll(List.of(
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId1),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId2),
+                ScheduleDiseaseTag.of(scheduleId,diseaseTagId3)
+        ));
+
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(HEAD,"두통"),
+                        givenDiseaseTagRequest(CUSTOM,"디스크"),
+                        givenDiseaseTagRequest(CUSTOM,"목디스크")
+                )
+        );
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/"+ scheduleId)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        flushAndClear();
+
+        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, user.getId()).get();
+
+        assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(3);
+    }
+
 
 
 }

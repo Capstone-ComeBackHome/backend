@@ -3,6 +3,7 @@ package com.comebackhome.unit.calendar.presentation;
 import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
 import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
+import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
@@ -15,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.comebackhome.calendar.domain.DiseaseType.CUSTOM;
 import static com.comebackhome.config.RestDocsConfig.field;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.DISEASE_TYPE;
@@ -371,5 +373,144 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                 ));
         ;
     }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_스케줄_수정_성공() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        pathParameters(
+                                parameterWithName("scheduleId").description("수정할 스케줄 ID")
+                        ),
+                        requestFields(
+                                fieldWithPath("diseaseTagRequestList").type(ARRAY).description("질병 태그 리스트"),
+                                fieldWithPath("diseaseTagRequestList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
+                                fieldWithPath("diseaseTagRequestList[0].name").type(STRING).description("질병 이름"),
+                                fieldWithPath("dailyNote").type(STRING).description("아픔 일기").optional(),
+                                fieldWithPath("painType").type(STRING).description("아픔 정도").optional()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_스케줄_수정() throws Exception{
+        // given
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",1)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    void 스케줄_id_없이_스케줄_수정() throws Exception{
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}","")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isMethodNotAllowed())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_스케줄_수정_증상이_6개_들어온_경우_실패() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(
+                List.of(
+                        givenDiseaseTagRequest(CUSTOM,"test1"),
+                        givenDiseaseTagRequest(CUSTOM,"test2"),
+                        givenDiseaseTagRequest(CUSTOM,"test3"),
+                        givenDiseaseTagRequest(CUSTOM,"test4"),
+                        givenDiseaseTagRequest(CUSTOM,"test5"),
+                        givenDiseaseTagRequest(CUSTOM,"test6")
+                ));
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_스케줄_수정_증상이_0개_들어온_경우_실패() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setDiseaseTagRequestList(null);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 자신의_스케줄_중_존재하지_않는_scheduleId로_스케줄_수정() throws Exception{
+        // given
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new ScheduleNotFoundException()).given(calendarCommandUseCase).modifyMySchedule(any(),any(),any());
+
+        // when then
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",-1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+        ;
+    }
+
 
 }

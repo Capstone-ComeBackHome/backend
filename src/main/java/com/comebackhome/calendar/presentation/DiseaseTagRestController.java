@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
-import com.comebackhome.calendar.presentation.dto.DefaultTypeDiseaseTagListResponse;
+import com.comebackhome.calendar.presentation.dto.response.DefaultTypeDiseaseTagListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

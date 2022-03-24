@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.presentation.dto;
 
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
-import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
+import com.comebackhome.calendar.application.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenScheduleSaveRequest;

@@ -1,8 +1,8 @@
 package com.comebackhome.calendar.application;
 
 
-import com.comebackhome.calendar.application.dto.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.application.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.application.dto.request.ScheduleSaveRequestDto;
 
 public interface CalendarCommandUseCase {
 

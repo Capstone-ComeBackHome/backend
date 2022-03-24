@@ -1,8 +1,8 @@
 package com.comebackhome.calendar.application;
 
-import com.comebackhome.calendar.application.dto.DiseaseTagRequestDto;
-import com.comebackhome.calendar.application.dto.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.application.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.application.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.application.dto.request.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.Schedule;

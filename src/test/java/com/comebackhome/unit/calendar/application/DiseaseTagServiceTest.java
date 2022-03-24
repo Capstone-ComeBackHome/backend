@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.application;
 
 import com.comebackhome.calendar.application.DiseaseTagService;
-import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
 import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;

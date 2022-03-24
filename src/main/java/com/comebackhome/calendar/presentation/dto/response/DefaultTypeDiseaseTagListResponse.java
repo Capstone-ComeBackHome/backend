@@ -1,6 +1,6 @@
-package com.comebackhome.calendar.presentation.dto;
+package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
 import lombok.*;
 
 import java.util.List;

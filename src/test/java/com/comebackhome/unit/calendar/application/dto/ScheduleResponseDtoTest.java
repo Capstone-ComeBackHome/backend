@@ -1,6 +1,6 @@
 package com.comebackhome.unit.calendar.application.dto;
 
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;

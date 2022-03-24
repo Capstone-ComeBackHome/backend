@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.application;
 
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;

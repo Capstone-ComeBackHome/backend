@@ -1,10 +1,10 @@
 package com.comebackhome.unit.calendar.presentation;
 
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.DiseaseType;
-import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
-import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;

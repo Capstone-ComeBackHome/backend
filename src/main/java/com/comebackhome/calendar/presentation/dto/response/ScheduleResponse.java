@@ -1,6 +1,6 @@
-package com.comebackhome.calendar.presentation.dto;
+package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.domain.PainType;
 import lombok.*;
 

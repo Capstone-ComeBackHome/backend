@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.presentation.dto;
 
-import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
-import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponse;
+import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponse;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.presentation.dto;
 
-import com.comebackhome.calendar.application.dto.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
+import com.comebackhome.calendar.application.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenScheduleModifyRequest;

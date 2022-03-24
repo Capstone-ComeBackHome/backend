@@ -1,8 +1,8 @@
 package com.comebackhome.calendar.application;
 
 
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
 
 import java.time.YearMonth;
 import java.util.List;

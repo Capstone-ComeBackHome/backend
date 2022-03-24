@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.application.dto;
+package com.comebackhome.calendar.application.dto.response;
 
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;

@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.application;
 
 import com.comebackhome.calendar.application.CalendarQueryService;
-import com.comebackhome.calendar.application.dto.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;

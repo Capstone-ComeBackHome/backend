@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.application.dto;
+package com.comebackhome.calendar.application.dto.request;
 
 import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.Schedule;

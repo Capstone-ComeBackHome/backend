@@ -2,10 +2,10 @@ package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.CalendarCommandUseCase;
 import com.comebackhome.calendar.application.CalendarQueryUseCase;
-import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
-import com.comebackhome.calendar.presentation.dto.ScheduleResponse;
-import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
-import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
+import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
+import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
+import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponseList;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.domain.User;

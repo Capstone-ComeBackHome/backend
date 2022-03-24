@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.presentation.dto;
 
-import com.comebackhome.calendar.application.dto.DiseaseTagDto;
-import com.comebackhome.calendar.presentation.dto.DiseaseTagResponse;
+import com.comebackhome.calendar.application.dto.response.DiseaseTagDto;
+import com.comebackhome.calendar.presentation.dto.response.DiseaseTagResponse;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.calendar.domain.DiseaseType.HEAD;

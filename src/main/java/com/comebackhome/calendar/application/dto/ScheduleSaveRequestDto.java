@@ -1,6 +1,8 @@
 package com.comebackhome.calendar.application.dto;
 
 import com.comebackhome.calendar.domain.PainType;
+import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.user.domain.User;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,5 +23,14 @@ public class ScheduleSaveRequestDto {
     private LocalDate localDate;
 
     private Long userId;
+
+    public Schedule toSchedule(){
+        return Schedule.builder()
+                .localDate(localDate)
+                .dailyNote(dailyNote)
+                .painType(painType)
+                .user(User.builder().id(userId).build())
+                .build();
+    }
 
 }

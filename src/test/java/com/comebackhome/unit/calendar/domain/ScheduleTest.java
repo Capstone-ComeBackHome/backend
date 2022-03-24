@@ -1,25 +1,37 @@
 package com.comebackhome.unit.calendar.domain;
 
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.support.helper.CalendarGivenHelper;
-import org.assertj.core.api.Assertions;
+import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
+
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScheduleTest {
 
     @Test
-    void 정적_메서드_from으로_생성() throws Exception{
+    void painType_업데이트() throws Exception{
         //given
-        ScheduleSaveRequestDto scheduleSaveRequestDto = CalendarGivenHelper.givenScheduleSaveRequestDto(1L);
+        Schedule schedule = givenSchedule(User.builder().id(1L).build());
 
         //when
-        Schedule result = Schedule.from(scheduleSaveRequestDto);
+        schedule.updatePainType(PainType.BAD);
 
         //then
-        Assertions.assertThat(result.getUser().getId()).isEqualTo(scheduleSaveRequestDto.getUserId());
-        Assertions.assertThat(result.getDailyNote()).isEqualTo(scheduleSaveRequestDto.getDailyNote());
-        Assertions.assertThat(result.getLocalDate()).isEqualTo(scheduleSaveRequestDto.getLocalDate());
-        Assertions.assertThat(result.getPainType()).isEqualTo(scheduleSaveRequestDto.getPainType());
+        assertThat(schedule.getPainType()).isEqualTo(PainType.BAD);
+    }
+
+    @Test
+    void dailyNote_업데이트() throws Exception{
+        //given
+        Schedule schedule = givenSchedule(User.builder().id(1L).build());
+        String dailyNote = "오늘은 피곤해요.";
+
+        //when
+        schedule.updateDailyNote(dailyNote);
+
+        //then
+        assertThat(schedule.getDailyNote()).isEqualTo(dailyNote);
     }
 }

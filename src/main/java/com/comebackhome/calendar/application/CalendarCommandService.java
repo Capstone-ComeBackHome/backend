@@ -37,7 +37,7 @@ public class CalendarCommandService implements CalendarCommandUseCase {
      */
     @Override
     public void saveMySchedule(ScheduleSaveRequestDto scheduleSaveRequestDto) {
-        Long scheduleId = scheduleRepository.save(Schedule.from(scheduleSaveRequestDto));
+        Long scheduleId = scheduleRepository.save(scheduleSaveRequestDto.toSchedule());
         List<DiseaseTagRequestDto> trimmedDiseaseTagDtoList
                 = getTrimmedDiseaseTagDtoList(scheduleSaveRequestDto.getDiseaseTagRequestDtoList());
         Set<Long> diseaseTagIdSet = getDiseaseTagIdSet(trimmedDiseaseTagDtoList);

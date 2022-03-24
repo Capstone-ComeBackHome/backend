@@ -1,6 +1,5 @@
 package com.comebackhome.calendar.domain;
 
-import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
 import com.comebackhome.common.domain.BaseEntity;
 import com.comebackhome.user.domain.User;
 import lombok.*;
@@ -36,15 +35,6 @@ public class Schedule extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private PainType painType;
-
-    public static Schedule from(ScheduleSaveRequestDto scheduleSaveRequestDto){
-        return Schedule.builder()
-                .localDate(scheduleSaveRequestDto.getLocalDate())
-                .dailyNote(scheduleSaveRequestDto.getDailyNote())
-                .painType(scheduleSaveRequestDto.getPainType())
-                .user(User.builder().id(scheduleSaveRequestDto.getUserId()).build())
-                .build();
-    }
 
     public void updateDailyNote(String dailyNote){
         this.dailyNote = dailyNote;

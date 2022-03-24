@@ -46,4 +46,12 @@ public class Schedule extends BaseEntity {
                 .build();
     }
 
+    public void updateDailyNote(String dailyNote){
+        this.dailyNote = dailyNote;
+    }
+
+    public void updatePainType(PainType painType){
+        this.painType = painType;
+    }
+
 }

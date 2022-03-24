@@ -14,4 +14,11 @@ public class DiseaseTagRequestDto {
     private DiseaseType diseaseType;
 
     private String name;
+
+    public static DiseaseTagRequestDto of(DiseaseType diseaseType, String name){
+        return DiseaseTagRequestDto.builder()
+                .diseaseType(diseaseType)
+                .name(name)
+                .build();
+    }
 }

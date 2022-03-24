@@ -26,4 +26,11 @@ public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepos
     public void deleteByScheduleId(Long scheduleId) {
         scheduleDiseaseTagJpaRepository.deleteByScheduleId(scheduleId);
     }
+
+    @Override
+    public void deleteByIdList(List<Long> idList) {
+        scheduleDiseaseTagJpaRepository.deleteByIdList(idList);
+    }
+
+
 }

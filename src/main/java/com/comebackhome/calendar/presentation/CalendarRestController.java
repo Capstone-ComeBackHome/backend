@@ -2,6 +2,7 @@ package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.CalendarCommandUseCase;
 import com.comebackhome.calendar.application.CalendarQueryUseCase;
+import com.comebackhome.calendar.presentation.dto.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.ScheduleResponse;
 import com.comebackhome.calendar.presentation.dto.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.SimpleScheduleResponseList;
@@ -51,6 +52,14 @@ public class CalendarRestController {
     public ResponseEntity<ScheduleResponse> getMySchedule(@PathVariable Long scheduleId,
                                                           @LoginUser User user){
         return ResponseEntity.ok(ScheduleResponse.from(calendarQueryUseCase.getMySchedule(scheduleId, user.getId())));
+    }
+
+    @PatchMapping("/{scheduleId}")
+    public ResponseEntity<Void> modifyMySchedule(@PathVariable Long scheduleId,
+                                                 @Validated @RequestBody ScheduleModifyRequest scheduleModifyRequest,
+                                                          @LoginUser User user){
+        calendarCommandUseCase.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
+        return ResponseEntity.ok().build();
     }
 
 }

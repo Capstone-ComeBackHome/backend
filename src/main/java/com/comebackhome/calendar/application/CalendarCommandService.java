@@ -1,5 +1,7 @@
 package com.comebackhome.calendar.application;
 
+import com.comebackhome.calendar.application.dto.DiseaseTagRequestDto;
+import com.comebackhome.calendar.application.dto.ScheduleModifyRequestDto;
 import com.comebackhome.calendar.application.dto.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;
@@ -22,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CalendarCommandService implements CalendarCommandUseCase{
+public class CalendarCommandService implements CalendarCommandUseCase {
 
     private final ScheduleRepository scheduleRepository;
     private final ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
@@ -36,46 +38,55 @@ public class CalendarCommandService implements CalendarCommandUseCase{
     @Override
     public void saveMySchedule(ScheduleSaveRequestDto scheduleSaveRequestDto) {
         Long scheduleId = scheduleRepository.save(Schedule.from(scheduleSaveRequestDto));
-
-        Set<Long> diseaseTagIdSet = new HashSet<>();
-        diseaseTagIdSet.addAll(getDiseaseTagIdListExceptCustomType(scheduleSaveRequestDto));
-
-        List<String> customTypeDiseaseTagName = getCustomTypeDiseaseTagNameList(scheduleSaveRequestDto);
-        if (!customTypeDiseaseTagName.isEmpty()){
-            List<DiseaseTag> alreadyExistDiseaseTagList
-                    = diseaseTagRepository.findDiseaseTagListByDiseaseTagNameList(customTypeDiseaseTagName);
-            diseaseTagIdSet.addAll(getIdList(alreadyExistDiseaseTagList));
-
-            List<DiseaseTag> newCustomTypeDiseaseTagList
-                    = extractNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistDiseaseTagList);
-            List<Long> newCustomTypeDiseaseTagIdList
-                    = saveNewCustomTypeDiseaseTagList(newCustomTypeDiseaseTagList);
-            diseaseTagIdSet.addAll(newCustomTypeDiseaseTagIdList);
-        }
-
+        List<DiseaseTagRequestDto> trimmedDiseaseTagDtoList
+                = getTrimmedDiseaseTagDtoList(scheduleSaveRequestDto.getDiseaseTagRequestDtoList());
+        Set<Long> diseaseTagIdSet = getDiseaseTagIdSet(trimmedDiseaseTagDtoList);
         saveScheduleDiseaseTagList(scheduleId, diseaseTagIdSet);
     }
 
-    private List<Long> getDiseaseTagIdListExceptCustomType(ScheduleSaveRequestDto scheduleSaveRequestDto) {
-        List<String> diseaseTagNameExceptCustomType = scheduleSaveRequestDto.getDiseaseTagRequestDtoList().parallelStream()
+    private Set<Long> getDiseaseTagIdSet(List<DiseaseTagRequestDto> newDiseaseTagRequestDtoList) {
+        Set<Long> diseaseTagIdSet = new HashSet<>();
+        diseaseTagIdSet.addAll(getDiseaseTagIdListExceptCustomType(newDiseaseTagRequestDtoList));
+
+        List<String> customTypeDiseaseTagName = getCustomTypeDiseaseTagNameList(newDiseaseTagRequestDtoList);
+        if (!customTypeDiseaseTagName.isEmpty()) {
+            addCustomTypeDiseaseTagIdToSet(diseaseTagIdSet, customTypeDiseaseTagName);
+        }
+
+        return diseaseTagIdSet;
+    }
+
+    private List<Long> getDiseaseTagIdListExceptCustomType(List<DiseaseTagRequestDto> diseaseTagRequestDtoList) {
+        List<String> diseaseTagNameExceptCustomType = diseaseTagRequestDtoList.parallelStream()
                 .filter(diseaseTagRequestDto -> !diseaseTagRequestDto.getDiseaseType().equals(DiseaseType.CUSTOM))
-                .map(diseaseTagRequestDto -> diseaseTagRequestDto.getName().trim())
+                .map(DiseaseTagRequestDto::getName)
                 .collect(Collectors.toList());
         return diseaseTagRepository.findDiseaseTagIdListByDiseaseTagNameList(diseaseTagNameExceptCustomType);
     }
 
-    private List<String> getCustomTypeDiseaseTagNameList(ScheduleSaveRequestDto scheduleSaveRequestDto) {
-        return scheduleSaveRequestDto.getDiseaseTagRequestDtoList().parallelStream()
+    private List<String> getCustomTypeDiseaseTagNameList(List<DiseaseTagRequestDto> diseaseTagRequestDtoList) {
+        return diseaseTagRequestDtoList.parallelStream()
                 .filter(diseaseTagRequestDto -> diseaseTagRequestDto.getDiseaseType().equals(DiseaseType.CUSTOM))
-                .map(diseaseTagRequestDto -> diseaseTagRequestDto.getName().trim())
+                .map(DiseaseTagRequestDto::getName)
                 .collect(Collectors.toList());
     }
 
+    private void addCustomTypeDiseaseTagIdToSet(Set<Long> diseaseTagIdSet, List<String> customTypeDiseaseTagName) {
+        List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList
+                = diseaseTagRepository.findDiseaseTagListByDiseaseTagNameList(customTypeDiseaseTagName);
+        diseaseTagIdSet.addAll(getIdList(alreadyExistCustomTypeDiseaseTagList));
+
+        List<DiseaseTag> newCustomTypeDiseaseTagList
+                = extractNewCustomTypeDiseaseTagList(customTypeDiseaseTagName, alreadyExistCustomTypeDiseaseTagList);
+        List<Long> newCustomTypeDiseaseTagIdList
+                = saveNewCustomTypeDiseaseTagList(newCustomTypeDiseaseTagList);
+        diseaseTagIdSet.addAll(newCustomTypeDiseaseTagIdList);
+    }
+
     private List<Long> getIdList(List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
-        List<Long> alreadyExistCustomTypeDiseaseTagIdList = alreadyExistCustomTypeDiseaseTagList.parallelStream()
+        return alreadyExistCustomTypeDiseaseTagList.parallelStream()
                 .map(DiseaseTag::getId)
                 .collect(Collectors.toList());
-        return alreadyExistCustomTypeDiseaseTagIdList;
     }
 
     private List<DiseaseTag> extractNewCustomTypeDiseaseTagList(List<String> customTypeDiseaseTagName, List<DiseaseTag> alreadyExistCustomTypeDiseaseTagList) {
@@ -83,31 +94,28 @@ public class CalendarCommandService implements CalendarCommandUseCase{
                 .map(DiseaseTag::getName)
                 .collect(Collectors.toList());
 
-        List<DiseaseTag> newCustomTypeDiseaseTagList = customTypeDiseaseTagName.parallelStream()
+        return customTypeDiseaseTagName.parallelStream()
                 .filter(name -> !alreadyExistCustomTypeDiseaseTagNameList.contains(name))
                 .map(name -> DiseaseTag.of(DiseaseType.CUSTOM, name))
                 .collect(Collectors.toList());
-        return newCustomTypeDiseaseTagList;
     }
 
     private List<Long> saveNewCustomTypeDiseaseTagList(List<DiseaseTag> newCustomTypeDiseaseTagList) {
-
-
         if (newCustomTypeDiseaseTagList.isEmpty())
             return new ArrayList<>();
-
         return diseaseTagRepository.saveAll(newCustomTypeDiseaseTagList);
     }
 
     private void saveScheduleDiseaseTagList(Long scheduleId, Set<Long> diseaseTagIdSet) {
+        if (diseaseTagIdSet.isEmpty())
+            return;
+
         List<ScheduleDiseaseTag> scheduleDiseaseTagList = diseaseTagIdSet.parallelStream()
                 .map(id -> ScheduleDiseaseTag.of(scheduleId, id))
                 .collect(Collectors.toList());
 
         scheduleDiseaseTagRepository.saveAll(scheduleDiseaseTagList);
     }
-
-
 
     @Override
     public void deleteSchedule(Long scheduleId, Long userId) {
@@ -118,8 +126,68 @@ public class CalendarCommandService implements CalendarCommandUseCase{
     }
 
     private void checkIsMyScheduleOrThrow(Long scheduleId, Long userId) {
-        if (!scheduleRepository.existsByIdAndUserId(scheduleId,userId)){
+        if (!scheduleRepository.existsByIdAndUserId(scheduleId, userId)) {
             throw new ScheduleNotFoundException();
         }
     }
+
+    /**
+     * scheduleModifyRequestDto의 diseaseTagRequestDto로 들어온 diseaseTag 중 DB에 저장된 diseaseTag 내용이 없는 것은 삭제
+     * DB에 없는 태그들을 DB에 저장하고 ID값을 가져오고 DB에 있는 태그들은 Id값만 가져온다.
+     * 그리고 한번에 ScheduleDiseaseTag를 Bulk Insert 한다.
+     */
+    @Override
+    public void modifyMySchedule(Long scheduleId, Long userId, ScheduleModifyRequestDto scheduleModifyRequestDto) {
+        Schedule schedule = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(scheduleId, userId)
+                .orElseThrow(() -> new ScheduleNotFoundException());
+        updateDailyNoteAndPainType(scheduleModifyRequestDto, schedule);
+
+        List<DiseaseTagRequestDto> requestDiseaseTagDtoList
+                = getTrimmedDiseaseTagDtoList(scheduleModifyRequestDto.getDiseaseTagRequestDtoList());
+        deleteScheduleDiseaseTag(schedule, requestDiseaseTagDtoList);
+
+        Set<Long> diseaseTagIdSet = getDiseaseTagIdSet(getNewDiseaseTagRequestDtoList(schedule, requestDiseaseTagDtoList));
+        saveScheduleDiseaseTagList(scheduleId, diseaseTagIdSet);
+    }
+
+    private void updateDailyNoteAndPainType(ScheduleModifyRequestDto scheduleModifyRequestDto, Schedule schedule) {
+        schedule.updateDailyNote(scheduleModifyRequestDto.getDailyNote());
+        schedule.updatePainType(scheduleModifyRequestDto.getPainType());
+    }
+
+    private List<DiseaseTagRequestDto> getTrimmedDiseaseTagDtoList(List<DiseaseTagRequestDto> diseaseTagRequestDtoList) {
+        return diseaseTagRequestDtoList.parallelStream().map(diseaseTagRequestDto ->
+                        DiseaseTagRequestDto.of(diseaseTagRequestDto.getDiseaseType(), diseaseTagRequestDto.getName().trim()))
+                .collect(Collectors.toList());
+    }
+
+    private void deleteScheduleDiseaseTag(Schedule schedule, List<DiseaseTagRequestDto> requestDiseaseTagDtoList) {
+        List<Long> haveToDeleteScheduleDiseaseTagIdList = findScheduleDiseaseTagIdListToRemove(schedule, requestDiseaseTagDtoList);
+        if (haveToDeleteScheduleDiseaseTagIdList.isEmpty())
+            return;
+        scheduleDiseaseTagRepository.deleteByIdList(haveToDeleteScheduleDiseaseTagIdList);
+    }
+
+    private List<Long> findScheduleDiseaseTagIdListToRemove(Schedule schedule, List<DiseaseTagRequestDto> requestDiseaseTagDtoList) {
+        List<String> requestDiseaseTagNameList = requestDiseaseTagDtoList.parallelStream()
+                .map(DiseaseTagRequestDto::getName)
+                .collect(Collectors.toList());
+
+        return schedule.getScheduleDiseaseTagList().parallelStream()
+                .filter(scheduleDiseaseTag -> !requestDiseaseTagNameList.contains(scheduleDiseaseTag.getDiseaseTag().getName()))
+                .map(ScheduleDiseaseTag::getId)
+                .collect(Collectors.toList());
+    }
+
+    private List<DiseaseTagRequestDto> getNewDiseaseTagRequestDtoList(Schedule schedule, List<DiseaseTagRequestDto> requestDiseaseTagDtoList) {
+        List<String> existsDiseaseTagNameList
+                = schedule.getScheduleDiseaseTagList().parallelStream()
+                .map(scheduleDiseaseTag -> scheduleDiseaseTag.getDiseaseTag().getName())
+                .collect(Collectors.toList());
+
+        return requestDiseaseTagDtoList.parallelStream()
+                .filter(diseaseTagRequestDto -> !existsDiseaseTagNameList.contains(diseaseTagRequestDto.getName()))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -56,7 +56,7 @@ include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰
 == Disease API
 === 간략한 질병 조회
 ==== 간략한 질병 조회 성공
-아래 request에서 diseaseNameList 값이 한글이라 인코딩되서 나오는데 diseaseNameList=부정맥,후두염,편도염 이렇게 넣으시면 됩니다.
+아래 request에서 diseaseNameList 값이 한글이라 인코딩되서 나오는데 diseaseNameList=질병1,질병2,질병3 이렇게 넣으시면 됩니다.
 
 operation::disease-rest-controller-test/여러_질병명으로_간략하게_질병_조회하기[snippets='http-request,request-parameters,http-response,response-fields']
 

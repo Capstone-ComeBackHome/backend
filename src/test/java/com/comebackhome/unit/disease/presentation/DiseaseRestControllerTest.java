@@ -5,6 +5,7 @@ import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import java.util.List;
@@ -85,14 +86,14 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     void 여러_질병명으로_간략하게_질병_조회하기() throws Exception{
         // given
         List<SimpleDiseaseResponseDto> simpleDiseaseResponseDtoList = List.of(
-                        givenSimpleDiseaseResponseDto("부정맥",1L),
-                        givenSimpleDiseaseResponseDto("후두염",2L),
-                        givenSimpleDiseaseResponseDto("편도염",3L));
+                        givenSimpleDiseaseResponseDto("질병1",1L),
+                        givenSimpleDiseaseResponseDto("질병2",2L),
+                        givenSimpleDiseaseResponseDto("질병3",3L));
 
         given(diseaseQueryUseCase.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
 
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=부정맥,후두염,편도염")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocumentationResultHandler.document(
@@ -144,5 +145,25 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                 ))
         ;
     }
+
+    @Test
+    void CSVFile로_disease_등록() throws Exception{
+        // given
+        MockMultipartFile file = createMockMultipartFile();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.multipart(URL)
+                .file(file))
+                .andExpect(status().isOk())
+                ;
+    }
+
+    private MockMultipartFile createMockMultipartFile() {
+        return new MockMultipartFile("file",
+                "disease.csv",
+                "text/csv",
+                "부정맥,정의,내과,증상,원인,치료".getBytes());
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.comebackhome.support.helper;
 
+import com.comebackhome.disease.application.dto.DiseaseRequestDto;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.Disease;
@@ -59,6 +60,17 @@ public class DiseaseGivenHelper {
                 .name("부정맥")
                 .definition("발작성 민백 중 하나인 부정맥은 심장 전체로 전기 신호를 전달하는 전기...")
                 .recommendDepartment("내과")
+                .build();
+    }
+
+    public static DiseaseRequestDto givenDiseaseRequestDto(){
+        return DiseaseRequestDto.builder()
+                .name("병명")
+                .definition("정의")
+                .recommendDepartment("진료과")
+                .symptom("증상")
+                .cause("원인")
+                .hospitalCare("병원 치료 방법")
                 .build();
     }
 

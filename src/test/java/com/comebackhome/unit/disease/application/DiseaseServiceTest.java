@@ -2,6 +2,7 @@ package com.comebackhome.unit.disease.application;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.application.DiseaseService;
+import com.comebackhome.disease.application.dto.DiseaseRequestDto;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.Disease;
@@ -16,12 +17,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDisease;
-import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDiseaseQueryDto;
+import static com.comebackhome.support.helper.DiseaseGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
 public class DiseaseServiceTest {
@@ -76,5 +77,17 @@ public class DiseaseServiceTest {
         assertThat(result.get(0).getName()).isEqualTo(simpleDiseaseQueryDto.getName());
         assertThat(result.get(0).getDefinition()).isEqualTo(simpleDiseaseQueryDto.getDefinition());
         assertThat(result.get(0).getRecommendDepartment()).isEqualTo(simpleDiseaseQueryDto.getRecommendDepartment());
+    }
+
+    @Test
+    void disease_저장하기() throws Exception{
+        // given
+        List<DiseaseRequestDto> diseaseRequestDtoList = List.of(givenDiseaseRequestDto());
+
+        //when
+        diseaseService.createDisease(diseaseRequestDtoList);
+
+        //then
+        then(diseaseRepository).should().saveAll(any());
     }
 }

@@ -1,15 +1,15 @@
 package com.comebackhome.disease.presentation;
 
+import com.comebackhome.common.CSVUtil;
+import com.comebackhome.disease.application.DiseaseCommandUseCase;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
 import com.comebackhome.disease.presentation.dto.DiseaseResponse;
 import com.comebackhome.disease.presentation.dto.SimpleDiseaseResponseList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -22,6 +22,7 @@ import java.util.List;
 public class DiseaseRestController {
 
     private final DiseaseQueryUseCase diseaseQueryUseCase;
+    private final DiseaseCommandUseCase diseaseCommandUseCase;
 
     @GetMapping
     public ResponseEntity<DiseaseResponse> getDisease(@RequestParam Long diseaseId){
@@ -34,6 +35,12 @@ public class DiseaseRestController {
 
         return ResponseEntity.ok(SimpleDiseaseResponseList
                 .from(diseaseQueryUseCase.getSimpleDiseaseList(diseaseNameList)));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createDisease(@RequestPart MultipartFile file){
+        diseaseCommandUseCase.createDisease(CSVUtil.toDiseaseRequestDto(file));
+        return ResponseEntity.ok().build();
     }
 
 }

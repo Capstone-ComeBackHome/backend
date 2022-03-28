@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +17,7 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
 
     private final DiseaseJpaRepository diseaseJpaRepository;
     private final DiseaseQuerydslRepository diseaseQuerydslRepository;
+    private final DiseaseJdbcRepository diseaseJdbcRepository;
 
     @Override
     public Optional<Disease> findDiseaseById(Long diseaseId) {
@@ -30,5 +32,10 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
     public SimpleDiseaseQueryDto findSimpleDiseaseQueryDtoByName(String diseaseName) {
         return diseaseQuerydslRepository.findDiseaseSimpleQueryDtoByName(diseaseName)
                 .orElseThrow(() -> new DiseaseNotFoundException());
+    }
+
+    @Override
+    public void saveAll(List<Disease> diseaseList) {
+        diseaseJdbcRepository.saveAll(diseaseList);
     }
 }

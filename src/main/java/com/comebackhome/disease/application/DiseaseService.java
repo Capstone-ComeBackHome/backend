@@ -1,8 +1,10 @@
 package com.comebackhome.disease.application;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
+import com.comebackhome.disease.application.dto.DiseaseRequestDto;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
+import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class DiseaseService implements DiseaseQueryUseCase{
+public class DiseaseService implements DiseaseQueryUseCase, DiseaseCommandUseCase{
 
     private final DiseaseRepository diseaseRepository;
 
@@ -39,5 +42,14 @@ public class DiseaseService implements DiseaseQueryUseCase{
             simpleDiseaseResponseDtoList.add(simpleDiseaseResponseDto);
         }
         return simpleDiseaseResponseDtoList;
+    }
+
+    @Override
+    @Transactional
+    public void createDisease(List<DiseaseRequestDto> diseaseRequestDto) {
+        List<Disease> diseaseList = diseaseRequestDto.parallelStream()
+                .map(DiseaseRequestDto::toDisease)
+                .collect(Collectors.toList());
+        diseaseRepository.saveAll(diseaseList);
     }
 }

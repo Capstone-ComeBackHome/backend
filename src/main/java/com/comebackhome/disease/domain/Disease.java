@@ -18,18 +18,22 @@ public class Disease extends BaseEntity {
     @Column(nullable = false,unique = true)
     private String name;
 
+    @Lob
     @Column(nullable = false)
     private String definition;
 
     @Column(nullable = false)
     private String recommendDepartment;
 
+    @Lob
     @Column(nullable = false)
     private String symptom;
 
+    @Lob
     @Column(nullable = false)
     private String cause;
 
+    @Lob
     @Column(nullable = false)
     private String hospitalCare;
 

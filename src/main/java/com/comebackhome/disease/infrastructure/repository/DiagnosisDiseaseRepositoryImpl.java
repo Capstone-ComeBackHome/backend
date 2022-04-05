@@ -14,9 +14,15 @@ public class DiagnosisDiseaseRepositoryImpl implements DiagnosisDiseaseRepositor
 
 
     private final DiagnosisDiseaseJdbcRepository diagnosisDiseaseJdbcRepository;
+    private final DiagnosisDiseaseJpaRepository diagnosisDiseaseJpaRepository;
 
     @Override
     public void saveAll(List<DiagnosisDisease> diagnosisDiseaseList) {
         diagnosisDiseaseJdbcRepository.saveAll(diagnosisDiseaseList);
+    }
+
+    @Override
+    public void deleteByDiagnosisId(Long diagnosisId) {
+        diagnosisDiseaseJpaRepository.deleteByDiagnosisId(diagnosisId);
     }
 }

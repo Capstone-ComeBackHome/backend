@@ -5,4 +5,6 @@ import java.util.List;
 public interface DiagnosisDiseaseRepository {
 
     void saveAll(List<DiagnosisDisease> diagnosisDiseaseList);
+
+    void deleteByDiagnosisId(Long diagnosisId);
 }

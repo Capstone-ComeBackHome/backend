@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -33,6 +30,14 @@ public class DiagnosisRestController {
         }
 
         diagnosisCommandUseCase.createDiagnosis(diagnosisRequest.getDiseaseNameList(),user.getId());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{diagnosisId}")
+    public ResponseEntity<Void> deleteMyDiagnosis(@PathVariable Long diagnosisId,
+                                                @LoginUser User user){
+
+        diagnosisCommandUseCase.deleteMyDiagnosis(diagnosisId,user.getId());
         return ResponseEntity.ok().build();
     }
 }

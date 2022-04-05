@@ -1,6 +1,8 @@
 package com.comebackhome.disease.application;
 
+import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
+import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
 import com.comebackhome.disease.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,22 @@ public class DiagnosisService implements DiagnosisCommandUseCase{
         Long diseaseId = diseaseRepository.findIdByName(diseaseNameList.get(order).trim())
                 .orElseThrow(() -> new DiseaseNotFoundException());
         return diseaseId;
+    }
+
+
+    @Override
+    public void deleteMyDiagnosis(Long diagnosisId, Long userId) {
+        checkIsMyDiagnosis(diagnosisId, userId);
+        diagnosisDiseaseRepository.deleteByDiagnosisId(diagnosisId);
+        diagnosisRepository.deleteById(diagnosisId);
+    }
+
+    private void checkIsMyDiagnosis(Long diagnosisId, Long userId) {
+        Diagnosis diagnosis = diagnosisRepository.findById(diagnosisId)
+                .orElseThrow(() -> new DiagnosisNotFoundException());
+
+        if (!diagnosis.getUser().getId().equals(userId)){
+            throw new NotMyDiagnosisException();
+        }
     }
 }

@@ -5,6 +5,8 @@ import com.comebackhome.disease.domain.DiagnosisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class DiagnosisRepositoryImpl implements DiagnosisRepository {
@@ -14,5 +16,15 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     @Override
     public Long save(Diagnosis diagnosis) {
         return diagnosisJpaRepository.save(diagnosis).getId();
+    }
+
+    @Override
+    public Optional<Diagnosis> findById(Long id) {
+        return diagnosisJpaRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        diagnosisJpaRepository.deleteById(id);
     }
 }

@@ -79,11 +79,11 @@ DB에 존재하지 않은 diseaseId인 경우 실패합니다.
 include::{snippets}/disease-rest-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
 
 == Diagnosis API
-=== 진단 결과 저장
-==== 진단 결과 저장 성공
+=== 진단 내역 저장
+==== 진단 내역 저장 성공
 operation::diagnosis-rest-controller-test/세가지_질병명으로_diagnosis_저장하기[snippets='http-request,request-headers,request-fields,http-response']
 
-==== 진단 결과 저장 실패
+==== 진단 내역 저장 실패
 토큰 없이 접근하는 경우
 include::{snippets}/diagnosis-rest-controller-test/토큰없이_diagnosis_저장하기_실패/response-body.adoc[]
 
@@ -95,6 +95,26 @@ include::{snippets}/diagnosis-rest-controller-test/세가지_공백_질병명으
 
 존재하지 않는 질병명인 경우
 include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_질병명으로_진단_저장하기_실패/response-body.adoc[]
+
+---
+
+=== 진단 내역 삭제
+==== 진단 내역 삭제 성공
+operation::diagnosis-rest-controller-test/나의_진단_내역_제거하기[snippets='http-request,request-headers,path-parameters,http-response']
+
+==== 진단 내역 삭제 실패
+토큰 없이 접근하는 경우
+include::{snippets}/diagnosis-rest-controller-test/토큰_없이_나의_진단_내역_제거하기_실패/http-response.adoc[]
+
+진단 내역 id 없이 삭제를 시도하는 경우
+include::{snippets}/diagnosis-rest-controller-test/진단_내역_id_없이_나의_진단_내역_제거하기_실패/http-response.adoc[]
+
+다른 사람의 진단 내역을 제거 시도하는 경우
+include::{snippets}/diagnosis-rest-controller-test/다른_사람의_진단_내역_제거하기_실패/response-body.adoc[]
+
+존재하지 않는 진단 내역을 제거하는 경우
+include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_진단_내역_제거하기_실패/response-body.adoc[]
+
 
 == Calendar API
 

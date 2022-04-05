@@ -33,4 +33,18 @@ public class DiagnosisRepositoryImplTest extends JpaRepositoryTest {
         Optional<Diagnosis> result = diagnosisJpaRepository.findById(diagnosisId);
         assertThat(result).isNotEmpty();
     }
+
+    @Test
+    void diagnosis_삭제() throws Exception{
+        //given
+        Long userId = userJpaRepository.save(givenUser()).getId();
+        Long diagnosisId = diagnosisJpaRepository.save(givenDiagnosis(userId)).getId();
+
+        //when
+        diagnosisRepository.deleteById(diagnosisId);
+
+        //then
+        Optional<Diagnosis> result = diagnosisJpaRepository.findById(diagnosisId);
+        assertThat(result).isEmpty();
+    }
 }

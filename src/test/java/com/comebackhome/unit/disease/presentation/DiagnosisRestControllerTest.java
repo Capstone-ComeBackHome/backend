@@ -1,6 +1,8 @@
 package com.comebackhome.unit.disease.presentation;
 
+import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
+import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
 import com.comebackhome.disease.presentation.dto.DiagnosisRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DiagnosisRestControllerTest extends RestDocsTestSupport {
@@ -128,5 +132,103 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
                 ))
         ;
     }
+
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_진단_내역_제거하기() throws Exception{
+
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        pathParameters(
+                                parameterWithName("diagnosisId").description("삭제할 진단 내역 Id")
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_나의_진단_내역_제거하기_실패() throws Exception{
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 진단_내역_id_없이_나의_진단_내역_제거하기_실패() throws Exception{
+
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}","")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isMethodNotAllowed())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+        ;
+    }
+
+    @Test
+    void 다른_사람의_진단_내역_제거하기_실패() throws Exception{
+
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new NotMyDiagnosisException()).given(diagnosisCommandUseCase).deleteMyDiagnosis(any(),any());
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+
+        ;
+    }
+
+    @Test
+    void 존재하지_않는_진단_내역_제거하기_실패() throws Exception{
+
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        willThrow(new DiagnosisNotFoundException()).given(diagnosisCommandUseCase).deleteMyDiagnosis(any(),any());
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(errorDescriptors())
+                ))
+
+        ;
+    }
+
+
+
+
 
 }

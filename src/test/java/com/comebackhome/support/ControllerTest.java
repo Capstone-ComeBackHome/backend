@@ -41,7 +41,7 @@ import static org.mockito.BDDMockito.given;
         DiseaseTagRestController.class,
         CalendarRestController.class,
         EnumDocController.class,
-        DiagnosisRestController.class
+        DiagnosisRestController.class,
 })
 public abstract class ControllerTest {
 

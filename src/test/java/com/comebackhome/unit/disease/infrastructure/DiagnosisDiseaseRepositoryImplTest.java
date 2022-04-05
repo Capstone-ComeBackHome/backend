@@ -28,20 +28,7 @@ public class DiagnosisDiseaseRepositoryImplTest extends QuerydslRepositoryTest {
     @Test
     void diagnosisDisease_벌크_저장하기() throws Exception{
         //given
-        Long userId = userJpaRepository.save(givenUser()).getId();
-        Long diagnosisId = diagnosisJpaRepository.save(givenDiagnosis(userId)).getId();
-        List<Disease> diseaseList = diseaseJpaRepository.saveAll(
-                List.of(
-                givenDisease("질병1"),
-                givenDisease("질병2"),
-                givenDisease("질병3"))
-        );
-
-        List<DiagnosisDisease> diagnosisDiseaseList = new ArrayList<>();
-        for (int order = 0; order < diseaseList.size(); order++){
-            Long diseaseId = diseaseList.get(order).getId();
-            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId,order+1));
-        }
+        List<DiagnosisDisease> diagnosisDiseaseList = createDiagnosisDiseaseList();
 
         //when
         diagnosisDiseaseRepository.saveAll(diagnosisDiseaseList);
@@ -50,4 +37,37 @@ public class DiagnosisDiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         List<DiagnosisDisease> result = diagnosisDiseaseJpaRepository.findAll();
         assertThat(result.size()).isEqualTo(3);
     }
+
+
+    @Test
+    void diagnosisId로_삭제하기() throws Exception{
+        //given
+        List<DiagnosisDisease> diagnosisDiseaseList = diagnosisDiseaseJpaRepository.saveAll(createDiagnosisDiseaseList());
+
+        //when
+        diagnosisDiseaseRepository.deleteByDiagnosisId(diagnosisDiseaseList.get(0).getDiagnosis().getId());
+
+        //then
+        List<DiagnosisDisease> result = diagnosisDiseaseJpaRepository.findAll();
+        assertThat(result.size()).isEqualTo(0);
+    }
+
+    private List<DiagnosisDisease> createDiagnosisDiseaseList() {
+        Long userId = userJpaRepository.save(givenUser()).getId();
+        Long diagnosisId = diagnosisJpaRepository.save(givenDiagnosis(userId)).getId();
+        List<Disease> diseaseList = diseaseJpaRepository.saveAll(
+                List.of(
+                        givenDisease("질병1"),
+                        givenDisease("질병2"),
+                        givenDisease("질병3"))
+        );
+
+        List<DiagnosisDisease> diagnosisDiseaseList = new ArrayList<>();
+        for (int order = 0; order < diseaseList.size(); order++) {
+            Long diseaseId = diseaseList.get(order).getId();
+            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId, order + 1));
+        }
+        return diagnosisDiseaseList;
+    }
+
 }

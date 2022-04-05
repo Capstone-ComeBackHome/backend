@@ -30,10 +30,10 @@ operation::auth-rest-controller-test/로그아웃[snippets='http-request,request
 
 ==== 로그아웃 실패
 Authorization 토큰이 유효하지 않은 토큰이면 로그아웃에 실패합니다.
-include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_로그아웃_시도/response-body.adoc[]
+include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_로그아웃_시도/http-response.adoc[]
 
 Authorization, refreshToken 헤더가 들어오지 않으면 로그아웃에 실패합니다.
-include::{snippets}/auth-rest-controller-test/authorization헤더_없이_로그아웃_시도/response-body.adoc[]
+include::{snippets}/auth-rest-controller-test/authorization헤더_없이_로그아웃_시도/http-response.adoc[]
 
 ---
 
@@ -48,10 +48,10 @@ operation::auth-rest-controller-test/토큰_재발급[snippets='http-request,req
 
 ==== 토큰 재발급 실패
 토큰이 유효하지 않으면 실패합니다.
-include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_재발급_시도/response-body.adoc[]
+include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_재발급_시도/http-response.adoc[]
 
 Authorization, refreshToken 헤더가 들어오지 않으면 싪패합니다.
-include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/response-body.adoc[]
+include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/http-response.adoc[]
 
 == Disease API
 === 간략한 질병 조회
@@ -63,7 +63,7 @@ operation::disease-rest-controller-test/여러_질병명으로_간략하게_질�
 ==== 간략한 질병 조회 실패
 diseaseNameList 파라미터 자체가 들어오지 않거나, 공백으로 들어오거나, 콤마를 기준으로 공백이 들어온 경우 실패합니다.
 
-include::{snippets}/disease-rest-controller-test/질병명이_빈칸으로_들어온_경우_실패/response-body.adoc[]
+include::{snippets}/disease-rest-controller-test/질병명이_빈칸으로_들어온_경우_실패/http-response.adoc[]
 
 ---
 
@@ -73,10 +73,10 @@ operation::disease-rest-controller-test/disease-id로_상세정보_찾기[snippe
 
 ==== 질병 상세 조회 실패
 diseaseId 파라미터가 들어오지 않으면 실패합니다.
-include::{snippets}/disease-rest-controller-test/disease-id_파라미터_없이_상세조회/response-body.adoc[]
+include::{snippets}/disease-rest-controller-test/disease-id_파라미터_없이_상세조회/http-response.adoc[]
 
 DB에 존재하지 않은 diseaseId인 경우 실패합니다.
-include::{snippets}/disease-rest-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
+include::{snippets}/disease-rest-controller-test/없는_disease-id로_상세조회/http-response.adoc[]
 
 == Diagnosis API
 === 진단 내역 저장
@@ -85,16 +85,16 @@ operation::diagnosis-rest-controller-test/세가지_질병명으로_diagnosis_�
 
 ==== 진단 내역 저장 실패
 토큰 없이 접근하는 경우
-include::{snippets}/diagnosis-rest-controller-test/토큰없이_diagnosis_저장하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/토큰없이_diagnosis_저장하기_실패/http-response.adoc[]
 
 질병명이 3가지가 안 들어온 경우
-include::{snippets}/diagnosis-rest-controller-test/한가지_질병명으로_diagnosis_저장하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/한가지_질병명으로_diagnosis_저장하기_실패/http-response.adoc[]
 
 질병명이 공백으로 들어온 경우
-include::{snippets}/diagnosis-rest-controller-test/세가지_공백_질병명으로_diagnosis_저장하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/세가지_공백_질병명으로_diagnosis_저장하기_실패/http-response.adoc[]
 
 존재하지 않는 질병명인 경우
-include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_질병명으로_진단_저장하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_질병명으로_진단_저장하기_실패/http-response.adoc[]
 
 ---
 
@@ -110,10 +110,10 @@ include::{snippets}/diagnosis-rest-controller-test/토큰_없이_나의_진단_�
 include::{snippets}/diagnosis-rest-controller-test/진단_내역_id_없이_나의_진단_내역_제거하기_실패/http-response.adoc[]
 
 다른 사람의 진단 내역을 제거 시도하는 경우
-include::{snippets}/diagnosis-rest-controller-test/다른_사람의_진단_내역_제거하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/다른_사람의_진단_내역_제거하기_실패/http-response.adoc[]
 
 존재하지 않는 진단 내역을 제거하는 경우
-include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_진단_내역_제거하기_실패/response-body.adoc[]
+include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_진단_내역_제거하기_실패/http-response.adoc[]
 
 
 == Calendar API
@@ -124,7 +124,7 @@ operation::disease-tag-rest-controller-test/custom-type을_제외한_disease-tag
 
 ==== 질병 태그 조회 실패
 Authorization 헤더 없이 또는 유효하지 않은 토큰일 경우 실패합니다.
-include::{snippets}/disease-tag-rest-controller-test/토큰_없이_접근_시도_실패/response-body.adoc[]
+include::{snippets}/disease-tag-rest-controller-test/토큰_없이_접근_시도_실패/http-response.adoc[]
 
 ---
 
@@ -134,13 +134,13 @@ operation::calendar-rest-controller-test/스케줄_저장하기_성공[snippets=
 
 ==== 스케줄 등록 실패
 날짜 형식이 맞지 않거나 날짜가 들어오지 않은 경우
-include::{snippets}/calendar-rest-controller-test/날짜_없이_스케줄_저장하기_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/날짜_없이_스케줄_저장하기_실패/http-response.adoc[]
 
 증상 값이 들어오지 않거나 제약조건에 맞지 않는 경우
-include::{snippets}/calendar-rest-controller-test/증상_없이_스케줄_저장하기_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/증상_없이_스케줄_저장하기_실패/http-response.adoc[]
 
 토근 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_저장하기_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_저장하기_실패/http-response.adoc[]
 
 ---
 
@@ -150,10 +150,10 @@ operation::calendar-rest-controller-test/특정_월의_자신의_스케줄_조�
 
 ==== 월별 스케줄 조회 실패
 토근 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/토근_없이_월_스케줄_요청/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/토근_없이_월_스케줄_요청/http-response.adoc[]
 
 yearMonth 파라미터 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/year-month_없이_월_스케줄_요청/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/year-month_없이_월_스케줄_요청/http-response.adoc[]
 
 ---
 
@@ -163,13 +163,13 @@ operation::calendar-rest-controller-test/schedule-id로_스케줄_상세_조회[
 
 ==== 특정 스케줄 상세 조회 실패
 토큰 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/토큰_없이_schedule-id로_스케줄_상세_조회/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/토큰_없이_schedule-id로_스케줄_상세_조회/http-response.adoc[]
 
 파라미터로 scheduleId가 들어오지 않은 경우
-include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_상세_조회/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_상세_조회/http-response.adoc[]
 
 자신의 스케줄 중 없는 스케줄 Id인 경우
-include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_상세_조회/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_상세_조회/http-response.adoc[]
 
 
 ---
@@ -180,16 +180,16 @@ operation::calendar-rest-controller-test/나의_스케줄_수정_성공[snippets
 
 ==== 특정 스케줄 수정 실패
 토큰 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_수정/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_수정/http-response.adoc[]
 
 자신의 스케줄 중 존재하지 않는 scheduleId인 경우
-include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_수정/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_수정/http-response.adoc[]
 
 scheduleId path 가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
-include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_수정/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_수정/http-response.adoc[]
 
 증상이 1개 미만 혹은 5개 초과로 들어온 경우
-include::{snippets}/calendar-rest-controller-test/나의_스케줄_수정_증상이_0개_들어온_경우_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/나의_스케줄_수정_증상이_0개_들어온_경우_실패/http-response.adoc[]
 
 ---
 
@@ -199,10 +199,10 @@ operation::calendar-rest-controller-test/스케줄_삭제_성공[snippets='http-
 
 ==== 스케줄 삭제 실패
 토근 없이 접근하는 경우
-include::{snippets}/calendar-rest-controller-test/토근_없이_스케줄_삭제_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/토근_없이_스케줄_삭제_실패/http-response.adoc[]
 
 scheduleId path 가 들어오지 않았을 경우 Path 자체가 없기 때문에 지원하지 않는 메서드 응답이 나갑니다.
-include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_삭제_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_삭제_실패/http-response.adoc[]
 
 내 스케줄 중 존재하지 않는 scheduleId인 경우
-include::{snippets}/calendar-rest-controller-test/내_스케줄_중_존재하지_않는_schedule-id안_경우_실패/response-body.adoc[]
+include::{snippets}/calendar-rest-controller-test/내_스케줄_중_존재하지_않는_schedule-id안_경우_실패/http-response.adoc[]

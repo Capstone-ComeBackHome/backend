@@ -10,8 +10,10 @@ import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
 import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
+import com.comebackhome.disease.application.DiagnosisCommandUseCase;
 import com.comebackhome.disease.application.DiseaseCommandUseCase;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
+import com.comebackhome.disease.presentation.DiagnosisRestController;
 import com.comebackhome.disease.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
@@ -39,6 +41,7 @@ import static org.mockito.BDDMockito.given;
         DiseaseTagRestController.class,
         CalendarRestController.class,
         EnumDocController.class,
+        DiagnosisRestController.class
 })
 public abstract class ControllerTest {
 
@@ -51,6 +54,7 @@ public abstract class ControllerTest {
     @MockBean protected CalendarCommandUseCase calendarCommandUseCase;
     @MockBean protected CalendarQueryUseCase calendarQueryUseCase;
     @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
+    @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

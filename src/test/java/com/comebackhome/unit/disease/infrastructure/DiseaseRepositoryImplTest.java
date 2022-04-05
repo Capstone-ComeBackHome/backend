@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.comebackhome.support.helper.DiseaseGivenHelper.givenDisease;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,6 +80,18 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         assertThat(result.get(0).getName()).isEqualTo("질병1");
         assertThat(result.get(1).getName()).isEqualTo("질병2");
         assertThat(result.get(2).getName()).isEqualTo("질병3");
+    }
+
+    @Test
+    void 이름으로_diseaesId_찾기() throws Exception{
+        //given
+        String diseaseName = diseaseJpaRepository.save(givenDisease()).getName();
+
+        //when
+        Optional<Long> result = diseaseRepository.findIdByName(diseaseName);
+
+        //then
+        assertThat(result).isNotEmpty();
     }
 
 

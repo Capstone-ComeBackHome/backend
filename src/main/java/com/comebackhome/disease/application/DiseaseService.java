@@ -52,4 +52,5 @@ public class DiseaseService implements DiseaseQueryUseCase, DiseaseCommandUseCas
                 .collect(Collectors.toList());
         diseaseRepository.saveAll(diseaseList);
     }
+
 }

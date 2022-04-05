@@ -7,5 +7,4 @@ import java.util.List;
 public interface DiseaseCommandUseCase {
 
     void createDisease(List<DiseaseRequestDto> diseaseRequestDto);
-
 }

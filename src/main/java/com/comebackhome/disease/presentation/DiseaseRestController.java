@@ -43,4 +43,6 @@ public class DiseaseRestController {
         return ResponseEntity.ok().build();
     }
 
+
+
 }

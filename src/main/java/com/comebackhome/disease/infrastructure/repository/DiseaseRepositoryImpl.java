@@ -38,4 +38,9 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
     public void saveAll(List<Disease> diseaseList) {
         diseaseJdbcRepository.saveAll(diseaseList);
     }
+
+    @Override
+    public Optional<Long> findIdByName(String diseaseName) {
+        return diseaseJpaRepository.findIdByName(diseaseName);
+    }
 }

@@ -78,6 +78,23 @@ include::{snippets}/disease-rest-controller-test/disease-id_파라미터_없이_
 DB에 존재하지 않은 diseaseId인 경우 실패합니다.
 include::{snippets}/disease-rest-controller-test/없는_disease-id로_상세조회/response-body.adoc[]
 
+== Diagnosis API
+=== 진단 결과 저장
+==== 진단 결과 저장 성공
+operation::diagnosis-rest-controller-test/세가지_질병명으로_diagnosis_저장하기[snippets='http-request,request-headers,request-fields,http-response']
+
+==== 진단 결과 저장 실패
+토큰 없이 접근하는 경우
+include::{snippets}/diagnosis-rest-controller-test/토큰없이_diagnosis_저장하기_실패/response-body.adoc[]
+
+질병명이 3가지가 안 들어온 경우
+include::{snippets}/diagnosis-rest-controller-test/한가지_질병명으로_diagnosis_저장하기_실패/response-body.adoc[]
+
+질병명이 공백으로 들어온 경우
+include::{snippets}/diagnosis-rest-controller-test/세가지_공백_질병명으로_diagnosis_저장하기_실패/response-body.adoc[]
+
+존재하지 않는 질병명인 경우
+include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_질병명으로_진단_저장하기_실패/response-body.adoc[]
 
 == Calendar API
 

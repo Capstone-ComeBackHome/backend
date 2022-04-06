@@ -58,9 +58,12 @@ include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰
 ==== 간략한 질병 조회 성공
 아래 request에서 diseaseNameList 값이 한글이라 인코딩되서 나오는데 diseaseNameList=질병1,질병2,질병3 이렇게 넣으시면 됩니다.
 
-operation::disease-rest-controller-test/여러_질병명으로_간략하게_질병_조회하기[snippets='http-request,request-parameters,http-response,response-fields']
+operation::disease-rest-controller-test/여러_질병명으로_간략하게_질병_조회하기[snippets='http-request,request-headers,request-parameters,http-response,response-fields']
 
 ==== 간략한 질병 조회 실패
+토큰 없이 접근하는 경우
+include::{snippets}/disease-rest-controller-test/토큰_없이_여러_질병명으로_간략하게_질병_조회하기/http-response.adoc[]
+
 diseaseNameList 파라미터 자체가 들어오지 않거나, 공백으로 들어오거나, 콤마를 기준으로 공백이 들어온 경우 실패합니다.
 
 include::{snippets}/disease-rest-controller-test/질병명이_빈칸으로_들어온_경우_실패/http-response.adoc[]
@@ -69,9 +72,12 @@ include::{snippets}/disease-rest-controller-test/질병명이_빈칸으로_들�
 
 === 질병 상세 조회
 ==== 질병 상세 조회 성공
-operation::disease-rest-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-parameters,http-response,response-fields']
+operation::disease-rest-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-headers,request-parameters,http-response,response-fields']
 
 ==== 질병 상세 조회 실패
+토큰 없이 접근하는 경우
+include::{snippets}/disease-rest-controller-test/토큰_없이_disease-id로_상세정보_찾기/http-response.adoc[]
+
 diseaseId 파라미터가 들어오지 않으면 실패합니다.
 include::{snippets}/disease-rest-controller-test/disease-id_파라미터_없이_상세조회/http-response.adoc[]
 

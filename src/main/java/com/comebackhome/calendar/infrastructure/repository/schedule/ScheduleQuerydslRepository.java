@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.infrastructure.repository;
+package com.comebackhome.calendar.infrastructure.repository.schedule;
 
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;

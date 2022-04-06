@@ -3,7 +3,7 @@ package com.comebackhome.integration.calendar;
 import com.comebackhome.calendar.application.DiseaseTagService;
 import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
 import com.comebackhome.calendar.domain.DiseaseTag;
-import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
+import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

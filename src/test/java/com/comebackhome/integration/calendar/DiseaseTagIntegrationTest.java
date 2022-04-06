@@ -2,7 +2,7 @@ package com.comebackhome.integration.calendar;
 
 import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseTag;
-import com.comebackhome.calendar.infrastructure.repository.DiseaseTagJpaRepository;
+import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;

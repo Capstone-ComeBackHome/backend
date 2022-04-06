@@ -1,8 +1,8 @@
-package com.comebackhome.disease.infrastructure.repository;
+package com.comebackhome.disease.infrastructure.repository.disease;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.domain.DiseaseRepository;
+import com.comebackhome.disease.domain.repository.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

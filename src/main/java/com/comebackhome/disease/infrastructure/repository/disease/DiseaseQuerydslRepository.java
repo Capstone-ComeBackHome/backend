@@ -1,4 +1,4 @@
-package com.comebackhome.disease.infrastructure.repository;
+package com.comebackhome.disease.infrastructure.repository.disease;
 
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import com.querydsl.core.types.Projections;

@@ -6,7 +6,7 @@ import com.comebackhome.disease.application.dto.DiseaseRequestDto;
 import com.comebackhome.disease.application.dto.DiseaseResponseDto;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.domain.DiseaseRepository;
+import com.comebackhome.disease.domain.repository.DiseaseRepository;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
 package com.comebackhome.integration.disease;
 
 import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.infrastructure.repository.DiseaseJpaRepository;
+import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

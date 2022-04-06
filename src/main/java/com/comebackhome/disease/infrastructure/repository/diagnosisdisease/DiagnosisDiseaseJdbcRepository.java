@@ -1,4 +1,4 @@
-package com.comebackhome.disease.infrastructure.repository;
+package com.comebackhome.disease.infrastructure.repository.diagnosisdisease;
 
 import com.comebackhome.disease.domain.DiagnosisDisease;
 import lombok.RequiredArgsConstructor;

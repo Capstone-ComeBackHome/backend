@@ -1,4 +1,4 @@
-package com.comebackhome.disease.infrastructure.repository;
+package com.comebackhome.disease.infrastructure.repository.diagnosis;
 
 import com.comebackhome.common.RepositorySliceHelper;
 import com.comebackhome.disease.domain.Diagnosis;

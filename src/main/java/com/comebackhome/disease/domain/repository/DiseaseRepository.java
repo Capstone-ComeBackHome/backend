@@ -1,5 +1,6 @@
-package com.comebackhome.disease.domain;
+package com.comebackhome.disease.domain.repository;
 
+import com.comebackhome.disease.domain.Disease;
 import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
 
 import java.util.List;

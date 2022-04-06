@@ -2,7 +2,11 @@ package com.comebackhome.unit.disease.infrastructure;
 
 import com.comebackhome.disease.domain.DiagnosisDisease;
 import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.infrastructure.repository.*;
+import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisJpaRepository;
+import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJdbcRepository;
+import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJpaRepository;
+import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseRepositoryImpl;
+import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJpaRepository;
 import com.comebackhome.support.QuerydslRepositoryTest;
 import com.comebackhome.user.infrastructure.repository.UserJpaRepository;
 import org.junit.jupiter.api.Test;
@@ -18,12 +22,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DiagnosisDiseaseRepositoryImplTest extends QuerydslRepositoryTest {
 
-    @Autowired DiagnosisDiseaseRepositoryImpl diagnosisDiseaseRepository;
-    @Autowired DiagnosisDiseaseJdbcRepository diagnosisDiseaseJdbcRepository;
-    @Autowired DiagnosisJpaRepository diagnosisJpaRepository;
-    @Autowired DiseaseJpaRepository diseaseJpaRepository;
+    @Autowired
+    DiagnosisDiseaseRepositoryImpl diagnosisDiseaseRepository;
+    @Autowired
+    DiagnosisDiseaseJdbcRepository diagnosisDiseaseJdbcRepository;
+    @Autowired
+    DiagnosisJpaRepository diagnosisJpaRepository;
+    @Autowired
+    DiseaseJpaRepository diseaseJpaRepository;
     @Autowired UserJpaRepository userJpaRepository;
-    @Autowired DiagnosisDiseaseJpaRepository diagnosisDiseaseJpaRepository;
+    @Autowired
+    DiagnosisDiseaseJpaRepository diagnosisDiseaseJpaRepository;
 
     @Test
     void diagnosisDisease_벌크_저장하기() throws Exception{

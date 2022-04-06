@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.infrastructure.repository;
+package com.comebackhome.calendar.infrastructure.repository.diseasetag;
 
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.DiseaseType;

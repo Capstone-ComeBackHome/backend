@@ -1,7 +1,7 @@
-package com.comebackhome.disease.infrastructure.repository;
+package com.comebackhome.disease.infrastructure.repository.diagnosis;
 
 import com.comebackhome.disease.domain.Diagnosis;
-import com.comebackhome.disease.domain.DiagnosisRepository;
+import com.comebackhome.disease.domain.repository.DiagnosisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

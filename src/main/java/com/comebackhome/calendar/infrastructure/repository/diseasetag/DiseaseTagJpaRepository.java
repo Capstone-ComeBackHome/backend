@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.infrastructure.repository;
+package com.comebackhome.calendar.infrastructure.repository.diseasetag;
 
 import com.comebackhome.calendar.domain.DiseaseTag;
 import org.springframework.data.jpa.repository.JpaRepository;

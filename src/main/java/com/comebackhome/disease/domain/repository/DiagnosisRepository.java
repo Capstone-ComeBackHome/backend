@@ -1,5 +1,6 @@
-package com.comebackhome.disease.domain;
+package com.comebackhome.disease.domain.repository;
 
+import com.comebackhome.disease.domain.Diagnosis;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

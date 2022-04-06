@@ -98,6 +98,19 @@ include::{snippets}/diagnosis-rest-controller-test/존재하지_않는_질병명
 
 ---
 
+
+
+=== 진단 내역 조회
+==== 진단 내역 조회 성공
+operation::diagnosis-rest-controller-test/나의_진단_내역_조회하기[snippets='http-request,request-headers,request-parameters,http-response,response-fields']
+
+==== 진단 내역 조회 실패
+토큰 없이 접근하는 경우
+include::{snippets}/diagnosis-rest-controller-test/토큰_없이_나의_진단_내역_조회하기/http-response.adoc[]
+
+
+---
+
 === 진단 내역 삭제
 ==== 진단 내역 삭제 성공
 operation::diagnosis-rest-controller-test/나의_진단_내역_제거하기[snippets='http-request,request-headers,path-parameters,http-response']

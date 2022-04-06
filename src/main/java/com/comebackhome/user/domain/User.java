@@ -1,6 +1,7 @@
 package com.comebackhome.user.domain;
 
 import com.comebackhome.common.domain.BaseEntity;
+import com.comebackhome.user.domain.dto.UserInfoDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,23 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private int age;
+
+    private Sex sex;
+
+    private int height;
+
+    private int weight;
+
+    private String history;
+
+    private String FamilyHistory;
+
+    private String drugHistory;
+
+    private String socialHistory;
+
+    private String traumaHistory;
 
     public String getRoleKey(){
         return this.role.getKey();
@@ -41,5 +59,17 @@ public class User extends BaseEntity {
         this.name = name;
         this.picture = picture;
         return this;
+    }
+
+    public void updateInfo(UserInfoDto userInfoDto){
+        this.age = userInfoDto.getAge();
+        this.sex = userInfoDto.getSex();
+        this.height = userInfoDto.getHeight();
+        this.weight = userInfoDto.getWeight();
+        this.history = userInfoDto.getHistory();
+        this.FamilyHistory = userInfoDto.getFamilyHistory();
+        this.drugHistory = userInfoDto.getDrugHistory();
+        this.socialHistory = userInfoDto.getSocialHistory();
+        this.traumaHistory = userInfoDto.getTraumaHistory();
     }
 }

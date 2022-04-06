@@ -5,6 +5,7 @@ import com.comebackhome.disease.infrastructure.repository.DiseaseJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,10 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DiseaseIntegrationTest extends IntegrationTest {
 
     private final String URL = "/api/v1/diseases";
+    private final String TOKEN_TYPE = "Bearer ";
 
     @Autowired DiseaseJpaRepository diseaseJpaRepository;
-
-
 
     @Test
     void diseaseId로_상세정보_가져오기() throws Exception{
@@ -32,6 +32,7 @@ public class DiseaseIntegrationTest extends IntegrationTest {
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.get(URL+"?diseaseId="+disease.getId())
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name",is("부정맥")))
@@ -51,6 +52,7 @@ public class DiseaseIntegrationTest extends IntegrationTest {
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.get(URL+"/simple?diseaseNameList=부정맥,후두염")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.simpleDiseaseList[0].name",is("부정맥")))

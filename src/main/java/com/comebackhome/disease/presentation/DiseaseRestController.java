@@ -7,6 +7,7 @@ import com.comebackhome.disease.presentation.dto.DiseaseResponse;
 import com.comebackhome.disease.presentation.dto.SimpleDiseaseResponseList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,11 +25,13 @@ public class DiseaseRestController {
     private final DiseaseQueryUseCase diseaseQueryUseCase;
     private final DiseaseCommandUseCase diseaseCommandUseCase;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public ResponseEntity<DiseaseResponse> getDisease(@RequestParam Long diseaseId){
         return ResponseEntity.ok(DiseaseResponse.from(diseaseQueryUseCase.getDisease(diseaseId)));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/simple")
     public ResponseEntity<SimpleDiseaseResponseList> getSimpleDisease
                             (@RequestParam @NotEmpty List<@NotBlank(message = "질병명이 빈칸입니다.") String> diseaseNameList){

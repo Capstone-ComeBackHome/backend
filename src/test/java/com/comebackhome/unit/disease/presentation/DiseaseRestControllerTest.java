@@ -4,9 +4,11 @@ import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import static com.comebackhome.support.helper.DiseaseGivenHelper.givenSimpleDise
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -26,17 +30,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DiseaseRestControllerTest extends RestDocsTestSupport {
 
     private final String URL = "/api/v1/diseases";
+    private final String ACCESS_TOKEN = "Bearer accessToken";
 
     @Test
+    @WithMockUser(roles = "USER")
     void diseaseId로_상세정보_찾기() throws Exception{
         // given
         given(diseaseQueryUseCase.getDisease(any())).willReturn(givenDiseaseResponseDto());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
                         requestParameters(
                                 parameterWithName("diseaseId").description("질병 ID값")
                         ),
@@ -52,13 +62,24 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                 ;
     }
 
+    @Test
+    void 토큰_없이_diseaseId로_상세정보_찾기() throws Exception{
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+        ;
+    }
+
    @Test
+   @WithMockUser(roles = "USER")
    void 없는_diseaseId로_상세조회() throws Exception{
        // given
        willThrow(new DiseaseNotFoundException()).given(diseaseQueryUseCase).getDisease(any());
 
        // when then docs
        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+               .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isBadRequest())
                .andDo(restDocumentationResultHandler.document(
@@ -83,6 +104,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void 여러_질병명으로_간략하게_질병_조회하기() throws Exception{
         // given
         List<SimpleDiseaseResponseDto> simpleDiseaseResponseDtoList = List.of(
@@ -94,9 +116,13 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
                         requestParameters(
                                 parameterWithName("diseaseNameList").description("질병 이름 리스트")
                         ),
@@ -111,9 +137,20 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    void 토큰_없이_여러_질병명으로_간략하게_질병_조회하기() throws Exception{
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
     void 질병명이_콤마를_기준으로_빈칸으로_들어온_경우_실패() throws Exception{
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=,,")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
@@ -123,9 +160,11 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     void 질병명이_빈칸으로_들어온_경우_실패() throws Exception{
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(

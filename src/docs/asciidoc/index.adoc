@@ -67,6 +67,27 @@ include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_업데
 필수값 없이 업데이트 시도할 경우 실패합니다.
 include::{snippets}/user-rest-controller-test/필수값이_들어오지_않은_상태에서_개인_정보_업데이트_하기/http-response.adoc[]
 
+---
+
+=== 개인 정보 심플 조회
+==== 개인 정보 심플 조회 성공
+operation::user-rest-controller-test/개인_정보_심플_조회하기[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 개인 정보 심플 조회 실패
+토큰이 유효하지 않으면 실패합니다.
+include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_심플_조회하기/http-response.adoc[]
+
+
+---
+
+=== 개인 병력 조회
+==== 개인 병력 조회 성공
+operation::user-rest-controller-test/개인_정보_히스토리_조회하기[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 개인 병력 조회 실패
+토큰이 유효하지 않으면 실패합니다.
+include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_히스토리_조회하기/http-response.adoc[]
+
 == Disease API
 === 간략한 질병 조회
 ==== 간략한 질병 조회 성공

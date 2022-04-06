@@ -27,6 +27,26 @@ public class UserGivenHelper {
                 .build();
     }
 
+    public static User givenUserIncludeHistory() {
+        return User.builder()
+                .email("cjs1863@gmail.com")
+                .name("최준성")
+                .picture("picture url")
+                .authProvider(AuthProvider.google)
+                .role(Role.USER)
+                .age(27)
+                .sex(Sex.MAN)
+                .height(172)
+                .weight(65)
+                .history("저는 과거에..")
+                .FamilyHistory("가족 중에는..")
+                .drugHistory("약은..")
+                .socialHistory("사회력은..")
+                .traumaHistory("외상력은..")
+                .build();
+    }
+
+
     public static Authentication createAuthentication(User user) {
         List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRoleKey()));
         UserPrincipal principal = UserPrincipal.from(user);

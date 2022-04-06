@@ -10,9 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUserInfoRequest;
+import static com.comebackhome.support.helper.UserGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserIntegrationTest extends IntegrationTest {
@@ -49,4 +50,47 @@ public class UserIntegrationTest extends IntegrationTest {
         assertThat(result.getSocialHistory()).isEqualTo(userInfoRequest.getSocialHistory());
         assertThat(result.getTraumaHistory()).isEqualTo(userInfoRequest.getTraumaHistory());
     }
+
+
+    @Test
+    void 개인_정보_심플_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL)
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.picture", is(user.getPicture())))
+                .andExpect(jsonPath("$.authProvider", is(user.getAuthProvider().name())))
+        ;
+    }
+
+    @Test
+    void 개인_정보_병력_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUserIncludeHistory());
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/history")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.age", is(user.getAge())))
+                .andExpect(jsonPath("$.sex", is(user.getSex().name())))
+                .andExpect(jsonPath("$.height", is(user.getHeight())))
+                .andExpect(jsonPath("$.weight", is(user.getWeight())))
+                .andExpect(jsonPath("$.history", is(user.getHistory())))
+                .andExpect(jsonPath("$.drugHistory", is(user.getDrugHistory())))
+                .andExpect(jsonPath("$.socialHistory", is(user.getSocialHistory())))
+                .andExpect(jsonPath("$.traumaHistory", is(user.getTraumaHistory())))
+                .andExpect(jsonPath("$.familyHistory", is(user.getFamilyHistory())))
+
+        ;
+    }
+
+
 }

@@ -19,9 +19,7 @@ import com.comebackhome.disease.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
 import com.comebackhome.user.application.UserCommandUseCase;
-import com.comebackhome.user.domain.Role;
-import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.*;
 import com.comebackhome.user.presentation.UserRestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,6 +74,22 @@ public abstract class ControllerTest {
         given(tokenProvider.validateToken(any())).willReturn(true);
         given(tokenRepository.existsLogoutAccessTokenById(any())).willReturn(false);
         given(tokenRepository.existsLogoutRefreshTokenById(any())).willReturn(false);
-        given(userRepository.findByEmail(any())).willReturn(Optional.of(User.builder().id(1L).role(Role.USER).build()));
+        given(userRepository.findByEmail(any())).willReturn(Optional.of(User.builder()
+                .id(1L)
+                .email("cjs1863@gmail.com")
+                .name("최준성")
+                .picture("picture url")
+                .authProvider(AuthProvider.google)
+                .role(Role.USER)
+                .age(27)
+                .sex(Sex.MAN)
+                .height(172)
+                .weight(65)
+                .history("저는 과거에..")
+                .FamilyHistory("가족 중에는..")
+                .drugHistory("약은..")
+                .socialHistory("사회력은..")
+                .traumaHistory("외상력은..")
+                .build()));
     }
 }

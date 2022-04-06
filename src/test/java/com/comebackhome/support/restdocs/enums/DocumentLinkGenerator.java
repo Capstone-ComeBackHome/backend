@@ -18,6 +18,8 @@ public interface DocumentLinkGenerator {
     enum DocUrl {
         DISEASE_TYPE("disease-type","질병 태그 타입"),
         PAIN_TYPE("pain-type","아픈 정도"),
+        AUTH_PROVIDER("auth-provider","소셜 제공자"),
+        SEX("sex","성별")
         ;
 
         private final String pageId;

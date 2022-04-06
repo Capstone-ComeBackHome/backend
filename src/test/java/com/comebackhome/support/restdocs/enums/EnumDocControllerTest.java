@@ -43,6 +43,14 @@ class EnumDocControllerTest extends RestDocsTestSupport {
                         customResponseFields("custom-response", beneathPath("data.painType").withSubsectionId("painType"),
                                 attributes(key("title").value("painType")),
                                 enumConvertFieldDescriptor((enumDocs.getPainType()))
+                        ),
+                        customResponseFields("custom-response", beneathPath("data.authProvider").withSubsectionId("authProvider"),
+                                attributes(key("title").value("authProvider")),
+                                enumConvertFieldDescriptor((enumDocs.getAuthProvider()))
+                        ),
+                        customResponseFields("custom-response", beneathPath("data.sex").withSubsectionId("sex"),
+                                attributes(key("title").value("sex")),
+                                enumConvertFieldDescriptor((enumDocs.getSex()))
                         )
                 ));
     }

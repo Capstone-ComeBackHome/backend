@@ -10,6 +10,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import static com.comebackhome.config.RestDocsConfig.field;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUserInfoRequest;
+import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.AUTH_PROVIDER;
+import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.SEX;
+import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.generateLinkCode;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
@@ -42,7 +45,7 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                         ),
                         requestFields(
                                 fieldWithPath("age").type(NUMBER).description("나이").attributes(field("constraints", "양수")),
-                                fieldWithPath("sex").type(STRING).description("성별").attributes(field("constraints", "MAN, WOMAN 중 하나")),
+                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
                                 fieldWithPath("height").type(NUMBER).description("키").attributes(field("constraints", "양수")),
                                 fieldWithPath("weight").type(NUMBER).description("몸무게").attributes(field("constraints", "양수")),
                                 fieldWithPath("history").type(STRING).description("과거력").optional(),
@@ -93,4 +96,96 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                 ))
         ;
     }
+
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 개인_정보_심플_조회하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("email").type(STRING).description("이메일"),
+                                fieldWithPath("name").type(STRING).description("실명"),
+                                fieldWithPath("picture").type(STRING).description("사진 url").optional(),
+                                fieldWithPath("authProvider").type(STRING).description(generateLinkCode(AUTH_PROVIDER))
+                        )
+
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_개인_정보_심플_조회하기() throws Exception{
+        // given
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 개인_정보_히스토리_조회하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/history")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("age").type(NUMBER).description("나이"),
+                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
+                                fieldWithPath("height").type(NUMBER).description("키"),
+                                fieldWithPath("weight").type(NUMBER).description("몸무게"),
+                                fieldWithPath("history").type(STRING).description("과거력").optional(),
+                                fieldWithPath("drugHistory").type(STRING).description("약물투여력").optional(),
+                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
+                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional(),
+                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional()
+                        )
+
+                ))
+        ;
+    }
+
+
+    @Test
+    void 토큰_없이_개인_정보_히스토리_조회하기() throws Exception{
+        // given
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/history")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
 }

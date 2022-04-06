@@ -6,6 +6,7 @@ import com.comebackhome.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +22,9 @@ public class Diagnosis extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID",nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "diagnosis")
+    private List<DiagnosisDisease> diagnosisDiseaseList;
 
     public static Diagnosis from(Long userId){
         return Diagnosis.builder()

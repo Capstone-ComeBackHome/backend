@@ -3,6 +3,8 @@ package com.comebackhome.disease.infrastructure.repository;
 import com.comebackhome.disease.domain.Diagnosis;
 import com.comebackhome.disease.domain.DiagnosisRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,6 +14,7 @@ import java.util.Optional;
 public class DiagnosisRepositoryImpl implements DiagnosisRepository {
 
     private final DiagnosisJpaRepository diagnosisJpaRepository;
+    private final DiagnosisQuerydslRepository diagnosisQuerydslRepository;
 
     @Override
     public Long save(Diagnosis diagnosis) {
@@ -26,5 +29,11 @@ public class DiagnosisRepositoryImpl implements DiagnosisRepository {
     @Override
     public void deleteById(Long id) {
         diagnosisJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Slice<Diagnosis> findDiagnosisListByLastDiagnosisIdAndUserId(Long lastDiagnosisId, Long userId, Pageable pageable) {
+        return diagnosisQuerydslRepository.findDiagnosisListByLastDiagnosisIdAndUserId(lastDiagnosisId, userId, pageable);
+
     }
 }

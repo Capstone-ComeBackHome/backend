@@ -3,18 +3,23 @@ package com.comebackhome.disease.application;
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
+import com.comebackhome.disease.application.dto.DiagnosisResponseDto;
+import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
 import com.comebackhome.disease.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
-public class DiagnosisService implements DiagnosisCommandUseCase{
+public class DiagnosisService implements DiagnosisCommandUseCase, DiagnosisQueryUseCase{
 
     private final DiseaseRepository diseaseRepository;
     private final DiagnosisRepository diagnosisRepository;
@@ -58,5 +63,24 @@ public class DiagnosisService implements DiagnosisCommandUseCase{
         if (!diagnosis.getUser().getId().equals(userId)){
             throw new NotMyDiagnosisException();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DiagnosisResponseDtoList getMyDiagnoses(Long lastDiagnosisId, Long userId, Pageable pageable) {
+        Slice<Diagnosis> diagnosisList
+                = diagnosisRepository.findDiagnosisListByLastDiagnosisIdAndUserId(lastDiagnosisId, userId, pageable);
+        return DiagnosisResponseDtoList.of(createDiagnosisResponseDtoList(diagnosisList),diagnosisList.hasNext());
+    }
+
+    private List<DiagnosisResponseDto> createDiagnosisResponseDtoList(Slice<Diagnosis> diagnosisList) {
+        List<DiagnosisResponseDto> diagnosisResponseDtoList = new ArrayList<>();
+        for (Diagnosis diagnosis : diagnosisList.getContent()) {
+            List<String> diseaseNameList = diagnosis.getDiagnosisDiseaseList().parallelStream()
+                    .map(diagnosisDisease -> diagnosisDisease.getDisease().getName())
+                    .collect(Collectors.toList());
+            diagnosisResponseDtoList.add(DiagnosisResponseDto.of(diagnosis,diseaseNameList));
+        }
+        return diagnosisResponseDtoList;
     }
 }

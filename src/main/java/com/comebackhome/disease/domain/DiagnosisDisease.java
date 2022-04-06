@@ -25,14 +25,10 @@ public class DiagnosisDisease extends BaseEntity {
     @JoinColumn(name = "DIAGNOSIS_ID", nullable = false)
     private Diagnosis diagnosis;
 
-    @Column(nullable = false)
-    private int orders;
-
-    public static DiagnosisDisease of(Long diseaseId, Long diagnosisId, int order){
+    public static DiagnosisDisease of(Long diseaseId, Long diagnosisId){
         return DiagnosisDisease.builder()
                 .disease(Disease.builder().id(diseaseId).build())
                 .diagnosis(Diagnosis.builder().id(diagnosisId).build())
-                .orders(order)
                 .build();
     }
 }

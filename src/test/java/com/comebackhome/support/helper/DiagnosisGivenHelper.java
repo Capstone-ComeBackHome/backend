@@ -27,7 +27,7 @@ public class DiagnosisGivenHelper {
     public static Diagnosis givenDiagnosis(){
         return Diagnosis.builder()
                 .diagnosisDiseaseList(List.of(
-                        DiagnosisDisease.of(1L,1L,1)
+                        DiagnosisDisease.of(1L,1L)
                 ))
                 .build();
     }

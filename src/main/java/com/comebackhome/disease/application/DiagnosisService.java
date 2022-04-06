@@ -34,16 +34,16 @@ public class DiagnosisService implements DiagnosisCommandUseCase, DiagnosisQuery
 
     private List<DiagnosisDisease> createDiagnosisDiseaseList(List<String> diseaseNameList, Long diagnosisId) {
         List<DiagnosisDisease> diagnosisDiseaseList = new ArrayList<>();
-        for (int order = 0; order < diseaseNameList.size(); order++){
-            Long diseaseId = getDiseaseIdOrThrow(diseaseNameList, order);
-            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId,order+1));
+        for (String diseaseName : diseaseNameList) {
+            Long diseaseId = getDiseaseIdOrThrow(diseaseName);
+            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId));
         }
 
         return diagnosisDiseaseList;
     }
 
-    private Long getDiseaseIdOrThrow(List<String> diseaseNameList, int order) {
-        Long diseaseId = diseaseRepository.findIdByName(diseaseNameList.get(order).trim())
+    private Long getDiseaseIdOrThrow(String diseaseName) {
+        Long diseaseId = diseaseRepository.findIdByName(diseaseName.trim())
                 .orElseThrow(() -> new DiseaseNotFoundException());
         return diseaseId;
     }

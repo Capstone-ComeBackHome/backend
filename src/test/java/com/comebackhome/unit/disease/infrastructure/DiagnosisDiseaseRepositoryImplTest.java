@@ -65,7 +65,7 @@ public class DiagnosisDiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         List<DiagnosisDisease> diagnosisDiseaseList = new ArrayList<>();
         for (int order = 0; order < diseaseList.size(); order++) {
             Long diseaseId = diseaseList.get(order).getId();
-            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId, order + 1));
+            diagnosisDiseaseList.add(DiagnosisDisease.of(diseaseId, diagnosisId));
         }
         return diagnosisDiseaseList;
     }

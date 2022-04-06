@@ -20,16 +20,15 @@ public class DiagnosisDiseaseJdbcRepository {
 
     public void saveAll(List<DiagnosisDisease> DiagnosisDiseaseList) {
         jdbcTemplate.batchUpdate("insert into diagnosis_disease" +
-                        "(disease_id, diagnosis_id,orders, created_date,last_modified_date)" +
-                        " values(?,?,?,?,?)",
+                        "(disease_id, diagnosis_id, created_date,last_modified_date)" +
+                        " values(?,?,?,?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setLong(1,DiagnosisDiseaseList.get(i).getDisease().getId());
                         ps.setLong(2,DiagnosisDiseaseList.get(i).getDiagnosis().getId());
-                        ps.setInt(3,DiagnosisDiseaseList.get(i).getOrders());
+                        ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
                         ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-                        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
                     }
 
                     @Override

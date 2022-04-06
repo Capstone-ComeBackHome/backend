@@ -57,7 +57,7 @@ public class DiagnosisIntegrationTest extends IntegrationTest {
         User user = userRepository.save(givenUser());
         Long diagnosisId = diagnosisRepository.save(Diagnosis.from(user.getId()));
         Long diseaseId = diseaseJpaRepository.save(givenDisease()).getId();
-        diagnosisDiseaseJpaRepository.save(DiagnosisDisease.of(diseaseId,diagnosisId,1));
+        diagnosisDiseaseJpaRepository.save(DiagnosisDisease.of(diseaseId,diagnosisId));
 
 
         // when then
@@ -80,18 +80,18 @@ public class DiagnosisIntegrationTest extends IntegrationTest {
 
         diagnosisDiseaseJpaRepository.saveAll(
                 List.of(
-                        DiagnosisDisease.of(diseaseId1,diagnosisId,1),
-                        DiagnosisDisease.of(diseaseId2,diagnosisId,2),
-                        DiagnosisDisease.of(diseaseId3,diagnosisId,3)
+                        DiagnosisDisease.of(diseaseId1,diagnosisId),
+                        DiagnosisDisease.of(diseaseId2,diagnosisId),
+                        DiagnosisDisease.of(diseaseId3,diagnosisId)
                 )
         );
 
         Long diagnosisId2 = diagnosisRepository.save(Diagnosis.from(user.getId()));
         diagnosisDiseaseJpaRepository.saveAll(
                 List.of(
-                        DiagnosisDisease.of(diseaseId1,diagnosisId2,1),
-                        DiagnosisDisease.of(diseaseId2,diagnosisId2,2),
-                        DiagnosisDisease.of(diseaseId3,diagnosisId2,3)
+                        DiagnosisDisease.of(diseaseId1,diagnosisId2),
+                        DiagnosisDisease.of(diseaseId2,diagnosisId2),
+                        DiagnosisDisease.of(diseaseId3,diagnosisId2)
                 )
         );
 
@@ -123,18 +123,18 @@ public class DiagnosisIntegrationTest extends IntegrationTest {
 
         diagnosisDiseaseJpaRepository.saveAll(
                 List.of(
-                        DiagnosisDisease.of(diseaseId1,diagnosisId,1),
-                        DiagnosisDisease.of(diseaseId2,diagnosisId,2),
-                        DiagnosisDisease.of(diseaseId3,diagnosisId,3)
+                        DiagnosisDisease.of(diseaseId1,diagnosisId),
+                        DiagnosisDisease.of(diseaseId2,diagnosisId),
+                        DiagnosisDisease.of(diseaseId3,diagnosisId)
                 )
         );
 
         Long diagnosisId2 = diagnosisRepository.save(Diagnosis.from(user.getId()));
         diagnosisDiseaseJpaRepository.saveAll(
                 List.of(
-                        DiagnosisDisease.of(diseaseId1,diagnosisId2,1),
-                        DiagnosisDisease.of(diseaseId2,diagnosisId2,2),
-                        DiagnosisDisease.of(diseaseId3,diagnosisId2,3)
+                        DiagnosisDisease.of(diseaseId1,diagnosisId2),
+                        DiagnosisDisease.of(diseaseId2,diagnosisId2),
+                        DiagnosisDisease.of(diseaseId3,diagnosisId2)
                 )
         );
 

@@ -255,9 +255,9 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         ),
                         responseFields(
                                 fieldWithPath("simpleScheduleResponseList").type(ARRAY).description("요청한 달의 나의 스케줄 리스트"),
-                                fieldWithPath("simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID"),
-                                fieldWithPath("simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜"),
-                                fieldWithPath("simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수")
+                                fieldWithPath("simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID").optional(),
+                                fieldWithPath("simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜").optional(),
+                                fieldWithPath("simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수").optional()
                         )
                 ))
         ;

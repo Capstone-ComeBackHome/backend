@@ -18,9 +18,11 @@ import com.comebackhome.disease.presentation.DiagnosisRestController;
 import com.comebackhome.disease.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
+import com.comebackhome.user.application.UserCommandUseCase;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.presentation.UserRestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ import static org.mockito.BDDMockito.given;
         CalendarRestController.class,
         EnumDocController.class,
         DiagnosisRestController.class,
+        UserRestController.class
 })
 public abstract class ControllerTest {
 
@@ -57,6 +60,7 @@ public abstract class ControllerTest {
     @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
     @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
     @MockBean protected DiagnosisQueryUseCase diagnosisQueryUseCase;
+    @MockBean protected UserCommandUseCase userCommandUseCase;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

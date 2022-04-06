@@ -47,4 +47,16 @@ public class UserRepositoryImplTest extends JpaRepositoryTest {
         assertThat(userOptional.get()).isNotNull();
     }
 
+    @Test
+    void Id로_유저_찾기() throws Exception{
+        //given
+        User savedUser = userRepository.save(givenUser());
+
+        //when
+        Optional<User> result = userRepository.findById(savedUser.getId());
+
+        //then
+        assertThat(result).isNotEmpty();
+    }
+
 }

@@ -11,6 +11,7 @@ import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
 import com.comebackhome.disease.application.DiagnosisCommandUseCase;
+import com.comebackhome.disease.application.DiagnosisQueryUseCase;
 import com.comebackhome.disease.application.DiseaseCommandUseCase;
 import com.comebackhome.disease.application.DiseaseQueryUseCase;
 import com.comebackhome.disease.presentation.DiagnosisRestController;
@@ -55,6 +56,7 @@ public abstract class ControllerTest {
     @MockBean protected CalendarQueryUseCase calendarQueryUseCase;
     @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
     @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
+    @MockBean protected DiagnosisQueryUseCase diagnosisQueryUseCase;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

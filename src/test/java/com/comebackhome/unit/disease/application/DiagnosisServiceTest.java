@@ -1,10 +1,13 @@
 package com.comebackhome.unit.disease.application;
 
 
+import com.comebackhome.common.RepositorySliceHelper;
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
 import com.comebackhome.disease.application.DiagnosisService;
+import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
+import com.comebackhome.disease.domain.Diagnosis;
 import com.comebackhome.disease.domain.DiagnosisDiseaseRepository;
 import com.comebackhome.disease.domain.DiagnosisRepository;
 import com.comebackhome.disease.domain.DiseaseRepository;
@@ -13,11 +16,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.comebackhome.support.helper.DiagnosisGivenHelper.givenDiagnosis;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
@@ -81,6 +87,27 @@ public class DiagnosisServiceTest {
         assertThatThrownBy(() -> diagnosisService.deleteMyDiagnosis(any(),2L))
                 .isInstanceOf(NotMyDiagnosisException.class)
         ;
+    }
+
+
+    @Test
+    void 나의_진단_내역_조회하기() throws Exception{
+        //given
+        List<Diagnosis> diagnosisList = List.of(
+                givenDiagnosis(),
+                givenDiagnosis()
+        );
+        PageRequest pageRequest = PageRequest.of(0, 20);
+        Slice<Diagnosis> diagnosisSlice = RepositorySliceHelper.toSlice(diagnosisList, pageRequest);
+
+        given(diagnosisRepository.findDiagnosisListByLastDiagnosisIdAndUserId(any(),any(),any())).willReturn(diagnosisSlice);
+
+        //when
+        DiagnosisResponseDtoList result = diagnosisService.getMyDiagnoses(any(), any(), any());
+
+        //then
+        assertThat(result.hasNext()).isFalse();
+        assertThat(result.getDiagnosisResponseDtoList().size()).isEqualTo(2);
     }
 
 

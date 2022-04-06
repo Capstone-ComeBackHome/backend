@@ -90,4 +90,5 @@ public class DiseaseServiceTest {
         //then
         then(diseaseRepository).should().saveAll(any());
     }
+
 }

@@ -3,7 +3,8 @@ package com.comebackhome.unit.disease.presentation;
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
-import com.comebackhome.disease.presentation.dto.DiagnosisRequest;
+import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
+import com.comebackhome.disease.presentation.dto.DiagnosisSaveRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -15,14 +16,15 @@ import java.util.List;
 
 import static com.comebackhome.config.RestDocsConfig.field;
 import static com.comebackhome.support.helper.DiagnosisGivenHelper.givenDiagnosisRequest;
+import static com.comebackhome.support.helper.DiagnosisGivenHelper.givenDiagnosisResponseDtoList;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.JsonFieldType.ARRAY;
+import static org.springframework.restdocs.payload.JsonFieldType.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DiagnosisRestControllerTest extends RestDocsTestSupport {
@@ -37,12 +39,12 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
 
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        DiagnosisRequest diagnosisRequest = givenDiagnosisRequest();
+        DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(diagnosisRequest))
+                .content(createJson(diagnosisSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocumentationResultHandler.document(
@@ -62,13 +64,13 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
 
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        DiagnosisRequest diagnosisRequest = givenDiagnosisRequest();
-        diagnosisRequest.setDiseaseNameList(List.of("질병1"));
+        DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
+        diagnosisSaveRequest.setDiseaseNameList(List.of("질병1"));
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(diagnosisRequest))
+                .content(createJson(diagnosisSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
@@ -83,13 +85,13 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
 
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        DiagnosisRequest diagnosisRequest = givenDiagnosisRequest();
-        diagnosisRequest.setDiseaseNameList(List.of("","",""));
+        DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
+        diagnosisSaveRequest.setDiseaseNameList(List.of("","",""));
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(diagnosisRequest))
+                .content(createJson(diagnosisSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
@@ -102,12 +104,12 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
     void 토큰없이_diagnosis_저장하기_실패() throws Exception{
 
         // given
-        DiagnosisRequest diagnosisRequest = givenDiagnosisRequest();
+        DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(diagnosisRequest))
+                .content(createJson(diagnosisSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
         ;
@@ -119,12 +121,12 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
         //given
         mockingSecurityFilterForLoginUserAnnotation();
         willThrow(new DiseaseNotFoundException()).given(diagnosisCommandUseCase).createDiagnosis(any(),any());
-        DiagnosisRequest diagnosisRequest = givenDiagnosisRequest();
+        DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
 
         //when
         mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(diagnosisRequest))
+                .content(createJson(diagnosisSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
@@ -227,7 +229,54 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
         ;
     }
 
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_진단_내역_조회하기() throws Exception{
 
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        DiagnosisResponseDtoList diagnosisResponseDtoList = givenDiagnosisResponseDtoList();
+        given(diagnosisQueryUseCase.getMyDiagnoses(any(),any(),any())).willReturn(diagnosisResponseDtoList);
+
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?lastDiagnosisId=20&size=20")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        requestParameters(
+                                parameterWithName("lastDiagnosisId").description("조회했던 진단 Id중 가장 작은 Id").optional(),
+                                parameterWithName("size").description("가져올 진단 내역 개수, 기본값은 20").optional()
+                        ),
+                        responseFields(
+                                fieldWithPath("diagnosisResponseList").type(ARRAY).description("진단 내역 리스트"),
+                                fieldWithPath("diagnosisResponseList[0].diagnosisId").type(NUMBER).description("진단 내역 Id").optional(),
+                                fieldWithPath("diagnosisResponseList[0].createdDate").type(STRING).description("진단 시각").optional(),
+                                fieldWithPath("diagnosisResponseList[0].diseaseNameList").type(ARRAY).description("진단된 질병 리스트").optional(),
+                                fieldWithPath("hasNext").type(BOOLEAN).description("다음 페이지가 존재하는지 여부")
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_나의_진단_내역_조회하기() throws Exception{
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?lastDiagnosisId=20&size=20")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
 
 
 

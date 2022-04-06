@@ -18,7 +18,9 @@ import org.springframework.context.annotation.Import;
         ScheduleRepositoryImpl.class,
         DiseaseJdbcRepository.class,
         DiagnosisDiseaseJdbcRepository.class,
-        DiagnosisDiseaseRepositoryImpl.class
+        DiagnosisDiseaseRepositoryImpl.class,
+        DiagnosisQuerydslRepository.class,
+        DiagnosisRepositoryImpl.class
 })
 public abstract class QuerydslRepositoryTest extends JpaRepositoryTest{
 }

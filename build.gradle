@@ -84,7 +84,7 @@ tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     configurations 'asciidoctorExtensions'
     sources{
-        include("**/index.adoc","**/*-type.adoc")
+        include("**/*.adoc")
     }
     baseDirFollowsSourceFile()
 }

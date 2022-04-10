@@ -23,6 +23,7 @@ public class ScheduleSaveRequest {
 
     private String dailyNote;
 
+    @NotNull(message = "아픔 정도는 핋수값입니다.")
     private PainType painType;
 
     @NotNull(message = "스케줄 날짜를 'yyyy-MM-dd' 형식으로 입력해주세요.")

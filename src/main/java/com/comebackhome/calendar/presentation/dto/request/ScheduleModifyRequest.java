@@ -22,6 +22,7 @@ public class ScheduleModifyRequest {
 
     private String dailyNote;
 
+    @NotNull(message = "아픔 정도는 핋수값입니다.")
     private PainType painType;
 
     public ScheduleModifyRequestDto toScheduleModifyRequestDto(){

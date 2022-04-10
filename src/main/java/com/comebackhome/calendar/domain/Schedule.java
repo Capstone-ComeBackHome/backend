@@ -34,6 +34,7 @@ public class Schedule extends BaseEntity {
     private String dailyNote;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private PainType painType;
 
     public void updateDailyNote(String dailyNote){

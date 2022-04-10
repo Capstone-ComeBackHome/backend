@@ -1,6 +1,7 @@
 package com.comebackhome.integration.user;
 
 import com.comebackhome.support.IntegrationTest;
+import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import com.comebackhome.user.presentation.dto.UserInfoRequest;
@@ -72,7 +73,7 @@ public class UserIntegrationTest extends IntegrationTest {
     @Test
     void 개인_정보_병력_조회() throws Exception{
         // given
-        User user = userRepository.save(givenUserIncludeHistory());
+        User user = userRepository.save(givenUserIncludeInfo());
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.get(URL+"/history")
@@ -90,6 +91,43 @@ public class UserIntegrationTest extends IntegrationTest {
                 .andExpect(jsonPath("$.familyHistory", is(user.getFamilyHistory())))
 
         ;
+    }
+
+    @Test
+    void 필수_정보_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUserIncludeInfo());
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.age", is(user.getAge())))
+                .andExpect(jsonPath("$.sex", is(user.getSex().name())))
+                .andExpect(jsonPath("$.height", is(user.getHeight())))
+                .andExpect(jsonPath("$.weight", is(user.getWeight())))
+        ;
+    }
+
+    @Test
+    void 필수_정보_수정() throws Exception{
+        // given
+        User user = userRepository.save(givenUserIncludeInfo());
+        UserEssentialUpdateRequestDto dto = givenUserEssentialUpdateRequestDto();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(dto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        assertThat(user.getAge()).isEqualTo(dto.getAge());
+        assertThat(user.getSex()).isEqualTo(dto.getSex());
+        assertThat(user.getHeight()).isEqualTo(dto.getHeight());
+        assertThat(user.getWeight()).isEqualTo(dto.getWeight());
     }
 
 

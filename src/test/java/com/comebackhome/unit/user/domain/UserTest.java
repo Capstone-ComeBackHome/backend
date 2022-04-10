@@ -1,11 +1,11 @@
 package com.comebackhome.unit.user.domain;
 
 import com.comebackhome.user.domain.User;
+import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUserInfoDto;
+import static com.comebackhome.support.helper.UserGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTest {
@@ -44,5 +44,22 @@ public class UserTest {
         assertThat(user.getDrugHistory()).isEqualTo(userInfoDto.getDrugHistory());
         assertThat(user.getSocialHistory()).isEqualTo(userInfoDto.getSocialHistory());
         assertThat(user.getTraumaHistory()).isEqualTo(userInfoDto.getTraumaHistory());
+    }
+
+    @Test
+    void EssentialInfo_업데이트하기() throws Exception{
+        //given
+        UserEssentialUpdateDto dto = givenUserEssentialUpdateDto();
+        User user = givenUser();
+
+        //when
+        user.updateEssentialInfo(dto);
+
+        //then
+        assertThat(user.getAge()).isEqualTo(dto.getAge());
+        assertThat(user.getSex()).isEqualTo(dto.getSex());
+        assertThat(user.getHeight()).isEqualTo(dto.getHeight());
+        assertThat(user.getWeight()).isEqualTo(dto.getWeight());
+
     }
 }

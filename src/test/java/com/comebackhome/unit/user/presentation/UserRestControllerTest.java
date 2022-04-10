@@ -1,6 +1,7 @@
 package com.comebackhome.unit.user.presentation;
 
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
+import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.presentation.dto.UserInfoRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +10,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import static com.comebackhome.config.RestDocsConfig.field;
+import static com.comebackhome.support.helper.UserGivenHelper.givenUserEssentialUpdateRequestDto;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUserInfoRequest;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.AUTH_PROVIDER;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.SEX;
@@ -178,6 +180,207 @@ public class UserRestControllerTest extends RestDocsTestSupport {
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/history")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_조회하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("age").type(NUMBER).description("나이"),
+                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
+                                fieldWithPath("weight").type(NUMBER).description("몸무게"),
+                                fieldWithPath("height").type(NUMBER).description("키")
+                        )
+
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_필수_정보_조회하기() throws Exception{
+        // given
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/essential")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        requestFields(
+                                fieldWithPath("age").type(NUMBER).description("나이").attributes(field("constraints", "양수")),
+                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
+                                fieldWithPath("height").type(NUMBER).description("키").attributes(field("constraints", "양수")),
+                                fieldWithPath("weight").type(NUMBER).description("몸무게").attributes(field("constraints", "양수"))
+                        )
+
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_나이_없이_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+        userEssentialUpdateRequestDto.setAge(0);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_성별_없이_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+        userEssentialUpdateRequestDto.setSex(null);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_몸무게_없이_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+        userEssentialUpdateRequestDto.setWeight(0);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_키_없이_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+        userEssentialUpdateRequestDto.setHeight(0);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 필수_정보_전부_없이_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+        userEssentialUpdateRequestDto.setHeight(0);
+        userEssentialUpdateRequestDto.setSex(null);
+        userEssentialUpdateRequestDto.setWeight(0);
+        userEssentialUpdateRequestDto.setHeight(0);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userEssentialUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_필수_정보_수정하기() throws Exception{
+        // given
+        UserEssentialUpdateRequestDto userEssentialUpdateRequestDto = givenUserEssentialUpdateRequestDto();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/essential")
+                .content(createJson(userEssentialUpdateRequestDto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andDo(restDocumentationResultHandler.document(

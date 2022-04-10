@@ -1,11 +1,13 @@
 package com.comebackhome.support.helper;
 
 import com.comebackhome.config.security.dto.UserPrincipal;
+import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.application.dto.UserInfoRequestDto;
 import com.comebackhome.user.domain.AuthProvider;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;
+import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
 import com.comebackhome.user.presentation.dto.UserInfoRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +29,7 @@ public class UserGivenHelper {
                 .build();
     }
 
-    public static User givenUserIncludeHistory() {
+    public static User givenUserIncludeInfo() {
         return User.builder()
                 .email("cjs1863@gmail.com")
                 .name("최준성")
@@ -73,5 +75,18 @@ public class UserGivenHelper {
 
     public static UserInfoDto givenUserInfoDto(){
         return givenUserInfoRequestDto().toUserInfoDto();
+    }
+
+    public static UserEssentialUpdateRequestDto givenUserEssentialUpdateRequestDto(){
+        return UserEssentialUpdateRequestDto.builder()
+                .age(27)
+                .sex(Sex.MAN)
+                .weight(65)
+                .height(172)
+                .build();
+    }
+
+    public static UserEssentialUpdateDto givenUserEssentialUpdateDto(){
+        return givenUserEssentialUpdateRequestDto().toUserEssentialUpdateDto();
     }
 }

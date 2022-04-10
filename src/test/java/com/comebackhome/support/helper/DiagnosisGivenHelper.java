@@ -34,10 +34,19 @@ public class DiagnosisGivenHelper {
 
 
     public static DiagnosisResponseDtoList givenDiagnosisResponseDtoList(){
+
+        DiagnosisResponseDto diagnosisResponseDto1 = givenDiagnosisResponseDto(1L);
+        diagnosisResponseDto1.setCreatedDate(LocalDateTime.now());
+        DiagnosisResponseDto diagnosisResponseDto2 = givenDiagnosisResponseDto(2L);
+        diagnosisResponseDto2.setCreatedDate(LocalDateTime.now());
+        DiagnosisResponseDto diagnosisResponseDto3 = givenDiagnosisResponseDto(3L);
+        diagnosisResponseDto3.setCreatedDate(LocalDateTime.now());
+
         return DiagnosisResponseDtoList.builder()
                 .diagnosisResponseDtoList(List.of(
-                        givenDiagnosisResponseDto(1L),
-                        givenDiagnosisResponseDto(2L)))
+                        diagnosisResponseDto3,
+                        diagnosisResponseDto2,
+                        diagnosisResponseDto1))
                 .hasNext(false)
                 .build();
     }

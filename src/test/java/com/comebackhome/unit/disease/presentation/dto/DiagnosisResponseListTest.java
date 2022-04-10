@@ -19,6 +19,6 @@ public class DiagnosisResponseListTest {
 
         //then
         assertThat(result.isHasNext()).isFalse();
-        assertThat(result.getDiagnosisResponseList().size()).isEqualTo(2);
+        assertThat(result.getDiagnosisResponseList().size()).isEqualTo(3);
     }
 }

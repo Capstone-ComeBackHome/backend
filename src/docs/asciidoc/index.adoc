@@ -54,21 +54,6 @@ Authorization, refreshToken 헤더가 들어오지 않으면 싪패합니다.
 include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/http-response.adoc[]
 
 == User API
-=== 개인 정보 등록 및 수정
-==== 개인 정보 등록 및 수정 성공
-등록과 수정은 같은 API를 사용합니다.
-
-operation::user-rest-controller-test/개인_정보_업데이트_하기[snippets='http-request,request-headers,request-fields,http-response']
-
-==== 개인 정보 등록 및 수정 실패
-토큰이 유효하지 않으면 실패합니다.
-include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_업데이트/http-response.adoc[]
-
-필수값 없이 업데이트 시도할 경우 실패합니다.
-include::{snippets}/user-rest-controller-test/필수값이_들어오지_않은_상태에서_개인_정보_업데이트_하기/http-response.adoc[]
-
----
-
 === 계정 정보 조회
 ==== 계정 정보 조회 성공
 operation::user-rest-controller-test/개인_정보_심플_조회하기[snippets='http-request,request-headers,http-response,response-fields']
@@ -76,6 +61,20 @@ operation::user-rest-controller-test/개인_정보_심플_조회하기[snippets=
 ==== 계정 정보 조회 실패
 토큰이 유효하지 않으면 실패합니다.
 include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_심플_조회하기/http-response.adoc[]
+
+---
+
+=== 개인 정보 등록
+==== 개인 정보 등록 성공
+
+operation::user-rest-controller-test/개인_정보_업데이트_하기[snippets='http-request,request-headers,request-fields,http-response']
+
+==== 개인 정보 등록 실패
+토큰이 유효하지 않으면 실패합니다.
+include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_업데이트/http-response.adoc[]
+
+필수값 없이 업데이트 시도할 경우 실패합니다.
+include::{snippets}/user-rest-controller-test/필수값이_들어오지_않은_상태에서_개인_정보_업데이트_하기/http-response.adoc[]
 
 ---
 

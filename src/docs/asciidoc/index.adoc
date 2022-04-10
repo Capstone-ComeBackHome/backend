@@ -69,14 +69,36 @@ include::{snippets}/user-rest-controller-test/필수값이_들어오지_않은_�
 
 ---
 
-=== 개인 정보 심플 조회
-==== 개인 정보 심플 조회 성공
+=== 계정 정보 조회
+==== 계정 정보 조회 성공
 operation::user-rest-controller-test/개인_정보_심플_조회하기[snippets='http-request,request-headers,http-response,response-fields']
 
-==== 개인 정보 심플 조회 실패
+==== 계정 정보 조회 실패
 토큰이 유효하지 않으면 실패합니다.
 include::{snippets}/user-rest-controller-test/토큰_없이_개인_정보_심플_조회하기/http-response.adoc[]
 
+---
+
+=== 개인 필수 정보 조회
+==== 개인 필수 정보 조회 성공
+operation::user-rest-controller-test/필수_정보_조회하기[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 개인 필수 정보 조회 실패
+토큰이 유효하지 않으면 실패합니다.
+include::{snippets}/user-rest-controller-test/토큰_없이_필수_정보_조회하기/http-response.adoc[]
+
+---
+
+=== 개인 필수 정보 수정
+==== 개인 필수 정보 수정 성공
+operation::user-rest-controller-test/필수_정보_수정하기[snippets='http-request,request-headers,request-fields,http-response']
+
+==== 개인 필수 정보 수정 실패
+토큰이 유효하지 않으면 실패합니다.
+include::{snippets}/user-rest-controller-test/토큰_없이_필수_정보_수정하기/http-response.adoc[]
+
+필수값이 하나라도 들어오지 않는 경우 실패합니다.
+include::{snippets}/user-rest-controller-test/필수_정보_전부_없이_수정하기/http-response.adoc[]
 
 ---
 
@@ -240,7 +262,7 @@ operation::calendar-rest-controller-test/나의_스케줄_수정_성공[snippets
 include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_수정/http-response.adoc[]
 
 아픔 정도 없이 스케줄 수정하는 경우
-include::{snippets}/calendar-rest-controller-test/아픔_정도_없이_스케줄_수정_실패/http-response.adoc[]
+include::{snippets}/calendar-rest-controller-test/아픔_정도_없이_스케줄_수정_실패/http-response.adoc[]1
 
 자신의 스케줄 중 존재하지 않는 scheduleId인 경우
 include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_수정/http-response.adoc[]

@@ -1,11 +1,11 @@
 package com.comebackhome.user.application;
 
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoRequestDto;
+import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
 
 public interface UserCommandUseCase {
 
-    void updateMyInfo(UserInfoRequestDto userInfoRequestDto, Long userId);
+    void saveMyInfo(UserInfoSaveRequestDto userInfoSaveRequestDto, Long userId);
 
     void updateMyEssentialInfo(UserEssentialUpdateRequestDto userEssentialUpdateRequestDto, Long userId);
 }

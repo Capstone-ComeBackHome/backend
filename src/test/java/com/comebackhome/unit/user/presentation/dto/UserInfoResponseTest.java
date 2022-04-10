@@ -1,13 +1,13 @@
 package com.comebackhome.unit.user.presentation.dto;
 
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.presentation.dto.UserHistoryResponse;
+import com.comebackhome.user.presentation.dto.UserInfoResponse;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.UserGivenHelper.givenUserIncludeInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserHistoryResponseTest {
+public class UserInfoResponseTest {
 
     @Test
     void 정적_메서드_from_으로_생성하기() throws Exception{
@@ -15,7 +15,7 @@ public class UserHistoryResponseTest {
         User user = givenUserIncludeInfo();
 
         //when
-        UserHistoryResponse result = UserHistoryResponse.from(user);
+        UserInfoResponse result = UserInfoResponse.from(user);
 
         //then
         assertThat(result.getAge()).isEqualTo(user.getAge());

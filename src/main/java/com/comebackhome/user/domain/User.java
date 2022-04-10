@@ -62,7 +62,7 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public void updateInfo(UserInfoDto userInfoDto){
+    public void saveInfo(UserInfoDto userInfoDto){
         this.age = userInfoDto.getAge();
         this.sex = userInfoDto.getSex();
         this.height = userInfoDto.getHeight();

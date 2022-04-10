@@ -4,7 +4,7 @@ import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
-import com.comebackhome.user.presentation.dto.UserInfoRequest;
+import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,11 +28,11 @@ public class UserIntegrationTest extends IntegrationTest {
     void 개인_정보_업데이트_하기() throws Exception{
         // given
         User user = userRepository.save(givenUser());
-        UserInfoRequest userInfoRequest = givenUserInfoRequest();
+        UserInfoSaveRequest userInfoSaveRequest = givenUserInfoRequest();
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.patch(URL)
-                .content(createJson(userInfoRequest))
+                .content(createJson(userInfoSaveRequest))
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -41,15 +41,15 @@ public class UserIntegrationTest extends IntegrationTest {
         flushAndClear();
 
         User result = userRepository.findById(user.getId()).get();
-        assertThat(result.getAge()).isEqualTo(userInfoRequest.getAge());
-        assertThat(result.getSex()).isEqualTo(userInfoRequest.getSex());
-        assertThat(result.getHeight()).isEqualTo(userInfoRequest.getHeight());
-        assertThat(result.getWeight()).isEqualTo(userInfoRequest.getWeight());
-        assertThat(result.getHistory()).isEqualTo(userInfoRequest.getHistory());
-        assertThat(result.getFamilyHistory()).isEqualTo(userInfoRequest.getFamilyHistory());
-        assertThat(result.getDrugHistory()).isEqualTo(userInfoRequest.getDrugHistory());
-        assertThat(result.getSocialHistory()).isEqualTo(userInfoRequest.getSocialHistory());
-        assertThat(result.getTraumaHistory()).isEqualTo(userInfoRequest.getTraumaHistory());
+        assertThat(result.getAge()).isEqualTo(userInfoSaveRequest.getAge());
+        assertThat(result.getSex()).isEqualTo(userInfoSaveRequest.getSex());
+        assertThat(result.getHeight()).isEqualTo(userInfoSaveRequest.getHeight());
+        assertThat(result.getWeight()).isEqualTo(userInfoSaveRequest.getWeight());
+        assertThat(result.getHistory()).isEqualTo(userInfoSaveRequest.getHistory());
+        assertThat(result.getFamilyHistory()).isEqualTo(userInfoSaveRequest.getFamilyHistory());
+        assertThat(result.getDrugHistory()).isEqualTo(userInfoSaveRequest.getDrugHistory());
+        assertThat(result.getSocialHistory()).isEqualTo(userInfoSaveRequest.getSocialHistory());
+        assertThat(result.getTraumaHistory()).isEqualTo(userInfoSaveRequest.getTraumaHistory());
     }
 
 
@@ -76,7 +76,7 @@ public class UserIntegrationTest extends IntegrationTest {
         User user = userRepository.save(givenUserIncludeInfo());
 
         // when then
-        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/history")
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/info")
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

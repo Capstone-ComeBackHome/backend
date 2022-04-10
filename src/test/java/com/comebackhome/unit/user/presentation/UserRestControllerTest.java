@@ -2,7 +2,7 @@ package com.comebackhome.unit.user.presentation;
 
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.presentation.dto.UserInfoRequest;
+import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -33,12 +33,12 @@ public class UserRestControllerTest extends RestDocsTestSupport {
     void 개인_정보_업데이트_하기() throws Exception{
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        UserInfoRequest userInfoRequest = givenUserInfoRequest();
+        UserInfoSaveRequest userInfoSaveRequest = givenUserInfoRequest();
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.patch(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(userInfoRequest))
+                .content(createJson(userInfoSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(restDocumentationResultHandler.document(
@@ -63,11 +63,11 @@ public class UserRestControllerTest extends RestDocsTestSupport {
     @Test
     void 토큰_없이_개인_정보_업데이트() throws Exception{
         // given
-        UserInfoRequest userInfoRequest = givenUserInfoRequest();
+        UserInfoSaveRequest userInfoSaveRequest = givenUserInfoRequest();
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.patch(URL)
-                .content(createJson(userInfoRequest))
+                .content(createJson(userInfoSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andDo(restDocumentationResultHandler.document(
@@ -83,12 +83,12 @@ public class UserRestControllerTest extends RestDocsTestSupport {
     void 필수값이_들어오지_않은_상태에서_개인_정보_업데이트_하기() throws Exception{
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        UserInfoRequest userInfoRequest = UserInfoRequest.builder().build();
+        UserInfoSaveRequest userInfoSaveRequest = UserInfoSaveRequest.builder().build();
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.patch(URL)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
-                .content(createJson(userInfoRequest))
+                .content(createJson(userInfoSaveRequest))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
@@ -149,7 +149,7 @@ public class UserRestControllerTest extends RestDocsTestSupport {
         mockingSecurityFilterForLoginUserAnnotation();
 
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/history")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/info")
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -179,7 +179,7 @@ public class UserRestControllerTest extends RestDocsTestSupport {
         // given
 
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/history")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/info")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andDo(restDocumentationResultHandler.document(

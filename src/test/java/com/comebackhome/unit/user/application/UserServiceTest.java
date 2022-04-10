@@ -3,7 +3,7 @@ package com.comebackhome.unit.user.application;
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.user.application.UserService;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoRequestDto;
+import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -29,33 +29,33 @@ public class UserServiceTest {
     @Test
     void 내_정보_업데이트_하기() throws Exception{
         //given
-        UserInfoRequestDto userInfoRequestDto = givenUserInfoRequestDto();
+        UserInfoSaveRequestDto userInfoSaveRequestDto = givenUserInfoRequestDto();
         User user = givenUser();
         given(userRepository.findById(any())).willReturn(Optional.of(user));
 
         //when
-        userService.updateMyInfo(userInfoRequestDto,any());
+        userService.saveMyInfo(userInfoSaveRequestDto,any());
 
         //then
-        assertThat(user.getAge()).isEqualTo(userInfoRequestDto.getAge());
-        assertThat(user.getSex()).isEqualTo(userInfoRequestDto.getSex());
-        assertThat(user.getHeight()).isEqualTo(userInfoRequestDto.getHeight());
-        assertThat(user.getWeight()).isEqualTo(userInfoRequestDto.getWeight());
-        assertThat(user.getHistory()).isEqualTo(userInfoRequestDto.getHistory());
-        assertThat(user.getFamilyHistory()).isEqualTo(userInfoRequestDto.getFamilyHistory());
-        assertThat(user.getDrugHistory()).isEqualTo(userInfoRequestDto.getDrugHistory());
-        assertThat(user.getSocialHistory()).isEqualTo(userInfoRequestDto.getSocialHistory());
-        assertThat(user.getTraumaHistory()).isEqualTo(userInfoRequestDto.getTraumaHistory());
+        assertThat(user.getAge()).isEqualTo(userInfoSaveRequestDto.getAge());
+        assertThat(user.getSex()).isEqualTo(userInfoSaveRequestDto.getSex());
+        assertThat(user.getHeight()).isEqualTo(userInfoSaveRequestDto.getHeight());
+        assertThat(user.getWeight()).isEqualTo(userInfoSaveRequestDto.getWeight());
+        assertThat(user.getHistory()).isEqualTo(userInfoSaveRequestDto.getHistory());
+        assertThat(user.getFamilyHistory()).isEqualTo(userInfoSaveRequestDto.getFamilyHistory());
+        assertThat(user.getDrugHistory()).isEqualTo(userInfoSaveRequestDto.getDrugHistory());
+        assertThat(user.getSocialHistory()).isEqualTo(userInfoSaveRequestDto.getSocialHistory());
+        assertThat(user.getTraumaHistory()).isEqualTo(userInfoSaveRequestDto.getTraumaHistory());
     }
 
     @Test
     void 존재하지_않는_유저의_경우() throws Exception{
         //given
-        UserInfoRequestDto userInfoRequestDto = givenUserInfoRequestDto();
+        UserInfoSaveRequestDto userInfoSaveRequestDto = givenUserInfoRequestDto();
         given(userRepository.findById(any())).willReturn(Optional.empty());
 
         //when
-        assertThatThrownBy(() -> userService.updateMyInfo(userInfoRequestDto,any()))
+        assertThatThrownBy(() -> userService.saveMyInfo(userInfoSaveRequestDto,any()))
                 .isInstanceOf(UserNotFoundException.class)
         ;
     }

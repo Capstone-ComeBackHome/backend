@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserHistoryResponse {
+public class UserInfoResponse {
 
     private int age;
 
@@ -28,8 +28,8 @@ public class UserHistoryResponse {
 
     private String traumaHistory;
 
-    public static UserHistoryResponse from(User user){
-        return UserHistoryResponse.builder()
+    public static UserInfoResponse from(User user){
+        return UserInfoResponse.builder()
                 .age(user.getAge())
                 .sex(user.getSex())
                 .height(user.getHeight())

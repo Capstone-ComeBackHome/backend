@@ -32,7 +32,7 @@ public class UserTest {
         User user = givenUser();
 
         //when
-        user.updateInfo(userInfoDto);
+        user.saveInfo(userInfoDto);
 
         //then
         assertThat(user.getAge()).isEqualTo(userInfoDto.getAge());

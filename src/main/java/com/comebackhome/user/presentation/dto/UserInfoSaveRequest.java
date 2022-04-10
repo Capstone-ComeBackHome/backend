@@ -1,21 +1,29 @@
-package com.comebackhome.user.application.dto;
+package com.comebackhome.user.presentation.dto;
 
+import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
 import com.comebackhome.user.domain.Sex;
-import com.comebackhome.user.domain.dto.UserInfoDto;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+@Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserInfoRequestDto {
+public class UserInfoSaveRequest {
 
+    @Positive(message = "나이는 필수값입니다.")
     private int age;
 
+    @NotNull(message = "성별은 필수값입니다.")
     private Sex sex;
 
+    @Positive(message = "키는 필수값입니다.")
     private int height;
 
+    @Positive(message = "몸무게는 필수값입니다.")
     private int weight;
 
     private String history;
@@ -28,8 +36,8 @@ public class UserInfoRequestDto {
 
     private String traumaHistory;
 
-    public UserInfoDto toUserInfoDto(){
-        return UserInfoDto.builder()
+    public UserInfoSaveRequestDto toUserInfoSaveRequestDto(){
+        return UserInfoSaveRequestDto.builder()
                 .age(age)
                 .sex(sex)
                 .height(height)

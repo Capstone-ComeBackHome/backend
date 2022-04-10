@@ -2,7 +2,7 @@ package com.comebackhome.user.application;
 
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoRequestDto;
+import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +17,9 @@ public class UserService implements UserCommandUseCase{
     private final UserRepository userRepository;
 
     @Override
-    public void updateMyInfo(UserInfoRequestDto userInfoRequestDto, Long userId) {
+    public void saveMyInfo(UserInfoSaveRequestDto userInfoSaveRequestDto, Long userId) {
         User currentUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        currentUser.updateInfo(userInfoRequestDto.toUserInfoDto());
+        currentUser.saveInfo(userInfoSaveRequestDto.toUserInfoDto());
     }
 
     @Override

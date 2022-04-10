@@ -22,7 +22,7 @@ public class UserRestController {
     private final UserCommandUseCase userCommandUseCase;
 
     @PatchMapping
-    public ResponseEntity<Void> updateMyInfo(@Validated @RequestBody UserInfoRequest userInfoRequest,
+    public ResponseEntity<Void> saveMyInfo(@Validated @RequestBody UserInfoSaveRequest userInfoSaveRequest,
                                            BindingResult errors,
                                            @LoginUser User user){
 
@@ -30,7 +30,7 @@ public class UserRestController {
             throw new ValidatedException(errors);
         }
 
-        userCommandUseCase.updateMyInfo(userInfoRequest.toUserInfoRequestDto(),user.getId());
+        userCommandUseCase.saveMyInfo(userInfoSaveRequest.toUserInfoSaveRequestDto(),user.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -68,10 +68,9 @@ public class UserRestController {
 //    }
 
 
-    // 전체 조회 -> info로 변경하자
-    @GetMapping("/history")
-    public ResponseEntity<UserHistoryResponse> getMyHistoryInfo(@LoginUser User user){
-        return ResponseEntity.ok(UserHistoryResponse.from(user));
+    @GetMapping("/info")
+    public ResponseEntity<UserInfoResponse> getMyInfo(@LoginUser User user){
+        return ResponseEntity.ok(UserInfoResponse.from(user));
     }
 
 }

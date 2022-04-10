@@ -2,14 +2,14 @@ package com.comebackhome.support.helper;
 
 import com.comebackhome.config.security.dto.UserPrincipal;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoRequestDto;
+import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
 import com.comebackhome.user.domain.AuthProvider;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
-import com.comebackhome.user.presentation.dto.UserInfoRequest;
+import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -55,8 +55,8 @@ public class UserGivenHelper {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
-    public static UserInfoRequest givenUserInfoRequest(){
-        return UserInfoRequest.builder()
+    public static UserInfoSaveRequest givenUserInfoRequest(){
+        return UserInfoSaveRequest.builder()
                 .age(27)
                 .sex(Sex.MAN)
                 .height(172)
@@ -69,8 +69,8 @@ public class UserGivenHelper {
                 .build();
     }
 
-    public static UserInfoRequestDto givenUserInfoRequestDto(){
-        return givenUserInfoRequest().toUserInfoRequestDto();
+    public static UserInfoSaveRequestDto givenUserInfoRequestDto(){
+        return givenUserInfoRequest().toUserInfoSaveRequestDto();
     }
 
     public static UserInfoDto givenUserInfoDto(){

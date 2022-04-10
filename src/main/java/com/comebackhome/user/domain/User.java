@@ -1,6 +1,7 @@
 package com.comebackhome.user.domain;
 
 import com.comebackhome.common.domain.BaseEntity;
+import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
 import lombok.*;
 
@@ -71,5 +72,12 @@ public class User extends BaseEntity {
         this.drugHistory = userInfoDto.getDrugHistory();
         this.socialHistory = userInfoDto.getSocialHistory();
         this.traumaHistory = userInfoDto.getTraumaHistory();
+    }
+
+    public void updateEssentialInfo(UserEssentialUpdateDto userEssentialUpdateDto) {
+        this.age = userEssentialUpdateDto.getAge();
+        this.sex = userEssentialUpdateDto.getSex();
+        this.height = userEssentialUpdateDto.getHeight();
+        this.weight = userEssentialUpdateDto.getWeight();
     }
 }

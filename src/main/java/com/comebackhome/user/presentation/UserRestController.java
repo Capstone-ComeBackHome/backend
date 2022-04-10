@@ -5,9 +5,7 @@ import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.application.UserCommandUseCase;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.presentation.dto.UserHistoryResponse;
-import com.comebackhome.user.presentation.dto.UserInfoRequest;
-import com.comebackhome.user.presentation.dto.UserSimpleInfoResponse;
+import com.comebackhome.user.presentation.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,6 +39,36 @@ public class UserRestController {
         return ResponseEntity.ok(UserSimpleInfoResponse.from(user));
     }
 
+
+    // info 초기 save하는거 하나로 만들도록 수정해야하고
+    // 수정하는건 2개로 분리해야하고
+    // 조회하는건 3개 만들어야한다.
+
+    @GetMapping("/essential")
+    public ResponseEntity<UserEssentialResponse> getMyEssentialInfo(@LoginUser User user){
+        return ResponseEntity.ok(UserEssentialResponse.from(user));
+    }
+
+    @PatchMapping("/essential")
+    public ResponseEntity<Void> updateMyEssentialInfo(@LoginUser User user,
+                                                      @Validated @RequestBody UserEssentialUpdateRequest userEssentialUpdateRequest,
+                                                      BindingResult errors){
+        if (errors.hasErrors()){
+            throw new ValidatedException(errors);
+        }
+
+        userCommandUseCase.updateMyEssentialInfo(userEssentialUpdateRequest.toUserEssentialUpdateRequestDto(), user.getId());
+        return ResponseEntity.ok().build();
+    }
+
+    // medicine 정보 조회 수정
+//    @GetMapping("/medicine")
+//    public ResponseEntity<UserMedicineResponse> getMyMedicineInfo(@LoginUser User user){
+//        return ResponseEntity.ok(UserMedicineResponse.from(user));
+//    }
+
+
+    // 전체 조회 -> info로 변경하자
     @GetMapping("/history")
     public ResponseEntity<UserHistoryResponse> getMyHistoryInfo(@LoginUser User user){
         return ResponseEntity.ok(UserHistoryResponse.from(user));

@@ -1,6 +1,7 @@
 package com.comebackhome.user.application;
 
 import com.comebackhome.common.exception.user.UserNotFoundException;
+import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.application.dto.UserInfoRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
@@ -19,5 +20,12 @@ public class UserService implements UserCommandUseCase{
     public void updateMyInfo(UserInfoRequestDto userInfoRequestDto, Long userId) {
         User currentUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         currentUser.updateInfo(userInfoRequestDto.toUserInfoDto());
+    }
+
+    @Override
+    public void updateMyEssentialInfo(UserEssentialUpdateRequestDto userEssentialUpdateRequestDto, Long userId) {
+        User user = userRepository.findById(userId) // todo 함수로 빼기
+                .orElseThrow(() -> new UserNotFoundException());
+        user.updateEssentialInfo(userEssentialUpdateRequestDto.toUserEssentialUpdateDto());
     }
 }

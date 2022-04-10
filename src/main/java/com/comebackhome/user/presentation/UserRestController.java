@@ -5,7 +5,11 @@ import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.application.UserCommandUseCase;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.presentation.dto.*;
+import com.comebackhome.user.presentation.dto.request.UserEssentialUpdateRequest;
+import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.response.UserEssentialResponse;
+import com.comebackhome.user.presentation.dto.response.UserInfoResponse;
+import com.comebackhome.user.presentation.dto.response.UserSimpleInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,11 +42,6 @@ public class UserRestController {
     public ResponseEntity<UserSimpleInfoResponse> getMySimpleInfo(@LoginUser User user){
         return ResponseEntity.ok(UserSimpleInfoResponse.from(user));
     }
-
-
-    // info 초기 save하는거 하나로 만들도록 수정해야하고
-    // 수정하는건 2개로 분리해야하고
-    // 조회하는건 3개 만들어야한다.
 
     @GetMapping("/essential")
     public ResponseEntity<UserEssentialResponse> getMyEssentialInfo(@LoginUser User user){

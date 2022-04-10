@@ -9,7 +9,7 @@ import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
-import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,4 +1,4 @@
-package com.comebackhome.user.presentation.dto;
+package com.comebackhome.user.presentation.dto.request;
 
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.Sex;

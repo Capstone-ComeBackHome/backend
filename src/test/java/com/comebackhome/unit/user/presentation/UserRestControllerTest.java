@@ -2,7 +2,7 @@ package com.comebackhome.unit.user.presentation;
 
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package com.comebackhome.user.presentation.dto;
+package com.comebackhome.user.presentation.dto.response;
 
 import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;

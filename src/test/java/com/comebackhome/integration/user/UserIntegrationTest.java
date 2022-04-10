@@ -4,7 +4,7 @@ import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
-import com.comebackhome.user.presentation.dto.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

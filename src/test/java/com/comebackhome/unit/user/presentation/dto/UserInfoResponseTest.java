@@ -1,7 +1,7 @@
 package com.comebackhome.unit.user.presentation.dto;
 
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.presentation.dto.UserInfoResponse;
+import com.comebackhome.user.presentation.dto.response.UserInfoResponse;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.UserGivenHelper.givenUserIncludeInfo;

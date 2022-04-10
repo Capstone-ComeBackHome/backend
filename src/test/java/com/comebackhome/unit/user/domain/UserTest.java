@@ -3,6 +3,7 @@ package com.comebackhome.unit.user.domain;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
+import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.UserGivenHelper.*;
@@ -60,6 +61,22 @@ public class UserTest {
         assertThat(user.getSex()).isEqualTo(dto.getSex());
         assertThat(user.getHeight()).isEqualTo(dto.getHeight());
         assertThat(user.getWeight()).isEqualTo(dto.getWeight());
+    }
 
+    @Test
+    void userMedicineInfo_업데이트하기() throws Exception{
+        //given
+        UserMedicineUpdateDto dto = givenUserMedicineUpdateDto();
+        User user = givenUser();
+
+        //when
+        user.updateMedicineInfo(dto);
+
+        //then
+        assertThat(user.getHistory()).isEqualTo(dto.getHistory());
+        assertThat(user.getSocialHistory()).isEqualTo(dto.getSocialHistory());
+        assertThat(user.getDrugHistory()).isEqualTo(dto.getDrugHistory());
+        assertThat(user.getTraumaHistory()).isEqualTo(dto.getTraumaHistory());
+        assertThat(user.getFamilyHistory()).isEqualTo(dto.getFamilyHistory());
     }
 }

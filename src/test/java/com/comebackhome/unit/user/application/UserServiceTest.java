@@ -4,6 +4,7 @@ import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.user.application.UserService;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -89,4 +90,33 @@ public class UserServiceTest {
         ;
     }
 
+    @Test
+    void 부가_정보_수정() throws Exception{
+        //given
+        UserMedicineUpdateRequestDto dto = givenUserMedicineUpdateRequestDto();
+        User user = givenUser();
+        given(userRepository.findById(any())).willReturn(Optional.of(user));
+
+        //when
+        userService.updateMyMedicineInfo(dto,any());
+
+        //then
+        assertThat(user.getHistory()).isEqualTo(dto.getHistory());
+        assertThat(user.getSocialHistory()).isEqualTo(dto.getSocialHistory());
+        assertThat(user.getDrugHistory()).isEqualTo(dto.getDrugHistory());
+        assertThat(user.getTraumaHistory()).isEqualTo(dto.getTraumaHistory());
+        assertThat(user.getFamilyHistory()).isEqualTo(dto.getFamilyHistory());
+    }
+
+    @Test
+    void 부가_정보_수정_존재하지_않는_유저의_경우() throws Exception{
+        //given
+        UserMedicineUpdateRequestDto dto = givenUserMedicineUpdateRequestDto();
+        given(userRepository.findById(any())).willReturn(Optional.empty());
+
+        //when
+        assertThatThrownBy(() -> userService.updateMyMedicineInfo(dto,any()))
+                .isInstanceOf(UserNotFoundException.class)
+        ;
+    }
 }

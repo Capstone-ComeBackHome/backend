@@ -5,6 +5,7 @@ import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -128,6 +129,45 @@ public class UserIntegrationTest extends IntegrationTest {
         assertThat(user.getSex()).isEqualTo(dto.getSex());
         assertThat(user.getHeight()).isEqualTo(dto.getHeight());
         assertThat(user.getWeight()).isEqualTo(dto.getWeight());
+    }
+
+    @Test
+    void 부가_정보_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUserIncludeInfo());
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/medicine")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.history", is(user.getHistory())))
+                .andExpect(jsonPath("$.drugHistory", is(user.getDrugHistory())))
+                .andExpect(jsonPath("$.socialHistory", is(user.getSocialHistory())))
+                .andExpect(jsonPath("$.traumaHistory", is(user.getTraumaHistory())))
+                .andExpect(jsonPath("$.familyHistory", is(user.getFamilyHistory())))
+        ;
+    }
+
+    @Test
+    void 부가_정보_수정() throws Exception{
+        // given
+        User user = userRepository.save(givenUserIncludeInfo());
+        UserMedicineUpdateRequest dto = givenUserMedicineUpdateRequest();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/medicine")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .content(createJson(dto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+        ;
+
+        assertThat(user.getHistory()).isEqualTo(dto.getHistory());
+        assertThat(user.getSocialHistory()).isEqualTo(dto.getSocialHistory());
+        assertThat(user.getDrugHistory()).isEqualTo(dto.getDrugHistory());
+        assertThat(user.getTraumaHistory()).isEqualTo(dto.getTraumaHistory());
+        assertThat(user.getFamilyHistory()).isEqualTo(dto.getFamilyHistory());
     }
 
 

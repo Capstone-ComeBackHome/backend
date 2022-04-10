@@ -3,13 +3,16 @@ package com.comebackhome.support.helper;
 import com.comebackhome.config.security.dto.UserPrincipal;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.domain.AuthProvider;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
+import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -88,5 +91,29 @@ public class UserGivenHelper {
 
     public static UserEssentialUpdateDto givenUserEssentialUpdateDto(){
         return givenUserEssentialUpdateRequestDto().toUserEssentialUpdateDto();
+    }
+
+    public static UserMedicineUpdateRequestDto givenUserMedicineUpdateRequestDto(){
+        return UserMedicineUpdateRequestDto.builder()
+                .history("저는 과거에..")
+                .FamilyHistory("가족 중에는..")
+                .drugHistory("약은..")
+                .socialHistory("사회력은..")
+                .traumaHistory("외상력은..")
+                .build();
+    }
+
+    public static UserMedicineUpdateDto givenUserMedicineUpdateDto(){
+        return givenUserMedicineUpdateRequestDto().toUserMedicineUpdateDto();
+    }
+
+    public static UserMedicineUpdateRequest givenUserMedicineUpdateRequest(){
+        return UserMedicineUpdateRequest.builder()
+                .history("저는 과거에..")
+                .FamilyHistory("가족 중에는..")
+                .drugHistory("약은..")
+                .socialHistory("사회력은..")
+                .traumaHistory("외상력은..")
+                .build();
     }
 }

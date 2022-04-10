@@ -2,6 +2,7 @@ package com.comebackhome.unit.user.presentation;
 
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -10,8 +11,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import static com.comebackhome.config.RestDocsConfig.field;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUserEssentialUpdateRequestDto;
-import static com.comebackhome.support.helper.UserGivenHelper.givenUserInfoRequest;
+import static com.comebackhome.support.helper.UserGivenHelper.*;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.AUTH_PROVIDER;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.SEX;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.generateLinkCode;
@@ -390,5 +390,96 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                 ))
         ;
     }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 부가_정보_조회하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/medicine")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("history").type(STRING).description("과거력").optional(),
+                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional(),
+                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional(),
+                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
+                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional()
+                        )
+
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_부가_정보_조회하기() throws Exception{
+        // given
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/medicine")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 부가_정보_수정하기() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserMedicineUpdateRequestDto userMedicineUpdateRequestDto = givenUserMedicineUpdateRequestDto();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/medicine")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userMedicineUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        requestFields(
+                                fieldWithPath("history").type(STRING).description("과거력").optional(),
+                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional(),
+                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional(),
+                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
+                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional()
+                        )
+
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_부가_정보_수정하기() throws Exception{
+        // given
+        UserMedicineUpdateRequestDto userMedicineUpdateRequestDto = givenUserMedicineUpdateRequestDto();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/medicine")
+                .content(createJson(userMedicineUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ))
+        ;
+    }
+
 
 }

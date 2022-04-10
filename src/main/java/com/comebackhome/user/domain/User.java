@@ -3,6 +3,7 @@ package com.comebackhome.user.domain;
 import com.comebackhome.common.domain.BaseEntity;
 import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
 import com.comebackhome.user.domain.dto.UserInfoDto;
+import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -79,5 +80,13 @@ public class User extends BaseEntity {
         this.sex = userEssentialUpdateDto.getSex();
         this.height = userEssentialUpdateDto.getHeight();
         this.weight = userEssentialUpdateDto.getWeight();
+    }
+
+    public void updateMedicineInfo(UserMedicineUpdateDto userMedicineUpdateDto) {
+        this.history = userMedicineUpdateDto.getHistory();
+        this.FamilyHistory = userMedicineUpdateDto.getFamilyHistory();
+        this.drugHistory = userMedicineUpdateDto.getDrugHistory();
+        this.socialHistory = userMedicineUpdateDto.getSocialHistory();
+        this.traumaHistory = userMedicineUpdateDto.getTraumaHistory();
     }
 }

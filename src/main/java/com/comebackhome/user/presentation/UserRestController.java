@@ -7,8 +7,10 @@ import com.comebackhome.user.application.UserCommandUseCase;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.presentation.dto.request.UserEssentialUpdateRequest;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
+import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;
 import com.comebackhome.user.presentation.dto.response.UserEssentialResponse;
 import com.comebackhome.user.presentation.dto.response.UserInfoResponse;
+import com.comebackhome.user.presentation.dto.response.UserMedicineResponse;
 import com.comebackhome.user.presentation.dto.response.UserSimpleInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -60,11 +62,20 @@ public class UserRestController {
         return ResponseEntity.ok().build();
     }
 
-    // medicine 정보 조회 수정
-//    @GetMapping("/medicine")
-//    public ResponseEntity<UserMedicineResponse> getMyMedicineInfo(@LoginUser User user){
-//        return ResponseEntity.ok(UserMedicineResponse.from(user));
-//    }
+    @GetMapping("/medicine")
+    public ResponseEntity<UserMedicineResponse> getMyMedicineInfo(@LoginUser User user){
+        return ResponseEntity.ok(UserMedicineResponse.from(user));
+    }
+
+    @PatchMapping("/medicine")
+    public ResponseEntity<Void> updateMyMedicineInfo(@LoginUser User user,
+                                                                  @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest
+                                                                  ){
+
+        userCommandUseCase.updateMyMedicineInfo(userMedicineUpdateRequest.toUserMedicineUpdateRequestDto(),user.getId());
+
+        return ResponseEntity.ok().build();
+    }
 
 
     @GetMapping("/info")

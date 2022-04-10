@@ -3,6 +3,7 @@ package com.comebackhome.user.application;
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,12 @@ public class UserService implements UserCommandUseCase{
     public void updateMyEssentialInfo(UserEssentialUpdateRequestDto userEssentialUpdateRequestDto, Long userId) {
         User user = getCurrentUserOrThrow(userId);
         user.updateEssentialInfo(userEssentialUpdateRequestDto.toUserEssentialUpdateDto());
+    }
+
+    @Override
+    public void updateMyMedicineInfo(UserMedicineUpdateRequestDto userMedicineUpdateRequestDto, Long userId) {
+        User user = getCurrentUserOrThrow(userId);
+        user.updateMedicineInfo(userMedicineUpdateRequestDto.toUserMedicineUpdateDto());
     }
 
     private User getCurrentUserOrThrow(Long userId) {

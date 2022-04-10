@@ -18,14 +18,18 @@ public class UserService implements UserCommandUseCase{
 
     @Override
     public void saveMyInfo(UserInfoSaveRequestDto userInfoSaveRequestDto, Long userId) {
-        User currentUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        User currentUser = getCurrentUserOrThrow(userId);
         currentUser.saveInfo(userInfoSaveRequestDto.toUserInfoDto());
     }
 
     @Override
     public void updateMyEssentialInfo(UserEssentialUpdateRequestDto userEssentialUpdateRequestDto, Long userId) {
-        User user = userRepository.findById(userId) // todo 함수로 빼기
-                .orElseThrow(() -> new UserNotFoundException());
+        User user = getCurrentUserOrThrow(userId);
         user.updateEssentialInfo(userEssentialUpdateRequestDto.toUserEssentialUpdateDto());
+    }
+
+    private User getCurrentUserOrThrow(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException());
     }
 }

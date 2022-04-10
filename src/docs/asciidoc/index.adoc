@@ -190,6 +190,9 @@ operation::calendar-rest-controller-test/스케줄_저장하기_성공[snippets=
 날짜 형식이 맞지 않거나 날짜가 들어오지 않은 경우
 include::{snippets}/calendar-rest-controller-test/날짜_없이_스케줄_저장하기_실패/http-response.adoc[]
 
+아픔 정도가 없이 등록하는 경우
+include::{snippets}/calendar-rest-controller-test/아픔_정도_없이_스케줄_저장하기_실패/http-response.adoc[]
+
 증상 값이 들어오지 않거나 제약조건에 맞지 않는 경우
 include::{snippets}/calendar-rest-controller-test/증상_없이_스케줄_저장하기_실패/http-response.adoc[]
 
@@ -235,6 +238,9 @@ operation::calendar-rest-controller-test/나의_스케줄_수정_성공[snippets
 ==== 특정 스케줄 수정 실패
 토큰 없이 접근하는 경우
 include::{snippets}/calendar-rest-controller-test/토큰_없이_스케줄_수정/http-response.adoc[]
+
+아픔 정도 없이 스케줄 수정하는 경우
+include::{snippets}/calendar-rest-controller-test/아픔_정도_없이_스케줄_수정_실패/http-response.adoc[]
 
 자신의 스케줄 중 존재하지 않는 scheduleId인 경우
 include::{snippets}/calendar-rest-controller-test/자신의_스케줄_중_존재하지_않는_schedule-id로_스케줄_수정/http-response.adoc[]

@@ -60,7 +60,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("diseaseTagRequestList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
                                 fieldWithPath("diseaseTagRequestList[0].name").type(STRING).description("질병 태그 이름"),
                                 fieldWithPath("dailyNote").type(STRING).description("하루 일기").optional(),
-                                fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)).optional(),
+                                fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
                                 fieldWithPath("localDate").type(STRING).description("스케줄 날짜")
                         )
                 ));
@@ -95,6 +95,28 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
         // given
         ScheduleSaveRequest scheduleSaveRequest = givenScheduleSaveRequest();
         scheduleSaveRequest.setDiseaseTagRequestList(null);
+        mockingSecurityFilterForLoginUserAnnotation();
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.post(URL)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleSaveRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ));
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 아픔_정도_없이_스케줄_저장하기_실패() throws Exception{
+        // given
+        ScheduleSaveRequest scheduleSaveRequest = givenScheduleSaveRequest();
+        scheduleSaveRequest.setPainType(null);
         mockingSecurityFilterForLoginUserAnnotation();
 
         // when then docs
@@ -399,7 +421,29 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("diseaseTagRequestList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
                                 fieldWithPath("diseaseTagRequestList[0].name").type(STRING).description("질병 이름"),
                                 fieldWithPath("dailyNote").type(STRING).description("아픔 일기").optional(),
-                                fieldWithPath("painType").type(STRING).description("아픔 정도").optional()
+                                fieldWithPath("painType").type(STRING).description("아픔 정도")
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 아픔_정도_없이_스케줄_수정_실패() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
+        scheduleModifyRequest.setPainType(null);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",1)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(scheduleModifyRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
                         )
                 ))
         ;

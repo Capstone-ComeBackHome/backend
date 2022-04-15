@@ -69,8 +69,13 @@ public class UserRestController {
 
     @PatchMapping("/medicine")
     public ResponseEntity<Void> updateMyMedicineInfo(@LoginUser User user,
-                                                                  @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest
+                                                                  @Validated @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest,
+                                                                    BindingResult errors
                                                                   ){
+
+        if (errors.hasErrors()){
+            throw new ValidatedException(errors);
+        }
 
         userCommandUseCase.updateMyMedicineInfo(userMedicineUpdateRequest.toUserMedicineUpdateRequestDto(),user.getId());
 

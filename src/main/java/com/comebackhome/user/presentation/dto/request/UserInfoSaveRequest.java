@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 @Setter
 @Getter
@@ -26,14 +27,19 @@ public class UserInfoSaveRequest {
     @Positive(message = "몸무게는 필수값입니다.")
     private int weight;
 
+    @Size(max = 50,message = "50자 이내로 입력하세요.")
     private String history;
 
+    @Size(max = 50,message = "50자 이내로 입력하세요.")
     private String FamilyHistory;
 
+    @Size(max = 50,message = "50자 이내로 입력하세요.")
     private String drugHistory;
 
+    @Size(max = 50,message = "50자 이내로 입력하세요.")
     private String socialHistory;
 
+    @Size(max = 50,message = "50자 이내로 입력하세요.")
     private String traumaHistory;
 
     public UserInfoSaveRequestDto toUserInfoSaveRequestDto(){

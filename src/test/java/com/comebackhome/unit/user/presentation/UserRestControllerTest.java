@@ -50,14 +50,45 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
                                 fieldWithPath("height").type(NUMBER).description("키").attributes(field("constraints", "양수")),
                                 fieldWithPath("weight").type(NUMBER).description("몸무게").attributes(field("constraints", "양수")),
-                                fieldWithPath("history").type(STRING).description("과거력").optional(),
-                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional(),
-                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional(),
-                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
-                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional()
+                                fieldWithPath("history").type(STRING).description("과거력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional().attributes(field("constraints", "50자 이내"))
                         )
                 ))
         ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 부가정보_50자_초과_개인_정보_업데이트_하기_실패() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserInfoSaveRequest userInfoSaveRequest = givenUserInfoRequest();
+        setExceedSizeFields(userInfoSaveRequest);
+
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL)
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userInfoSaveRequest))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    private void setExceedSizeFields(UserInfoSaveRequest userInfoSaveRequest) {
+        userInfoSaveRequest.setHistory("50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도");
+        userInfoSaveRequest.setDrugHistory("50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도");
+        userInfoSaveRequest.setFamilyHistory("50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도");
+        userInfoSaveRequest.setSocialHistory("50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도");
+        userInfoSaveRequest.setTraumaHistory("50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도50자초과시도");
     }
 
     @Test
@@ -452,15 +483,45 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         requestFields(
-                                fieldWithPath("history").type(STRING).description("과거력").optional(),
-                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional(),
-                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional(),
-                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
-                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional()
+                                fieldWithPath("history").type(STRING).description("과거력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional().attributes(field("constraints", "50자 이내")),
+                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional().attributes(field("constraints", "50자 이내"))
                         )
 
                 ))
         ;
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 부가_정보_50자_초과_수정하기_실패() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        UserMedicineUpdateRequestDto userMedicineUpdateRequestDto = givenUserMedicineUpdateRequestDto();
+        setExceedSizeFields(userMedicineUpdateRequestDto);
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/medicine")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .content(createJson(userMedicineUpdateRequestDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptorIncludeErrorFields()
+                        )
+                ))
+        ;
+    }
+
+    private void setExceedSizeFields(UserMedicineUpdateRequestDto userMedicineUpdateRequestDto) {
+        userMedicineUpdateRequestDto.setHistory("50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력");
+        userMedicineUpdateRequestDto.setDrugHistory("50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력");
+        userMedicineUpdateRequestDto.setFamilyHistory("50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력");
+        userMedicineUpdateRequestDto.setTraumaHistory("50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력");
+        userMedicineUpdateRequestDto.setSocialHistory("50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력50자초과입력");
     }
 
     @Test

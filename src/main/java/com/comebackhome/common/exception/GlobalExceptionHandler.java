@@ -1,5 +1,6 @@
 package com.comebackhome.common.exception;
 
+import com.comebackhome.common.exception.csv.CSVException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -128,6 +129,20 @@ public class GlobalExceptionHandler {
         ErrorResponse response = ErrorResponse.of(NOT_SUPPORT_METHOD.getMessage(), NOT_SUPPORT_METHOD.getCode());
         return ResponseEntity
                 .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(response);
+    }
+
+    @ExceptionHandler(CSVException.class)
+    public ResponseEntity<ErrorResponse> csvException(CSVException e) {
+
+        final String code = BINDING_EXCEPTION.getCode();
+        final String message = BINDING_EXCEPTION.getMessage();
+
+        log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message,e);
+
+        ErrorResponse response = ErrorResponse.of(message, code);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 

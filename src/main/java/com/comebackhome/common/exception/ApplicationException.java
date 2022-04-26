@@ -17,10 +17,25 @@ public abstract class ApplicationException extends RuntimeException{
         this.httpStatus = httpStatus;
     }
 
+    protected ApplicationException(String errorCode, HttpStatus httpStatus, String message, Throwable cause) {
+        super(message,cause);
+        this.errorCode = errorCode;
+        this.httpStatus = httpStatus;
+    }
+
     protected ApplicationException(String errorCode, HttpStatus httpStatus, String message, BindingResult errors) {
         super(message);
         this.errorCode = errorCode;
         this.httpStatus = httpStatus;
         this.errors = errors;
     }
+
+    protected ApplicationException(String errorCode, HttpStatus httpStatus, String message, BindingResult errors, Throwable cause) {
+        super(message,cause);
+        this.errorCode = errorCode;
+        this.httpStatus = httpStatus;
+        this.errors = errors;
+    }
+
+
 }

@@ -28,7 +28,7 @@ public class CSVUtil {
                     .build()
                     .parse();
         } catch (RuntimeException | IOException e) {
-            throw new FileReadException();
+            throw new FileReadException(e);
         }
     }
 

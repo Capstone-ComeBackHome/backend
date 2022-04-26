@@ -8,4 +8,8 @@ public abstract class CSVException extends ApplicationException {
     protected CSVException(String errorCode, HttpStatus httpStatus, String message) {
         super(errorCode, httpStatus, message);
     }
+
+    protected CSVException(String errorCode, HttpStatus httpStatus, String message, Throwable cause) {
+        super(errorCode, httpStatus, message,cause);
+    }
 }

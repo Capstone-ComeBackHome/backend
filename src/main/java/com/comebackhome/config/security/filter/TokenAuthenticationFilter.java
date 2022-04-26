@@ -53,7 +53,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         } catch (RedisConnectionFailureException e) {
             throw new RedisConnectionFailureException("redis 커넥션에 실패했습니다.");
         } catch(Exception e){
-            throw new TokenAuthenticationFilterException();
+            throw new TokenAuthenticationFilterException(e);
         }
 
         filterChain.doFilter(request, response);

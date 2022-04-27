@@ -65,7 +65,6 @@ public abstract class ControllerTest {
     @MockBean protected UserRepository userRepository;
     @MockBean protected TokenRepository tokenRepository;
 
-
     protected String createJson(Object dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);
     }

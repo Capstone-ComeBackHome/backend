@@ -16,7 +16,8 @@ public class TokenProviderTest {
 
     @BeforeEach
     void setup(){
-        tokenProvider = new TokenProvider("secret",3600000L,86400000L);
+        tokenProvider = new TokenProvider("secret",21600000L,
+                259200000L,604800000L);
     }
 
     @Test
@@ -67,8 +68,7 @@ public class TokenProviderTest {
         long remainingMilliSecondsFromToken = tokenProvider.getRemainingMilliSecondsFromToken(accessToken);
 
         //then
-        assertThat(remainingMilliSecondsFromToken).isGreaterThan(3400000L);
-        assertThat(remainingMilliSecondsFromToken).isLessThan(3600001L);
+        assertThat(remainingMilliSecondsFromToken).isLessThan(21600000L);
     }
 
     @Test
@@ -89,13 +89,17 @@ public class TokenProviderTest {
     void secret이_다른_토큰_유효성_체크() throws Exception{
         //given
         String accessToken = getAccessToken(givenUser());
-        TokenProvider anotherTokenProvider = new TokenProvider("new_secret", 10000L, 10000L);
+        TokenProvider anotherTokenProvider = new TokenProvider("new_secret", 10000L, 10000L,10000L);
 
         //when
         boolean result = anotherTokenProvider.validateToken(accessToken);
 
         // then
         assertThat(result).isFalse();
+    }
+
+    private String getAccessToken(User user) {
+        return tokenProvider.createAccessToken(createAuthentication(user));
     }
 
     @Test
@@ -113,7 +117,7 @@ public class TokenProviderTest {
     @Test
     void 만료된_토큰_유효성_체크() throws Exception{
         //given
-        tokenProvider = new TokenProvider("secret", 0L, 0L);
+        tokenProvider = new TokenProvider("secret", 0L, 0L,0L);
         String accessToken = tokenProvider.createAccessToken(createAuthentication(givenUser()));
 
         //when
@@ -123,8 +127,31 @@ public class TokenProviderTest {
         assertThat(result).isFalse();
     }
 
-    private String getAccessToken(User user) {
-        return tokenProvider.createAccessToken(createAuthentication(user));
+    @Test
+    void refreshToken_유효시간이_재발급_기간보다_적게_남은_경우() {
+        //given
+        tokenProvider = new TokenProvider("secret", 1000L, 1000L,1000L);
+        String refreshToken = tokenProvider.createRefreshToken(createAuthentication(givenUser()));
+
+        //when
+        boolean result = tokenProvider.isMoreThanReissueTime(refreshToken);
+
+        //then
+        assertThat(result).isFalse();
     }
+
+    @Test
+    void refreshToken_유효시간이_재발급_기간보다_많이_남은_경우() {
+        //given
+        tokenProvider = new TokenProvider("secret", 1000L, 100000L,1000L);
+        String refreshToken = tokenProvider.createRefreshToken(createAuthentication(givenUser()));
+
+        //when
+        boolean result = tokenProvider.isMoreThanReissueTime(refreshToken);
+
+        //then
+        assertThat(result).isTrue();
+    }
+
 
 }

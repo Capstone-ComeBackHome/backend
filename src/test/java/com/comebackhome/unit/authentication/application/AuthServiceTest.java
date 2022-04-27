@@ -4,14 +4,16 @@ import com.comebackhome.authentication.application.AuthService;
 import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.authentication.application.dto.AuthResponseDto;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.common.exception.security.NotExistsRefreshTokenException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
@@ -32,26 +34,57 @@ public class AuthServiceTest {
         authService.logout(accessToken,refreshToken);
 
         //then
-        then(tokenRepository).should().saveLogoutAccessToken(ArgumentMatchers.any());
-        then(tokenRepository).should().saveLogoutRefreshToken(ArgumentMatchers.any());
+        then(tokenRepository).should().saveLogoutAccessToken(any());
+        then(tokenRepository).should().saveLogoutRefreshToken(any());
     }
 
     @Test
-    void 토큰_재발급() throws Exception{
+    void 토큰이_redis에_없는_경우() throws Exception{
         //given
-        String accessToken = "accessToken";
         String refreshToken = "refreshToken";
-
-        given(tokenProvider.createAccessToken(ArgumentMatchers.any())).willReturn(accessToken);
-        given(tokenProvider.createRefreshToken(ArgumentMatchers.any())).willReturn(refreshToken);
+        given(tokenRepository.existsRefreshTokenById(any())).willReturn(false);
 
         //when
-        AuthResponseDto authResponseDto = authService.reissue(refreshToken);
-
-        //then
-        assertThat(authResponseDto.getTokenType()).isEqualTo(authResponseDto.getTokenType());
-        assertThat(authResponseDto.getAccessToken()).isEqualTo(accessToken);
-        assertThat(authResponseDto.getRefreshToken()).isEqualTo(refreshToken);
+        assertThatThrownBy(() -> authService.reissue(refreshToken))
+                .isInstanceOf(NotExistsRefreshTokenException.class);
     }
 
+    @Test
+    void Refresh토큰이_아직_reissue_time이_남아있는_경우() throws Exception{
+        //given
+        String refreshToken = "refreshToken";
+        String accessToken = "accessToken";
+        given(tokenProvider.removeType(any())).willReturn(refreshToken);
+        given(tokenRepository.existsRefreshTokenById(any())).willReturn(true);
+        given(tokenProvider.createAccessToken(any())).willReturn(accessToken);
+        given(tokenProvider.isMoreThanReissueTime(any())).willReturn(true);
+
+        //when
+        AuthResponseDto result = authService.reissue(refreshToken);
+
+        // then
+        assertThat(result.getAccessToken()).isEqualTo(accessToken);
+        assertThat(result.getRefreshToken()).isEqualTo(refreshToken);
+        assertThat(result.getTokenType()).isEqualTo("Bearer");
+    }
+
+    @Test
+    void Refresh토큰이_reissue_time보다_적게_남은_경우() throws Exception{
+        //given
+        String refreshToken = "refreshToken";
+        String accessToken = "accessToken";
+        String newRefreshToken = "newRefreshTokenk";
+        given(tokenRepository.existsRefreshTokenById(any())).willReturn(true);
+        given(tokenProvider.createAccessToken(any())).willReturn(accessToken);
+        given(tokenProvider.isMoreThanReissueTime(any())).willReturn(false);
+        given(tokenProvider.createRefreshToken(any())).willReturn(newRefreshToken);
+
+        //when
+        AuthResponseDto result = authService.reissue(refreshToken);
+
+        // then
+        assertThat(result.getAccessToken()).isEqualTo(accessToken);
+        assertThat(result.getRefreshToken()).isEqualTo(newRefreshToken);
+        assertThat(result.getTokenType()).isEqualTo("Bearer");
+    }
 }

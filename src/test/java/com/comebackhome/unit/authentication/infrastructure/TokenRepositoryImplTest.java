@@ -5,6 +5,7 @@ import com.comebackhome.authentication.domain.LogoutRefreshToken;
 import com.comebackhome.authentication.domain.TokenRepository;
 import com.comebackhome.authentication.infrastructure.repository.LogoutAccessTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.LogoutRefreshTokenRedisRepository;
+import com.comebackhome.authentication.infrastructure.repository.RefreshTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.TokenRepositoryImpl;
 import com.comebackhome.support.RedisRepositoryTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +20,12 @@ public class TokenRepositoryImplTest extends RedisRepositoryTest {
 
     @Autowired LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
     @Autowired LogoutRefreshTokenRedisRepository logoutRefreshTokenRedisRepository;
+    @Autowired RefreshTokenRedisRepository refreshTokenRedisRepository;
     TokenRepository tokenRepository;
 
     @BeforeEach
     void setup(){
-        tokenRepository = new TokenRepositoryImpl(logoutAccessTokenRedisRepository,logoutRefreshTokenRedisRepository);
+        tokenRepository = new TokenRepositoryImpl(logoutAccessTokenRedisRepository,logoutRefreshTokenRedisRepository,refreshTokenRedisRepository);
     }
 
     @BeforeEach

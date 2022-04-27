@@ -10,7 +10,7 @@ public class LogoutRefreshToken  extends Token {
         super(id, expiration);
     }
 
-    public static LogoutRefreshToken of (String accessToken, Long expiration){
-        return new LogoutRefreshToken(accessToken,expiration);
+    public static LogoutRefreshToken of (String refreshToken, Long expiration){
+        return new LogoutRefreshToken(refreshToken,expiration);
     }
 }

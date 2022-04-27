@@ -28,11 +28,11 @@ public class TokenAuthenticationErrorFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (RedisConnectionFailureException e){
-            log.error("[TokenAuthenticationErrorFilter error] {}",e.getMessage());
+            log.error("[TokenAuthenticationErrorFilter error] {}",e.getMessage(),e);
             SendErrorUtil.sendServerErrorResponse(response,objectMapper);
         }
         catch (TokenAuthenticationFilterException e) {
-            log.error("[TokenAuthenticationErrorFilter error] {}",e.getMessage());
+            log.error("[TokenAuthenticationErrorFilter error] {}",e.getMessage(),e);
             SendErrorUtil.sendUnauthorizedErrorResponse(response,objectMapper);
         }
     }

@@ -21,14 +21,18 @@ public class TokenProvider {
     private final String secretKey;
     private final long accessTokenExpirationTimeInMilliSeconds;
     private final long refreshTokenExpirationTimeInMilliSeconds;
+    private final long reissueRefreshTokenTimeInMilliSeconds;
 
     public TokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
             @Value("${jwt.access-expiration-time}") long accessTokenExpirationTimeInMilliSeconds,
-            @Value("${jwt.refresh-expiration-time}") long refreshTokenExpirationTimeInMilliSeconds) {
+            @Value("${jwt.refresh-expiration-time}") long refreshTokenExpirationTimeInMilliSeconds,
+            @Value("${jwt.reissue-refresh-time}") long reissueRefreshTokenTimeInMilliSeconds
+            ) {
         this.secretKey = secretKey;
         this.accessTokenExpirationTimeInMilliSeconds = accessTokenExpirationTimeInMilliSeconds;
         this.refreshTokenExpirationTimeInMilliSeconds = refreshTokenExpirationTimeInMilliSeconds;
+        this.reissueRefreshTokenTimeInMilliSeconds = reissueRefreshTokenTimeInMilliSeconds;
     }
 
     public String createAccessToken(Authentication authentication) {
@@ -63,13 +67,16 @@ public class TokenProvider {
         return expiration.getTime() - (new Date()).getTime();
     }
 
+    public boolean isMoreThanReissueTime(String token){
+        return getRemainingMilliSecondsFromToken(token) >= reissueRefreshTokenTimeInMilliSeconds;
+    }
+
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 
     public boolean validateToken(String authToken) {
         try {
@@ -78,5 +85,9 @@ public class TokenProvider {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public String removeType(String token){
+        return token.substring(TOKEN_TYPE.length());
     }
 }

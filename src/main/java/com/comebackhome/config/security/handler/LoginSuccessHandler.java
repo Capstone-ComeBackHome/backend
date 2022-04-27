@@ -1,6 +1,8 @@
 package com.comebackhome.config.security.handler;
 
 import com.comebackhome.authentication.application.TokenProvider;
+import com.comebackhome.authentication.domain.RefreshToken;
+import com.comebackhome.authentication.domain.TokenRepository;
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final TokenProvider tokenProvider;
     private final ObjectMapper objectMapper;
+    private final TokenRepository tokenRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -30,6 +33,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String refreshToken = tokenProvider.createRefreshToken(authentication);
         String accessToken = tokenProvider.createAccessToken(authentication);
         AuthResponse authResponse = AuthResponse.of(accessToken,refreshToken);
+        tokenRepository
+                .saveRefreshToken(RefreshToken.of(refreshToken, tokenProvider.getRemainingMilliSecondsFromToken(refreshToken)));
 
         objectMapper.writeValue(response.getWriter(), authResponse);
     }

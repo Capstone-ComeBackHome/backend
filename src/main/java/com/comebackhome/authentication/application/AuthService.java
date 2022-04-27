@@ -3,7 +3,9 @@ package com.comebackhome.authentication.application;
 import com.comebackhome.authentication.application.dto.AuthResponseDto;
 import com.comebackhome.authentication.domain.LogoutAccessToken;
 import com.comebackhome.authentication.domain.LogoutRefreshToken;
+import com.comebackhome.authentication.domain.RefreshToken;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.common.exception.security.NotExistsRefreshTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,17 +44,41 @@ public class AuthService implements AuthCommandUseCase {
         return token.substring(7);
     }
 
-    private long getRemainingMilliSecondsFromToken(String removedTypeToken) {
-        return tokenProvider.getRemainingMilliSecondsFromToken(removedTypeToken);
-    }
-
     @Override
     public AuthResponseDto reissue(String refreshToken) {
-        saveLogoutRefreshToken(refreshToken);
+        refreshToken = tokenProvider.removeType(refreshToken);
+        isInRedisOrThrow(refreshToken);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String newAccessToken = tokenProvider.createAccessToken(authentication);
-        String newRefreshToken = tokenProvider.createRefreshToken(authentication);
+        if (tokenProvider.isMoreThanReissueTime(refreshToken))
+            return AuthResponseDto.of(newAccessToken, refreshToken);
+
+        deleteOriginRefreshToken(refreshToken);
+        String newRefreshToken = createNewRefreshToken(authentication);
         return AuthResponseDto.of(newAccessToken, newRefreshToken);
+    }
+
+    private void isInRedisOrThrow(String refreshToken) {
+        if (!tokenRepository.existsRefreshTokenById(refreshToken)){
+            throw new NotExistsRefreshTokenException();
+        }
+    }
+
+    private void deleteOriginRefreshToken(String refreshToken) {
+        tokenRepository.deleteRefreshTokenById(refreshToken);
+        tokenRepository.saveLogoutRefreshToken(
+                LogoutRefreshToken.of(refreshToken,getRemainingMilliSecondsFromToken(refreshToken)));
+    }
+
+    private String createNewRefreshToken(Authentication authentication) {
+        String newRefreshToken = tokenProvider.createRefreshToken(authentication);
+        tokenRepository.saveRefreshToken(
+                RefreshToken.of(newRefreshToken,getRemainingMilliSecondsFromToken(newRefreshToken)));
+        return newRefreshToken;
+    }
+
+    private long getRemainingMilliSecondsFromToken(String token) {
+        return tokenProvider.getRemainingMilliSecondsFromToken(token);
     }
 }

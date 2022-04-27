@@ -1,9 +1,11 @@
 package com.comebackhome.authentication.domain;
 
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("logoutAccessToken")
+@NoArgsConstructor
 public class LogoutAccessToken extends Token {
 
     private LogoutAccessToken(String id, long expiration) {

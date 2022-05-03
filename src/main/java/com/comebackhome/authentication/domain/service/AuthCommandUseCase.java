@@ -1,6 +1,6 @@
-package com.comebackhome.authentication.application;
+package com.comebackhome.authentication.domain.service;
 
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 
 public interface AuthCommandUseCase {
 

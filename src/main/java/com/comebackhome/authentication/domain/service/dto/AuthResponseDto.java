@@ -1,4 +1,4 @@
-package com.comebackhome.authentication.application.dto;
+package com.comebackhome.authentication.domain.service.dto;
 
 import lombok.Getter;
 

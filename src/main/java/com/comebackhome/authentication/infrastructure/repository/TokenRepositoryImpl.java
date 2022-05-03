@@ -5,10 +5,10 @@ import com.comebackhome.authentication.domain.LogoutRefreshToken;
 import com.comebackhome.authentication.domain.RefreshToken;
 import com.comebackhome.authentication.domain.TokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Component
 @Transactional
 @RequiredArgsConstructor
 public class TokenRepositoryImpl implements TokenRepository {

@@ -1,6 +1,6 @@
 package com.comebackhome.authentication.presentation.dto;
 
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

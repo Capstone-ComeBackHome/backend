@@ -1,5 +1,6 @@
-package com.comebackhome.authentication.application;
+package com.comebackhome.authentication.infrastructure;
 
+import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.config.security.dto.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @Slf4j
 @Component
-public class TokenProvider {
+public class JWTTokenProvider implements TokenProvider {
 
     public static final String TOKEN_TYPE = "Bearer ";
 
@@ -23,7 +24,7 @@ public class TokenProvider {
     private final long refreshTokenExpirationTimeInMilliSeconds;
     private final long reissueRefreshTokenTimeInMilliSeconds;
 
-    public TokenProvider(
+    public JWTTokenProvider(
             @Value("${jwt.secret-key}") String secretKey,
             @Value("${jwt.access-expiration-time}") long accessTokenExpirationTimeInMilliSeconds,
             @Value("${jwt.refresh-expiration-time}") long refreshTokenExpirationTimeInMilliSeconds,

@@ -1,7 +1,7 @@
 package com.comebackhome.authentication.presentation;
 
-import com.comebackhome.authentication.application.AuthCommandUseCase;
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.application.AuthFacade;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthRestController {
 
-    private final AuthCommandUseCase authCommandUseCase;
+    private final AuthFacade authFacade;
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestHeader(value = "Authorization") String accessToken,
                                        @RequestHeader(value = "refreshToken") String refreshToken) {
-        authCommandUseCase.logout(accessToken,refreshToken);
+        authFacade.logout(accessToken,refreshToken);
         return ResponseEntity.ok().build();
     }
 
 
     @PostMapping("/reissue")
     public ResponseEntity<AuthResponse> reissueToken(@RequestHeader(value = "Authorization") String refreshToken){
-        AuthResponseDto authResponseDto = authCommandUseCase.reissue(refreshToken);
+        AuthResponseDto authResponseDto = authFacade.reissue(refreshToken);
         return ResponseEntity.ok(AuthResponse.from(authResponseDto));
     }
 

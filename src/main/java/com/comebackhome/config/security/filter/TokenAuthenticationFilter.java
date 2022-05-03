@@ -1,7 +1,7 @@
 package com.comebackhome.config.security.filter;
 
-import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.common.exception.security.TokenAuthenticationFilterException;
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.config.security.dto.UserPrincipal;

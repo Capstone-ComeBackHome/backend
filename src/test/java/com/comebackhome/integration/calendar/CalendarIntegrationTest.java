@@ -1,6 +1,5 @@
 package com.comebackhome.integration.calendar;
 
-import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
@@ -38,7 +37,6 @@ public class CalendarIntegrationTest extends IntegrationTest {
     private final String TOKEN_TYPE = "Bearer ";
 
     @Autowired UserRepository userRepository;
-    @Autowired TokenProvider tokenProvider;
     @Autowired DiseaseTagRepository diseaseTagRepository;
     @Autowired ScheduleDiseaseTagJpaRepository scheduleDiseaseTagJpaRepository;
     @Autowired ScheduleRepository scheduleRepository;

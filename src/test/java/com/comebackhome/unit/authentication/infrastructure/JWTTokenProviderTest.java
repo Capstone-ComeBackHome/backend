@@ -1,7 +1,7 @@
-package com.comebackhome.unit.authentication.application;
+package com.comebackhome.unit.authentication.infrastructure;
 
 
-import com.comebackhome.authentication.application.TokenProvider;
+import com.comebackhome.authentication.infrastructure.JWTTokenProvider;
 import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,13 +10,13 @@ import static com.comebackhome.support.helper.UserGivenHelper.createAuthenticati
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TokenProviderTest {
+public class JWTTokenProviderTest {
 
-    TokenProvider tokenProvider;
+    JWTTokenProvider JWTTokenProvider;
 
     @BeforeEach
     void setup(){
-        tokenProvider = new TokenProvider("secret",21600000L,
+        JWTTokenProvider = new JWTTokenProvider("secret",21600000L,
                 259200000L,604800000L);
     }
 
@@ -29,7 +29,7 @@ public class TokenProviderTest {
         String accessToken = getAccessToken(user);
 
         //then
-        String userEmailFromToken = tokenProvider.getUserEmailFromToken(accessToken);
+        String userEmailFromToken = JWTTokenProvider.getUserEmailFromToken(accessToken);
         assertThat(userEmailFromToken).isEqualTo(user.getEmail());
     }
 
@@ -39,10 +39,10 @@ public class TokenProviderTest {
         User user = givenUser();
 
         //when
-        String refreshToken = tokenProvider.createRefreshToken(createAuthentication(user));
+        String refreshToken = JWTTokenProvider.createRefreshToken(createAuthentication(user));
 
         //then
-        String userEmailFromToken = tokenProvider.getUserEmailFromToken(refreshToken);
+        String userEmailFromToken = JWTTokenProvider.getUserEmailFromToken(refreshToken);
         assertThat(userEmailFromToken).isEqualTo(user.getEmail());
     }
 
@@ -53,7 +53,7 @@ public class TokenProviderTest {
         String accessToken = getAccessToken(user);
 
         //when
-        String userEmailFromToken = tokenProvider.getUserEmailFromToken(accessToken);
+        String userEmailFromToken = JWTTokenProvider.getUserEmailFromToken(accessToken);
 
         //then
         assertThat(userEmailFromToken).isEqualTo(user.getEmail());
@@ -65,7 +65,7 @@ public class TokenProviderTest {
         String accessToken = getAccessToken(givenUser());
 
         //when
-        long remainingMilliSecondsFromToken = tokenProvider.getRemainingMilliSecondsFromToken(accessToken);
+        long remainingMilliSecondsFromToken = JWTTokenProvider.getRemainingMilliSecondsFromToken(accessToken);
 
         //then
         assertThat(remainingMilliSecondsFromToken).isLessThan(21600000L);
@@ -77,7 +77,7 @@ public class TokenProviderTest {
         String accessToken = getAccessToken(givenUser());
 
         //when
-        boolean result = tokenProvider.validateToken(accessToken);
+        boolean result = JWTTokenProvider.validateToken(accessToken);
 
         // then
         assertThat(result).isTrue();
@@ -89,17 +89,17 @@ public class TokenProviderTest {
     void secret이_다른_토큰_유효성_체크() throws Exception{
         //given
         String accessToken = getAccessToken(givenUser());
-        TokenProvider anotherTokenProvider = new TokenProvider("new_secret", 10000L, 10000L,10000L);
+        JWTTokenProvider anotherJWTTokenProvider = new JWTTokenProvider("new_secret", 10000L, 10000L,10000L);
 
         //when
-        boolean result = anotherTokenProvider.validateToken(accessToken);
+        boolean result = anotherJWTTokenProvider.validateToken(accessToken);
 
         // then
         assertThat(result).isFalse();
     }
 
     private String getAccessToken(User user) {
-        return tokenProvider.createAccessToken(createAuthentication(user));
+        return JWTTokenProvider.createAccessToken(createAuthentication(user));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class TokenProviderTest {
         String accessToken = "dummy";
 
         //when
-        boolean result = tokenProvider.validateToken(accessToken);
+        boolean result = JWTTokenProvider.validateToken(accessToken);
 
         // then
         assertThat(result).isFalse();
@@ -117,11 +117,11 @@ public class TokenProviderTest {
     @Test
     void 만료된_토큰_유효성_체크() throws Exception{
         //given
-        tokenProvider = new TokenProvider("secret", 0L, 0L,0L);
-        String accessToken = tokenProvider.createAccessToken(createAuthentication(givenUser()));
+        JWTTokenProvider = new JWTTokenProvider("secret", 0L, 0L,0L);
+        String accessToken = JWTTokenProvider.createAccessToken(createAuthentication(givenUser()));
 
         //when
-        boolean result = tokenProvider.validateToken(accessToken);
+        boolean result = JWTTokenProvider.validateToken(accessToken);
 
         // then
         assertThat(result).isFalse();
@@ -130,11 +130,11 @@ public class TokenProviderTest {
     @Test
     void refreshToken_유효시간이_재발급_기간보다_적게_남은_경우() {
         //given
-        tokenProvider = new TokenProvider("secret", 1000L, 1000L,1000L);
-        String refreshToken = tokenProvider.createRefreshToken(createAuthentication(givenUser()));
+        JWTTokenProvider = new JWTTokenProvider("secret", 1000L, 1000L,1000L);
+        String refreshToken = JWTTokenProvider.createRefreshToken(createAuthentication(givenUser()));
 
         //when
-        boolean result = tokenProvider.isMoreThanReissueTime(refreshToken);
+        boolean result = JWTTokenProvider.isMoreThanReissueTime(refreshToken);
 
         //then
         assertThat(result).isFalse();
@@ -143,11 +143,11 @@ public class TokenProviderTest {
     @Test
     void refreshToken_유효시간이_재발급_기간보다_많이_남은_경우() {
         //given
-        tokenProvider = new TokenProvider("secret", 1000L, 100000L,1000L);
-        String refreshToken = tokenProvider.createRefreshToken(createAuthentication(givenUser()));
+        JWTTokenProvider = new JWTTokenProvider("secret", 1000L, 100000L,1000L);
+        String refreshToken = JWTTokenProvider.createRefreshToken(createAuthentication(givenUser()));
 
         //when
-        boolean result = tokenProvider.isMoreThanReissueTime(refreshToken);
+        boolean result = JWTTokenProvider.isMoreThanReissueTime(refreshToken);
 
         //then
         assertThat(result).isTrue();

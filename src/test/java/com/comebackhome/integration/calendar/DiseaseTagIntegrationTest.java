@@ -1,6 +1,5 @@
 package com.comebackhome.integration.calendar;
 
-import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
@@ -26,7 +25,6 @@ public class DiseaseTagIntegrationTest extends IntegrationTest {
 
 
     @Autowired UserRepository userRepository;
-    @Autowired TokenProvider tokenProvider;
     @Autowired DiseaseTagJpaRepository diseaseTagJpaRepository;
 
     @Test

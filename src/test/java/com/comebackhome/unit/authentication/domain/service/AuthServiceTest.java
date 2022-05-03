@@ -1,9 +1,9 @@
-package com.comebackhome.unit.authentication.application;
+package com.comebackhome.unit.authentication.domain.service;
 
-import com.comebackhome.authentication.application.AuthService;
-import com.comebackhome.authentication.application.TokenProvider;
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.service.AuthService;
+import com.comebackhome.authentication.domain.service.TokenProvider;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.common.exception.security.NotExistsRefreshTokenException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

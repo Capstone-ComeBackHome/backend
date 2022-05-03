@@ -1,7 +1,7 @@
-package com.comebackhome.unit.authentication.application.dto;
+package com.comebackhome.unit.authentication.domain.service.dto;
 
 
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

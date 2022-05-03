@@ -1,6 +1,6 @@
 package com.comebackhome.unit.authentication.presentation;
 
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +30,7 @@ public class AuthRestControllerTest extends RestDocsTestSupport {
         //given
         AuthResponseDto authResponseDto = AuthResponseDto.of("accessToken", "refreshToken");
 
-        given(authCommandUseCase.reissue(anyString()))
+        given(authFacade.reissue(anyString()))
                 .willReturn(authResponseDto);
 
         //when then docs

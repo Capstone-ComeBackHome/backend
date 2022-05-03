@@ -1,6 +1,6 @@
 package com.comebackhome.support;
 
-import com.comebackhome.authentication.application.TokenProvider;
+import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.infrastructure.repository.LogoutAccessTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.LogoutRefreshTokenRedisRepository;
 import com.comebackhome.user.domain.User;
@@ -29,10 +29,11 @@ public abstract class IntegrationTest {
     @Autowired protected ObjectMapper objectMapper;
     @Autowired protected EntityManager em;
 
+    @Autowired protected TokenProvider tokenProvider;
     @Autowired UserJpaRepository userJpaRepository;
     @Autowired LogoutAccessTokenRedisRepository logoutAccessTokenRedisRepository;
     @Autowired LogoutRefreshTokenRedisRepository logoutRefreshTokenRedisRepository;
-    @Autowired TokenProvider tokenProvider;
+
 
     @BeforeEach
     void clearUser(){

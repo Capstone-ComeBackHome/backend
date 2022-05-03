@@ -1,8 +1,8 @@
 package com.comebackhome.support;
 
-import com.comebackhome.authentication.application.AuthCommandUseCase;
-import com.comebackhome.authentication.application.TokenProvider;
+import com.comebackhome.authentication.application.AuthFacade;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.presentation.AuthRestController;
 import com.comebackhome.calendar.application.CalendarCommandUseCase;
 import com.comebackhome.calendar.application.CalendarQueryUseCase;
@@ -50,7 +50,7 @@ public abstract class ControllerTest {
     protected MockMvc mockMvc;
 
     @Autowired protected ObjectMapper objectMapper;
-    @MockBean protected AuthCommandUseCase authCommandUseCase;
+    @MockBean protected AuthFacade authFacade;
     @MockBean protected DiseaseQueryUseCase diseaseQueryUseCase;
     @MockBean protected DiseaseTagQueryUseCase diseaseTagQueryUseCase;
     @MockBean protected CalendarCommandUseCase calendarCommandUseCase;

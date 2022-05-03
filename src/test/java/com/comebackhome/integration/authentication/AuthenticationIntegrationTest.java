@@ -1,8 +1,9 @@
 package com.comebackhome.integration.authentication;
 
-import com.comebackhome.authentication.application.TokenProvider;
 import com.comebackhome.authentication.domain.RefreshToken;
 import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.service.TokenProvider;
+import com.comebackhome.authentication.infrastructure.JWTTokenProvider;
 import com.comebackhome.authentication.infrastructure.repository.LogoutRefreshTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.RefreshTokenRedisRepository;
 import com.comebackhome.support.IntegrationTest;
@@ -32,7 +33,6 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
 
 
     @Autowired UserRepository userRepository;
-    @Autowired TokenProvider tokenProvider;
     @Autowired TokenRepository tokenRepository;
     @Autowired RefreshTokenRedisRepository refreshTokenRedisRepository;
     @Autowired LogoutRefreshTokenRedisRepository logoutRefreshTokenRedisRepository;
@@ -61,7 +61,7 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
         User user = userRepository.save(givenUser());
         Authentication authentication = createAuthentication(user);
         String refreshToken = tokenProvider.createRefreshToken(authentication);
-        tokenRepository.saveRefreshToken(RefreshToken.of(refreshToken,tokenProvider.getRemainingMilliSecondsFromToken(refreshToken)));
+        tokenRepository.saveRefreshToken(RefreshToken.of(refreshToken, tokenProvider.getRemainingMilliSecondsFromToken(refreshToken)));
 
         //when then
         mockMvc.perform(MockMvcRequestBuilders.post(URL+"reissue")
@@ -80,9 +80,9 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
         //given
         User user = userRepository.save(givenUser());
         Authentication authentication = createAuthentication(user);
-        TokenProvider stubTokenProvider = new TokenProvider("test", 21600000L, 259200000L, 259200000L);
-        String refreshToken = stubTokenProvider.createRefreshToken(authentication);
-        tokenRepository.saveRefreshToken(RefreshToken.of(refreshToken,stubTokenProvider.getRemainingMilliSecondsFromToken(refreshToken)));
+        TokenProvider stubJWTTokenProvider = new JWTTokenProvider("test", 21600000L, 259200000L, 259200000L);
+        String refreshToken = stubJWTTokenProvider.createRefreshToken(authentication);
+        tokenRepository.saveRefreshToken(RefreshToken.of(refreshToken, stubJWTTokenProvider.getRemainingMilliSecondsFromToken(refreshToken)));
 
         //when then
         mockMvc.perform(MockMvcRequestBuilders.post(URL+"reissue")

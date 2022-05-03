@@ -1,6 +1,6 @@
 package com.comebackhome.unit.authentication.presentation.dto;
 
-import com.comebackhome.authentication.application.dto.AuthResponseDto;
+import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
 import org.junit.jupiter.api.Test;
 

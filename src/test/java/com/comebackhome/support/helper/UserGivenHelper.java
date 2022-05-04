@@ -1,16 +1,13 @@
 package com.comebackhome.support.helper;
 
 import com.comebackhome.config.security.dto.UserPrincipal;
-import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
-import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.domain.AuthProvider;
 import com.comebackhome.user.domain.Role;
 import com.comebackhome.user.domain.Sex;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
-import com.comebackhome.user.domain.dto.UserInfoDto;
-import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -76,9 +73,6 @@ public class UserGivenHelper {
         return givenUserInfoRequest().toUserInfoSaveRequestDto();
     }
 
-    public static UserInfoDto givenUserInfoDto(){
-        return givenUserInfoRequestDto().toUserInfoDto();
-    }
 
     public static UserEssentialUpdateRequestDto givenUserEssentialUpdateRequestDto(){
         return UserEssentialUpdateRequestDto.builder()
@@ -89,10 +83,6 @@ public class UserGivenHelper {
                 .build();
     }
 
-    public static UserEssentialUpdateDto givenUserEssentialUpdateDto(){
-        return givenUserEssentialUpdateRequestDto().toUserEssentialUpdateDto();
-    }
-
     public static UserMedicineUpdateRequestDto givenUserMedicineUpdateRequestDto(){
         return UserMedicineUpdateRequestDto.builder()
                 .history("저는 과거에..")
@@ -101,10 +91,6 @@ public class UserGivenHelper {
                 .socialHistory("사회력은..")
                 .traumaHistory("외상력은..")
                 .build();
-    }
-
-    public static UserMedicineUpdateDto givenUserMedicineUpdateDto(){
-        return givenUserMedicineUpdateRequestDto().toUserMedicineUpdateDto();
     }
 
     public static UserMedicineUpdateRequest givenUserMedicineUpdateRequest(){

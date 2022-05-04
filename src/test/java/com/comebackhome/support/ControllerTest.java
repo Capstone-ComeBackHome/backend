@@ -18,7 +18,7 @@ import com.comebackhome.disease.presentation.DiagnosisRestController;
 import com.comebackhome.disease.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
-import com.comebackhome.user.application.UserCommandUseCase;
+import com.comebackhome.user.application.UserFacade;
 import com.comebackhome.user.domain.*;
 import com.comebackhome.user.presentation.UserRestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -58,7 +58,7 @@ public abstract class ControllerTest {
     @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
     @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
     @MockBean protected DiagnosisQueryUseCase diagnosisQueryUseCase;
-    @MockBean protected UserCommandUseCase userCommandUseCase;
+    @MockBean protected UserFacade userFacade;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

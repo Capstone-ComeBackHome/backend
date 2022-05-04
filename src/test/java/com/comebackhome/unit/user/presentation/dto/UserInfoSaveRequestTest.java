@@ -1,6 +1,6 @@
 package com.comebackhome.unit.user.presentation.dto;
 
-import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import org.junit.jupiter.api.Test;
 

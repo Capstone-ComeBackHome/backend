@@ -1,9 +1,9 @@
 package com.comebackhome.unit.user.domain;
 
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
-import com.comebackhome.user.domain.dto.UserInfoDto;
-import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.UserGivenHelper.*;
@@ -29,28 +29,28 @@ public class UserTest {
     @Test
     void 개인_정보_업데이트() throws Exception{
         //given
-        UserInfoDto userInfoDto = givenUserInfoDto();
+        UserInfoSaveRequestDto dto = givenUserInfoRequestDto();
         User user = givenUser();
 
         //when
-        user.saveInfo(userInfoDto);
+        user.saveInfo(dto);
 
         //then
-        assertThat(user.getAge()).isEqualTo(userInfoDto.getAge());
-        assertThat(user.getSex()).isEqualTo(userInfoDto.getSex());
-        assertThat(user.getHeight()).isEqualTo(userInfoDto.getHeight());
-        assertThat(user.getWeight()).isEqualTo(userInfoDto.getWeight());
-        assertThat(user.getHistory()).isEqualTo(userInfoDto.getHistory());
-        assertThat(user.getFamilyHistory()).isEqualTo(userInfoDto.getFamilyHistory());
-        assertThat(user.getDrugHistory()).isEqualTo(userInfoDto.getDrugHistory());
-        assertThat(user.getSocialHistory()).isEqualTo(userInfoDto.getSocialHistory());
-        assertThat(user.getTraumaHistory()).isEqualTo(userInfoDto.getTraumaHistory());
+        assertThat(user.getAge()).isEqualTo(dto.getAge());
+        assertThat(user.getSex()).isEqualTo(dto.getSex());
+        assertThat(user.getHeight()).isEqualTo(dto.getHeight());
+        assertThat(user.getWeight()).isEqualTo(dto.getWeight());
+        assertThat(user.getHistory()).isEqualTo(dto.getHistory());
+        assertThat(user.getFamilyHistory()).isEqualTo(dto.getFamilyHistory());
+        assertThat(user.getDrugHistory()).isEqualTo(dto.getDrugHistory());
+        assertThat(user.getSocialHistory()).isEqualTo(dto.getSocialHistory());
+        assertThat(user.getTraumaHistory()).isEqualTo(dto.getTraumaHistory());
     }
 
     @Test
     void EssentialInfo_업데이트하기() throws Exception{
         //given
-        UserEssentialUpdateDto dto = givenUserEssentialUpdateDto();
+        UserEssentialUpdateRequestDto dto = givenUserEssentialUpdateRequestDto();
         User user = givenUser();
 
         //when
@@ -66,7 +66,7 @@ public class UserTest {
     @Test
     void userMedicineInfo_업데이트하기() throws Exception{
         //given
-        UserMedicineUpdateDto dto = givenUserMedicineUpdateDto();
+        UserMedicineUpdateRequestDto dto = givenUserMedicineUpdateRequestDto();
         User user = givenUser();
 
         //when

@@ -1,6 +1,6 @@
 package com.comebackhome.unit.user.presentation.dto;
 
-import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;
 import org.junit.jupiter.api.Test;
 

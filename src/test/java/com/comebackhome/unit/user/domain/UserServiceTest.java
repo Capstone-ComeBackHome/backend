@@ -1,12 +1,12 @@
-package com.comebackhome.unit.user.application;
+package com.comebackhome.unit.user.domain;
 
 import com.comebackhome.common.exception.user.UserNotFoundException;
-import com.comebackhome.user.application.UserService;
-import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
-import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.service.UserService;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

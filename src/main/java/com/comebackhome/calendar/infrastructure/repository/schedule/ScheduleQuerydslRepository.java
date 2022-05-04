@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.infrastructure.repository.schedule;
 
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
+import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,9 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.calendar.domain.QDiseaseTag.diseaseTag;
 import static com.comebackhome.calendar.domain.QSchedule.schedule;
-import static com.comebackhome.calendar.domain.QScheduleDiseaseTag.scheduleDiseaseTag;
+import static com.comebackhome.calendar.domain.diseasetag.QDiseaseTag.diseaseTag;
+import static com.comebackhome.calendar.domain.diseasetag.QScheduleDiseaseTag.scheduleDiseaseTag;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,8 +21,8 @@ public class ScheduleQuerydslRepository {
 
     private final JPAQueryFactory query;
 
-    public List<SimpleScheduleQueryDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId){
-        return query.select(Projections.fields(SimpleScheduleQueryDto.class,
+    public List<SimpleScheduleResponseDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId){
+        return query.select(Projections.fields(SimpleScheduleResponseDto.class,
                 schedule.id.as("scheduleId"),
                 schedule.localDate,
                 schedule.scheduleDiseaseTagList.size().as("diseaseTagCount")

@@ -1,5 +1,6 @@
 package com.comebackhome.calendar.domain;
 
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.common.domain.BaseEntity;
 import com.comebackhome.user.domain.User;
 import lombok.*;

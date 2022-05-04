@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.presentation.dto.request;
 
-import com.comebackhome.calendar.application.dto.request.DiseaseTagRequestDto;
-import com.comebackhome.calendar.domain.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;

@@ -1,7 +1,6 @@
 package com.comebackhome.calendar.presentation;
 
-import com.comebackhome.calendar.application.CalendarCommandUseCase;
-import com.comebackhome.calendar.application.CalendarQueryUseCase;
+import com.comebackhome.calendar.application.CalendarFacade;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
@@ -24,13 +23,12 @@ import java.time.YearMonth;
 @RequiredArgsConstructor
 public class CalendarRestController {
 
-    private final CalendarCommandUseCase calendarCommandUseCase;
-    private final CalendarQueryUseCase calendarQueryUseCase;
+    private final CalendarFacade calendarFacade;
 
     @PostMapping
     public ResponseEntity<Void> saveMySchedule(@Validated @RequestBody ScheduleSaveRequest scheduleSaveRequest,
                                                @LoginUser User user){
-        calendarCommandUseCase.saveMySchedule(scheduleSaveRequest.toScheduleSaveRequestDto(user.getId()));
+        calendarFacade.saveMySchedule(scheduleSaveRequest.toScheduleSaveRequestDto(user.getId()));
         return ResponseEntity.ok().build();
     }
 
@@ -38,7 +36,7 @@ public class CalendarRestController {
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<Void> deleteMySchedule(@PathVariable Long scheduleId,
                                                  @LoginUser User user){
-        calendarCommandUseCase.deleteSchedule(scheduleId,user.getId());
+        calendarFacade.deleteSchedule(scheduleId,user.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -47,13 +45,13 @@ public class CalendarRestController {
                                                                          @LoginUser User user){
 
         return ResponseEntity.ok(SimpleScheduleResponseList
-                .from(calendarQueryUseCase.getMyMonthSchedule(yearMonth,user.getId())));
+                .from(calendarFacade.getMyMonthSchedule(yearMonth,user.getId())));
     }
 
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleResponse> getMySchedule(@PathVariable Long scheduleId,
                                                           @LoginUser User user){
-        return ResponseEntity.ok(ScheduleResponse.from(calendarQueryUseCase.getMySchedule(scheduleId, user.getId())));
+        return ResponseEntity.ok(ScheduleResponse.from(calendarFacade.getMySchedule(scheduleId, user.getId())));
     }
 
     @PatchMapping("/{scheduleId}")
@@ -64,7 +62,7 @@ public class CalendarRestController {
         if (errors.hasErrors()){
             throw new ValidatedException(errors);
         }
-        calendarCommandUseCase.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
+        calendarFacade.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
         return ResponseEntity.ok().build();
     }
 

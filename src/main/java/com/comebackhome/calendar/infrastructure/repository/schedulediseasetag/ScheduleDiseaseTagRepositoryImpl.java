@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.infrastructure.repository.schedulediseasetag;
 
-import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.domain.PainType;
+import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -28,7 +28,7 @@ public class ScheduleResponse {
         return ScheduleResponse.builder()
                 .scheduleId(scheduleResponseDto.getScheduleId())
                 .localDate(scheduleResponseDto.getLocalDate())
-                .diseaseTagResponseList(scheduleResponseDto.getDiseaseTagDtoList().parallelStream()
+                .diseaseTagResponseList(scheduleResponseDto.getDiseaseTagResponseDtoList().parallelStream()
                         .map(DiseaseTagResponse::from).collect(Collectors.toList()))
                 .dailyNote(scheduleResponseDto.getDailyNote())
                 .painType(scheduleResponseDto.getPainType())

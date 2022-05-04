@@ -1,6 +1,6 @@
 package com.comebackhome.calendar.presentation;
 
-import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
+import com.comebackhome.calendar.application.DiseaseTagFacade;
 import com.comebackhome.calendar.presentation.dto.response.DefaultTypeDiseaseTagListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DiseaseTagRestController {
 
-    private final DiseaseTagQueryUseCase diseaseTagQueryUseCase;
+    private final DiseaseTagFacade diseaseTagFacade;
 
     @GetMapping
     public ResponseEntity<DefaultTypeDiseaseTagListResponse> getDiseaseTagExceptCustomType() {
-        return ResponseEntity.ok(DefaultTypeDiseaseTagListResponse.from(diseaseTagQueryUseCase.getDiseaseTagExceptCustomType()));
+        return ResponseEntity.ok(DefaultTypeDiseaseTagListResponse.from(diseaseTagFacade.getDiseaseTagExceptCustomType()));
     }
 }

@@ -1,6 +1,6 @@
 package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import lombok.*;
 
 import java.util.List;
@@ -24,14 +24,14 @@ public class DefaultTypeDiseaseTagListResponse {
 
     private List<DiseaseTagResponse> skinDiseaseTagList;
 
-    public static DefaultTypeDiseaseTagListResponse from(DiseaseTagResponseDto diseaseTagResponseDto){
+    public static DefaultTypeDiseaseTagListResponse from(DiseaseTagListResponseDto diseaseTagListResponseDto){
         return DefaultTypeDiseaseTagListResponse.builder()
-                .headDiseaseTagList(diseaseTagResponseDto.getHeadDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
-                .bronchusDiseaseTagList(diseaseTagResponseDto.getBronchusDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
-                .chestDiseaseTagList(diseaseTagResponseDto.getChestDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
-                .stomachDiseaseTagList(diseaseTagResponseDto.getStomachDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
-                .limbDiseaseTagList(diseaseTagResponseDto.getLimbDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
-                .skinDiseaseTagList(diseaseTagResponseDto.getSkinDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .headDiseaseTagList(diseaseTagListResponseDto.getHeadDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .bronchusDiseaseTagList(diseaseTagListResponseDto.getBronchusDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .chestDiseaseTagList(diseaseTagListResponseDto.getChestDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .stomachDiseaseTagList(diseaseTagListResponseDto.getStomachDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .limbDiseaseTagList(diseaseTagListResponseDto.getLimbDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
+                .skinDiseaseTagList(diseaseTagListResponseDto.getSkinDiseaseTagList().parallelStream().map(DiseaseTagResponse::from).collect(Collectors.toList()))
                 .build();
     }
 

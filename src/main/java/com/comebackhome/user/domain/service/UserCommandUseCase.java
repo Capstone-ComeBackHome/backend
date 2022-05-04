@@ -1,8 +1,8 @@
-package com.comebackhome.user.application;
+package com.comebackhome.user.domain.service;
 
-import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
-import com.comebackhome.user.application.dto.UserInfoSaveRequestDto;
-import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 
 public interface UserCommandUseCase {
 

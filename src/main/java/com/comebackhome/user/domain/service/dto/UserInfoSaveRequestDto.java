@@ -1,12 +1,21 @@
-package com.comebackhome.user.domain.dto;
+package com.comebackhome.user.domain.service.dto;
 
+import com.comebackhome.user.domain.Sex;
 import lombok.*;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserMedicineUpdateDto {
+public class UserInfoSaveRequestDto {
+
+    private int age;
+
+    private Sex sex;
+
+    private int height;
+
+    private int weight;
 
     private String history;
 
@@ -17,4 +26,5 @@ public class UserMedicineUpdateDto {
     private String socialHistory;
 
     private String traumaHistory;
+
 }

@@ -1,9 +1,9 @@
 package com.comebackhome.user.domain;
 
 import com.comebackhome.common.domain.BaseEntity;
-import com.comebackhome.user.domain.dto.UserEssentialUpdateDto;
-import com.comebackhome.user.domain.dto.UserInfoDto;
-import com.comebackhome.user.domain.dto.UserMedicineUpdateDto;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -63,30 +63,30 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public void saveInfo(UserInfoDto userInfoDto){
-        this.age = userInfoDto.getAge();
-        this.sex = userInfoDto.getSex();
-        this.height = userInfoDto.getHeight();
-        this.weight = userInfoDto.getWeight();
-        this.history = userInfoDto.getHistory();
-        this.FamilyHistory = userInfoDto.getFamilyHistory();
-        this.drugHistory = userInfoDto.getDrugHistory();
-        this.socialHistory = userInfoDto.getSocialHistory();
-        this.traumaHistory = userInfoDto.getTraumaHistory();
+    public void saveInfo(UserInfoSaveRequestDto userInfoSaveRequestDto){
+        this.age = userInfoSaveRequestDto.getAge();
+        this.sex = userInfoSaveRequestDto.getSex();
+        this.height = userInfoSaveRequestDto.getHeight();
+        this.weight = userInfoSaveRequestDto.getWeight();
+        this.history = userInfoSaveRequestDto.getHistory();
+        this.FamilyHistory = userInfoSaveRequestDto.getFamilyHistory();
+        this.drugHistory = userInfoSaveRequestDto.getDrugHistory();
+        this.socialHistory = userInfoSaveRequestDto.getSocialHistory();
+        this.traumaHistory = userInfoSaveRequestDto.getTraumaHistory();
     }
 
-    public void updateEssentialInfo(UserEssentialUpdateDto userEssentialUpdateDto) {
-        this.age = userEssentialUpdateDto.getAge();
-        this.sex = userEssentialUpdateDto.getSex();
-        this.height = userEssentialUpdateDto.getHeight();
-        this.weight = userEssentialUpdateDto.getWeight();
+    public void updateEssentialInfo(UserEssentialUpdateRequestDto userEssentialUpdateRequestDto) {
+        this.age = userEssentialUpdateRequestDto.getAge();
+        this.sex = userEssentialUpdateRequestDto.getSex();
+        this.height = userEssentialUpdateRequestDto.getHeight();
+        this.weight = userEssentialUpdateRequestDto.getWeight();
     }
 
-    public void updateMedicineInfo(UserMedicineUpdateDto userMedicineUpdateDto) {
-        this.history = userMedicineUpdateDto.getHistory();
-        this.FamilyHistory = userMedicineUpdateDto.getFamilyHistory();
-        this.drugHistory = userMedicineUpdateDto.getDrugHistory();
-        this.socialHistory = userMedicineUpdateDto.getSocialHistory();
-        this.traumaHistory = userMedicineUpdateDto.getTraumaHistory();
+    public void updateMedicineInfo(UserMedicineUpdateRequestDto userMedicineUpdateRequestDto) {
+        this.history = userMedicineUpdateRequestDto.getHistory();
+        this.FamilyHistory = userMedicineUpdateRequestDto.getFamilyHistory();
+        this.drugHistory = userMedicineUpdateRequestDto.getDrugHistory();
+        this.socialHistory = userMedicineUpdateRequestDto.getSocialHistory();
+        this.traumaHistory = userMedicineUpdateRequestDto.getTraumaHistory();
     }
 }

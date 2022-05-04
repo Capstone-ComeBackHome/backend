@@ -3,7 +3,7 @@ package com.comebackhome.user.presentation;
 
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
-import com.comebackhome.user.application.UserCommandUseCase;
+import com.comebackhome.user.application.UserFacade;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.presentation.dto.request.UserEssentialUpdateRequest;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserRestController {
 
-    private final UserCommandUseCase userCommandUseCase;
+    private final UserFacade userFacade;
 
     @PatchMapping
     public ResponseEntity<Void> saveMyInfo(@Validated @RequestBody UserInfoSaveRequest userInfoSaveRequest,
@@ -36,7 +36,7 @@ public class UserRestController {
             throw new ValidatedException(errors);
         }
 
-        userCommandUseCase.saveMyInfo(userInfoSaveRequest.toUserInfoSaveRequestDto(),user.getId());
+        userFacade.saveMyInfo(userInfoSaveRequest.toUserInfoSaveRequestDto(),user.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -58,7 +58,7 @@ public class UserRestController {
             throw new ValidatedException(errors);
         }
 
-        userCommandUseCase.updateMyEssentialInfo(userEssentialUpdateRequest.toUserEssentialUpdateRequestDto(), user.getId());
+        userFacade.updateMyEssentialInfo(userEssentialUpdateRequest.toUserEssentialUpdateRequestDto(), user.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -69,15 +69,14 @@ public class UserRestController {
 
     @PatchMapping("/medicine")
     public ResponseEntity<Void> updateMyMedicineInfo(@LoginUser User user,
-                                                                  @Validated @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest,
-                                                                    BindingResult errors
-                                                                  ){
+                        @Validated @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest,
+                        BindingResult errors){
 
         if (errors.hasErrors()){
             throw new ValidatedException(errors);
         }
 
-        userCommandUseCase.updateMyMedicineInfo(userMedicineUpdateRequest.toUserMedicineUpdateRequestDto(),user.getId());
+        userFacade.updateMyMedicineInfo(userMedicineUpdateRequest.toUserMedicineUpdateRequestDto(),user.getId());
 
         return ResponseEntity.ok().build();
     }

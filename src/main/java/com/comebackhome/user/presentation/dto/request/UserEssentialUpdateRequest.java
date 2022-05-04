@@ -1,7 +1,7 @@
 package com.comebackhome.user.presentation.dto.request;
 
-import com.comebackhome.user.application.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.Sex;
+import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

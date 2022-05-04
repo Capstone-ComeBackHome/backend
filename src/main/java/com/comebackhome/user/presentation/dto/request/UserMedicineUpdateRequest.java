@@ -1,7 +1,7 @@
 package com.comebackhome.user.presentation.dto.request;
 
 
-import com.comebackhome.user.application.dto.UserMedicineUpdateRequestDto;
+import com.comebackhome.user.domain.service.dto.UserMedicineUpdateRequestDto;
 import lombok.*;
 
 import javax.validation.constraints.Size;

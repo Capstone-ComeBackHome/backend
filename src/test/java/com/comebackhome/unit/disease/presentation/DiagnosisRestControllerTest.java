@@ -4,7 +4,7 @@ import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
 import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
-import com.comebackhome.disease.presentation.dto.DiagnosisSaveRequest;
+import com.comebackhome.disease.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;

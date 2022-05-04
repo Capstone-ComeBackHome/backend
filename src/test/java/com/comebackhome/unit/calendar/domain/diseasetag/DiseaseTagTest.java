@@ -1,9 +1,9 @@
-package com.comebackhome.unit.calendar.domain;
+package com.comebackhome.unit.calendar.domain.diseasetag;
 
-import com.comebackhome.calendar.domain.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.calendar.domain.DiseaseType.HEAD;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.HEAD;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DiseaseTagTest {

@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.presentation;
 
-import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
-import com.comebackhome.calendar.domain.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
@@ -16,7 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.comebackhome.calendar.domain.DiseaseType.CUSTOM;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.CUSTOM;
 import static com.comebackhome.config.RestDocsConfig.field;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.restdocs.enums.DocumentLinkGenerator.DocUrl.DISEASE_TYPE;
@@ -235,7 +235,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void 내_스케줄_중_존재하지_않는_scheduleId안_경우_실패() throws Exception{
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new ScheduleNotFoundException()).given(calendarCommandUseCase).deleteSchedule(any(),any());
+        willThrow(new ScheduleNotFoundException()).given(calendarFacade).deleteSchedule(any(),any());
 
         // when then
         mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{scheduleId}", "1")
@@ -260,7 +260,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                 givenSimpleScheduleResponseDto(2L, LocalDate.of(2022, 3, 2), 2),
                 givenSimpleScheduleResponseDto(3L, LocalDate.of(2022, 3, 3), 3)
         );
-        given(calendarQueryUseCase.getMyMonthSchedule(any(),any())).willReturn(simpleScheduleResponseDtoList);
+        given(calendarFacade.getMyMonthSchedule(any(),any())).willReturn(simpleScheduleResponseDtoList);
 
 
         // when then docs
@@ -320,7 +320,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
         // given
         mockingSecurityFilterForLoginUserAnnotation();
         ScheduleResponseDto scheduleResponseDto = givenScheduleResponseDto();
-        given(calendarQueryUseCase.getMySchedule(any(),any())).willReturn(scheduleResponseDto);
+        given(calendarFacade.getMySchedule(any(),any())).willReturn(scheduleResponseDto);
 
 
         // when then docs
@@ -381,7 +381,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     void 자신의_스케줄_중_존재하지_않는_scheduleId로_스케줄_상세_조회() throws Exception{
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new ScheduleNotFoundException()).given(calendarQueryUseCase).getMySchedule(any(),any());
+        willThrow(new ScheduleNotFoundException()).given(calendarFacade).getMySchedule(any(),any());
 
         // when then
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{scheduleId}",-1)
@@ -540,7 +540,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
         // given
         ScheduleModifyRequest scheduleModifyRequest = givenScheduleModifyRequest();
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new ScheduleNotFoundException()).given(calendarCommandUseCase).modifyMySchedule(any(),any(),any());
+        willThrow(new ScheduleNotFoundException()).given(calendarFacade).modifyMySchedule(any(),any(),any());
 
         // when then
         mockMvc.perform(RestDocumentationRequestBuilders.patch(URL+"/{scheduleId}",-1)

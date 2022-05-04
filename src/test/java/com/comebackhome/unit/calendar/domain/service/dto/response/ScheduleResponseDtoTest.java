@@ -1,7 +1,7 @@
-package com.comebackhome.unit.calendar.application.dto;
+package com.comebackhome.unit.calendar.domain.service.dto.response;
 
-import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ public class ScheduleResponseDtoTest {
         //then
         assertThat(result.getScheduleId()).isEqualTo(schedule.getId());
         assertThat(result.getLocalDate()).isEqualTo(schedule.getLocalDate());
-        assertThat(result.getDiseaseTagDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
+        assertThat(result.getDiseaseTagResponseDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
         assertThat(result.getDailyNote()).isEqualTo(schedule.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(schedule.getPainType());
     }

@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagResponseDto;
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagListResponseDto;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -26,7 +26,7 @@ public class DiseaseTagRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void CustomType을_제외한_diseaseTag_가져오기() throws Exception{
         // given
-        given(diseaseTagQueryUseCase.getDiseaseTagExceptCustomType()).willReturn(givenDiseaseTagResponseDto());
+        given(diseaseTagFacade.getDiseaseTagExceptCustomType()).willReturn(givenDiseaseTagListResponseDto());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL)

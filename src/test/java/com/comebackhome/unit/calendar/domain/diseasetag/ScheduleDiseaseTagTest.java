@@ -1,6 +1,6 @@
-package com.comebackhome.unit.calendar.domain;
+package com.comebackhome.unit.calendar.domain.diseasetag;
 
-import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

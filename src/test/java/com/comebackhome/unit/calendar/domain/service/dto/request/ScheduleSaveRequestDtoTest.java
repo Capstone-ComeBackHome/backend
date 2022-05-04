@@ -1,7 +1,7 @@
-package com.comebackhome.unit.calendar.application.dto;
+package com.comebackhome.unit.calendar.domain.service.dto.request;
 
-import com.comebackhome.calendar.application.dto.request.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenScheduleSaveRequestDto;
@@ -15,7 +15,7 @@ public class ScheduleSaveRequestDtoTest {
         ScheduleSaveRequestDto scheduleSaveRequestDto = givenScheduleSaveRequestDto(1L);
 
         //when
-        Schedule result = scheduleSaveRequestDto.toSchedule();
+        Schedule result = scheduleSaveRequestDto.toEntity();
 
         //then
         assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(result.getScheduleDiseaseTagList().size());

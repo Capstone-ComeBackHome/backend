@@ -4,9 +4,8 @@ import com.comebackhome.authentication.application.AuthFacade;
 import com.comebackhome.authentication.domain.TokenRepository;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.presentation.AuthRestController;
-import com.comebackhome.calendar.application.CalendarCommandUseCase;
-import com.comebackhome.calendar.application.CalendarQueryUseCase;
-import com.comebackhome.calendar.application.DiseaseTagQueryUseCase;
+import com.comebackhome.calendar.application.CalendarFacade;
+import com.comebackhome.calendar.application.DiseaseTagFacade;
 import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
@@ -51,14 +50,14 @@ public abstract class ControllerTest {
 
     @Autowired protected ObjectMapper objectMapper;
     @MockBean protected AuthFacade authFacade;
+    @MockBean protected DiseaseTagFacade diseaseTagFacade;
+    @MockBean protected CalendarFacade calendarFacade;
+    @MockBean protected UserFacade userFacade;
+
     @MockBean protected DiseaseQueryUseCase diseaseQueryUseCase;
-    @MockBean protected DiseaseTagQueryUseCase diseaseTagQueryUseCase;
-    @MockBean protected CalendarCommandUseCase calendarCommandUseCase;
-    @MockBean protected CalendarQueryUseCase calendarQueryUseCase;
     @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
     @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
     @MockBean protected DiagnosisQueryUseCase diagnosisQueryUseCase;
-    @MockBean protected UserFacade userFacade;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

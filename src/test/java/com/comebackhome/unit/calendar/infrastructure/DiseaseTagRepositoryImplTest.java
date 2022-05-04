@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.infrastructure;
 
-import com.comebackhome.calendar.domain.DiseaseTag;
-import com.comebackhome.calendar.domain.DiseaseType;
-import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagRepositoryImpl;
 import com.comebackhome.support.QuerydslRepositoryTest;
@@ -26,7 +26,7 @@ public class DiseaseTagRepositoryImplTest extends QuerydslRepositoryTest {
         saveDiseaseTagList();
 
         //when
-        List<DiseaseTagQueryDto> result = diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CHEST);
+        List<DiseaseTagResponseDto> result = diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CHEST);
 
         //then
         assertThat(result.size()).isEqualTo(2);

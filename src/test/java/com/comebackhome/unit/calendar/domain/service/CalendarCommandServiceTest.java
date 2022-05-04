@@ -1,9 +1,9 @@
-package com.comebackhome.unit.calendar.application;
+package com.comebackhome.unit.calendar.domain.service;
 
-import com.comebackhome.calendar.application.CalendarCommandService;
-import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.repository.ScheduleDiseaseTagRepository;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.ScheduleRepository;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.service.CalendarCommandService;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

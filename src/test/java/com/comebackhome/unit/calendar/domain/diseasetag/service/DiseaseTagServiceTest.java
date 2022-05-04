@@ -1,10 +1,10 @@
-package com.comebackhome.unit.calendar.application;
+package com.comebackhome.unit.calendar.domain.diseasetag.service;
 
-import com.comebackhome.calendar.application.DiseaseTagService;
-import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
-import com.comebackhome.calendar.domain.DiseaseType;
-import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
-import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.service.DiseaseTagService;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,11 +28,11 @@ public class DiseaseTagServiceTest {
     @Test
     void getDiseaseTagExcludeCustomType() throws Exception{
         //given
-        List<DiseaseTagQueryDto> diseaseTagList = createDiseaseTagList();
+        List<DiseaseTagResponseDto> diseaseTagList = createDiseaseTagList();
         given(diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(any())).willReturn(diseaseTagList);
 
         //when
-        DiseaseTagResponseDto result = diseaseTagService.getDiseaseTagExceptCustomType();
+        DiseaseTagListResponseDto result = diseaseTagService.getDiseaseTagExceptCustomType();
 
         //then
         assertThat(result.getHeadDiseaseTagList().size()).isEqualTo(1);
@@ -44,9 +44,9 @@ public class DiseaseTagServiceTest {
 
     }
 
-    private List<DiseaseTagQueryDto> createDiseaseTagList() {
-        List<DiseaseTagQueryDto> diseaseTagQueryDtoList = new ArrayList<>();
-        diseaseTagQueryDtoList.addAll(List.of(
+    private List<DiseaseTagResponseDto> createDiseaseTagList() {
+        List<DiseaseTagResponseDto> diseaseTagResponseDtoList = new ArrayList<>();
+        diseaseTagResponseDtoList.addAll(List.of(
                 givenDiseaseTagQueryDto(DiseaseType.HEAD,"두통"),
                 givenDiseaseTagQueryDto(DiseaseType.BRONCHUS,"코막힘"),
                 givenDiseaseTagQueryDto(DiseaseType.CHEST,"가슴 통증"),
@@ -54,6 +54,6 @@ public class DiseaseTagServiceTest {
                 givenDiseaseTagQueryDto(DiseaseType.LIMB,"관절통"),
                 givenDiseaseTagQueryDto(DiseaseType.SKIN,"여드름")
         ));
-        return diseaseTagQueryDtoList;
+        return diseaseTagResponseDtoList;
     }
 }

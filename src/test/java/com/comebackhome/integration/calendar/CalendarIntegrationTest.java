@@ -1,10 +1,10 @@
 package com.comebackhome.integration.calendar;
 
-import com.comebackhome.calendar.domain.DiseaseType;
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.repository.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.ScheduleRepository;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.comebackhome.calendar.domain.DiseaseType.*;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;

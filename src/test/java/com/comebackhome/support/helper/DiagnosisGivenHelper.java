@@ -4,7 +4,7 @@ import com.comebackhome.disease.application.dto.DiagnosisResponseDto;
 import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
 import com.comebackhome.disease.domain.Diagnosis;
 import com.comebackhome.disease.domain.DiagnosisDisease;
-import com.comebackhome.disease.presentation.dto.DiagnosisSaveRequest;
+import com.comebackhome.disease.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.user.domain.User;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
-package com.comebackhome.unit.calendar.presentation.dto;
+package com.comebackhome.unit.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponse;
 import org.junit.jupiter.api.Test;
 

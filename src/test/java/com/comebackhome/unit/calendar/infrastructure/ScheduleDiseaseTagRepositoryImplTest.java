@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.infrastructure;
 
-import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.comebackhome.calendar.domain.DiseaseType.HEAD;
-import static com.comebackhome.calendar.domain.DiseaseType.SKIN;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.HEAD;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.SKIN;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;

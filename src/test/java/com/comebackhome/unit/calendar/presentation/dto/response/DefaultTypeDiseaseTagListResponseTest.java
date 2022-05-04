@@ -1,10 +1,10 @@
-package com.comebackhome.unit.calendar.presentation.dto;
+package com.comebackhome.unit.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import com.comebackhome.calendar.presentation.dto.response.DefaultTypeDiseaseTagListResponse;
 import org.junit.jupiter.api.Test;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagResponseDto;
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagListResponseDto;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DefaultTypeDiseaseTagListResponseTest {
@@ -12,10 +12,10 @@ public class DefaultTypeDiseaseTagListResponseTest {
     @Test
     void 정적_메서드_from_으로_생성() throws Exception{
         //given
-        DiseaseTagResponseDto diseaseTagResponseDto = givenDiseaseTagResponseDto();
+        DiseaseTagListResponseDto diseaseTagListResponseDto = givenDiseaseTagListResponseDto();
 
         //when
-        DefaultTypeDiseaseTagListResponse result = DefaultTypeDiseaseTagListResponse.from(diseaseTagResponseDto);
+        DefaultTypeDiseaseTagListResponse result = DefaultTypeDiseaseTagListResponse.from(diseaseTagListResponseDto);
 
         //then
         assertThat(result.getHeadDiseaseTagList().size()).isEqualTo(1);

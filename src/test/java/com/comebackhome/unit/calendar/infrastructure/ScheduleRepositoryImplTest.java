@@ -1,9 +1,9 @@
 package com.comebackhome.unit.calendar.infrastructure;
 
-import com.comebackhome.calendar.domain.DiseaseTag;
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleRepositoryImpl;
@@ -19,8 +19,8 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.calendar.domain.DiseaseType.CUSTOM;
-import static com.comebackhome.calendar.domain.DiseaseType.HEAD;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.CUSTOM;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.HEAD;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
@@ -99,7 +99,7 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         ));
 
         //when
-        List<SimpleScheduleQueryDto> result
+        List<SimpleScheduleResponseDto> result
                 = scheduleRepository.findByYearMonthAndUserId(YearMonth.now(), user.getId());
 
         //then

@@ -1,15 +1,17 @@
 package com.comebackhome.support.helper;
 
-import com.comebackhome.calendar.application.dto.request.DiseaseTagRequestDto;
-import com.comebackhome.calendar.application.dto.request.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.application.dto.request.ScheduleSaveRequestDto;
-import com.comebackhome.calendar.application.dto.response.DiseaseTagDto;
-import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
-import com.comebackhome.calendar.application.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.application.dto.response.SimpleScheduleResponseDto;
-import com.comebackhome.calendar.domain.*;
-import com.comebackhome.calendar.domain.dto.DiseaseTagQueryDto;
-import com.comebackhome.calendar.domain.dto.SimpleScheduleQueryDto;
+import com.comebackhome.calendar.domain.PainType;
+import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
@@ -19,7 +21,7 @@ import com.comebackhome.user.domain.User;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.comebackhome.calendar.domain.DiseaseType.*;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 
 public class CalendarGivenHelper {
 
@@ -30,21 +32,21 @@ public class CalendarGivenHelper {
                 .build();
     }
 
-    public static DiseaseTagQueryDto givenDiseaseTagQueryDto(DiseaseType diseaseType, String name){
-        return DiseaseTagQueryDto.builder()
+    public static DiseaseTagResponseDto givenDiseaseTagQueryDto(DiseaseType diseaseType, String name){
+        return DiseaseTagResponseDto.builder()
                 .diseaseType(diseaseType)
                 .name(name)
                 .build();
     }
 
-    public static DiseaseTagResponseDto givenDiseaseTagResponseDto(){
-        return DiseaseTagResponseDto.builder()
-                .headDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(HEAD).name("두통").build()))
-                .bronchusDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(BRONCHUS).name("코막힘").build()))
-                .chestDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(CHEST).name("가슴 통증").build()))
-                .stomachDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(STOMACH).name("공복감").build()))
-                .limbDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(LIMB).name("관절통").build()))
-                .skinDiseaseTagList(List.of(DiseaseTagDto.builder().diseaseType(SKIN).name("여드름").build()))
+    public static DiseaseTagListResponseDto givenDiseaseTagListResponseDto(){
+        return DiseaseTagListResponseDto.builder()
+                .headDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(HEAD).name("두통").build()))
+                .bronchusDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(BRONCHUS).name("코막힘").build()))
+                .chestDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(CHEST).name("가슴 통증").build()))
+                .stomachDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(STOMACH).name("공복감").build()))
+                .limbDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(LIMB).name("관절통").build()))
+                .skinDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(SKIN).name("여드름").build()))
                 .build();
     }
 
@@ -91,11 +93,7 @@ public class CalendarGivenHelper {
     }
 
     public static SimpleScheduleResponseDto givenSimpleScheduleResponseDto(Long scheduleId, LocalDate localDate, int diseaseTagCount) {
-        return SimpleScheduleResponseDto.from(givenSimpleScheduleQueryDto(scheduleId,localDate,diseaseTagCount));
-    }
-
-    public static SimpleScheduleQueryDto givenSimpleScheduleQueryDto(Long scheduleId, LocalDate localDate, int diseaseTagCount) {
-        return SimpleScheduleQueryDto.builder()
+        return SimpleScheduleResponseDto.builder()
                 .scheduleId(scheduleId)
                 .localDate(localDate)
                 .diseaseTagCount(diseaseTagCount)
@@ -106,17 +104,17 @@ public class CalendarGivenHelper {
         return ScheduleResponseDto.builder()
                 .scheduleId(1L)
                 .localDate(LocalDate.now())
-                .diseaseTagDtoList(List.of(
-                        givenDiseaseTagDto(HEAD,"두통"),
-                        givenDiseaseTagDto(CUSTOM,"디스크")
+                .diseaseTagResponseDtoList(List.of(
+                        givenDiseaseTagResponseDto(HEAD,"두통"),
+                        givenDiseaseTagResponseDto(CUSTOM,"디스크")
                 ))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
                 .build();
     }
 
-    public static DiseaseTagDto givenDiseaseTagDto(DiseaseType diseaseType, String name){
-        return DiseaseTagDto.builder()
+    public static DiseaseTagResponseDto givenDiseaseTagResponseDto(DiseaseType diseaseType, String name){
+        return DiseaseTagResponseDto.builder()
                 .diseaseType(diseaseType)
                 .name(name)
                 .build();

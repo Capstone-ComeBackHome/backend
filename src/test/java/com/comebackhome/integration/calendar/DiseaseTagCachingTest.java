@@ -1,8 +1,8 @@
 package com.comebackhome.integration.calendar;
 
-import com.comebackhome.calendar.application.DiseaseTagService;
-import com.comebackhome.calendar.application.dto.response.DiseaseTagResponseDto;
-import com.comebackhome.calendar.domain.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.service.DiseaseTagService;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.calendar.domain.DiseaseType.*;
+import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,8 +39,8 @@ public class DiseaseTagCachingTest extends IntegrationTest {
         diseaseTagService.getDiseaseTagExceptCustomType();
 
         //then
-        Optional<DiseaseTagResponseDto> result = Optional.ofNullable(cacheManager.getCache("diseaseTag"))
-                .map(cache -> cache.get("tags", DiseaseTagResponseDto.class));
+        Optional<DiseaseTagListResponseDto> result = Optional.ofNullable(cacheManager.getCache("diseaseTag"))
+                .map(cache -> cache.get("tags", DiseaseTagListResponseDto.class));
         assertThat(result).isNotEmpty();
     }
 

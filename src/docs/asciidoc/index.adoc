@@ -50,7 +50,7 @@ operation::auth-rest-controller-test/토큰_재발급[snippets='http-request,req
 토큰이 유효하지 않으면 실패합니다.
 include::{snippets}/auth-rest-controller-test/유효하지_않은_토큰으로_재발급_시도/http-response.adoc[]
 
-Authorization, refreshToken 헤더가 들어오지 않으면 싪패합니다.
+Authorization, refreshToken 헤더가 들어오지 않으면 실패합니다.
 include::{snippets}/auth-rest-controller-test/authorization_헤더_없이_토큰_재발급_시도/http-response.adoc[]
 
 == User API

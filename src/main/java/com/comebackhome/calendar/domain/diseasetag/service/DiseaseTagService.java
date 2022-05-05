@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.domain.diseasetag.service;
 
-import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import lombok.RequiredArgsConstructor;

@@ -1,12 +1,12 @@
 package com.comebackhome.diagnosis.presentation;
 
-import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import com.comebackhome.common.CommonResponse;
 import com.comebackhome.diagnosis.application.DiseaseFacade;
 import com.comebackhome.diagnosis.domain.disease.service.dto.request.DiseaseSaveRequestDto;
 import com.comebackhome.diagnosis.presentation.dto.request.DiseaseSaveRequest;
 import com.comebackhome.diagnosis.presentation.dto.response.DiseaseResponse;
 import com.comebackhome.diagnosis.presentation.dto.response.SimpleDiseaseResponseList;
+import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,14 +28,14 @@ public class DiseaseRestController {
     private final DiseaseFacade diseaseFacade;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping
-    public ResponseEntity<CommonResponse<DiseaseResponse>> getDisease(@RequestParam Long diseaseId){
+    @GetMapping("/{diseaseId}")
+    public ResponseEntity<CommonResponse<DiseaseResponse>> getDisease(@PathVariable Long diseaseId){
         DiseaseResponse diseaseResponse = DiseaseResponse.from(diseaseFacade.getDisease(diseaseId));
         return ResponseEntity.ok(CommonResponse.success(diseaseResponse));
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/simple")
+    @GetMapping
     public ResponseEntity<CommonResponse<SimpleDiseaseResponseList>> getSimpleDisease
                             (@RequestParam @NotEmpty List<@NotBlank(message = "질병명이 빈칸입니다.") String> diseaseNameList){
 

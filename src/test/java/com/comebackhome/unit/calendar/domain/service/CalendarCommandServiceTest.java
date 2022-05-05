@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.domain.service;
 
-import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.calendar.domain.service.CalendarCommandService;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;

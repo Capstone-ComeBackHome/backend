@@ -1,5 +1,7 @@
-package com.comebackhome.calendar.domain.diseasetag;
+package com.comebackhome.calendar.domain.diseasetag.repository;
 
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 
 import java.util.List;

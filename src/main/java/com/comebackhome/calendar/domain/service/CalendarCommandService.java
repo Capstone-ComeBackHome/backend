@@ -2,6 +2,8 @@ package com.comebackhome.calendar.domain.service;
 
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.*;
+import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
 import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;

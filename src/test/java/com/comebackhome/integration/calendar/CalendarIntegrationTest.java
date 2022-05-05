@@ -1,7 +1,7 @@
 package com.comebackhome.integration.calendar;
 
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;

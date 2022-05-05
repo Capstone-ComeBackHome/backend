@@ -1,6 +1,6 @@
 package com.comebackhome.diagnosis.presentation;
 
-import com.comebackhome.common.CSVUtil;
+import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import com.comebackhome.common.CommonResponse;
 import com.comebackhome.diagnosis.application.DiseaseFacade;
 import com.comebackhome.diagnosis.domain.disease.service.dto.request.DiseaseSaveRequestDto;

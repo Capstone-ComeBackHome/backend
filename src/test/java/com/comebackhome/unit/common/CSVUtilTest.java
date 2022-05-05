@@ -1,6 +1,6 @@
 package com.comebackhome.unit.common;
 
-import com.comebackhome.common.CSVUtil;
+import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import com.comebackhome.common.exception.csv.FileNotFoundException;
 import com.comebackhome.common.exception.csv.FileReadException;
 import com.comebackhome.common.exception.csv.NotCSVFileException;

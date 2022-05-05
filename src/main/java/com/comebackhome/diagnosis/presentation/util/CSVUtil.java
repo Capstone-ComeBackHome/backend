@@ -1,4 +1,4 @@
-package com.comebackhome.common;
+package com.comebackhome.diagnosis.presentation.util;
 
 import com.comebackhome.common.exception.csv.FileNotFoundException;
 import com.comebackhome.common.exception.csv.FileReadException;

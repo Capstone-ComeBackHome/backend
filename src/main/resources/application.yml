@@ -4,10 +4,13 @@ spring:
       - oauth
       - jwt
     active: dev
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
 
 server:
   error:
     include-stacktrace: never
+  shutdown: graceful
 
 
 logging:

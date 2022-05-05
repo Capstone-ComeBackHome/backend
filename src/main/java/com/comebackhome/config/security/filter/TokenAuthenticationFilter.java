@@ -1,12 +1,12 @@
 package com.comebackhome.config.security.filter;
 
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.common.exception.security.TokenAuthenticationFilterException;
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.config.security.dto.UserPrincipal;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

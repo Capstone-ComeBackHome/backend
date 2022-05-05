@@ -1,14 +1,14 @@
 package com.comebackhome.integration.authentication;
 
 import com.comebackhome.authentication.domain.RefreshToken;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.infrastructure.JWTTokenProvider;
 import com.comebackhome.authentication.infrastructure.repository.LogoutRefreshTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.RefreshTokenRedisRepository;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

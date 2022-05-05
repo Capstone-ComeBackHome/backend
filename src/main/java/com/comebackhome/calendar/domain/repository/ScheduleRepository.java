@@ -1,5 +1,6 @@
-package com.comebackhome.calendar.domain;
+package com.comebackhome.calendar.domain.repository;
 
+import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 
 import java.time.YearMonth;

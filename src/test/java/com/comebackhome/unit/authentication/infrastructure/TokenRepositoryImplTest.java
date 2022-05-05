@@ -2,7 +2,7 @@ package com.comebackhome.unit.authentication.infrastructure;
 
 import com.comebackhome.authentication.domain.LogoutAccessToken;
 import com.comebackhome.authentication.domain.LogoutRefreshToken;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.infrastructure.repository.LogoutAccessTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.LogoutRefreshTokenRedisRepository;
 import com.comebackhome.authentication.infrastructure.repository.RefreshTokenRedisRepository;

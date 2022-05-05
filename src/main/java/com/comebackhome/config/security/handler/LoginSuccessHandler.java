@@ -1,7 +1,7 @@
 package com.comebackhome.config.security.handler;
 
 import com.comebackhome.authentication.domain.RefreshToken;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;

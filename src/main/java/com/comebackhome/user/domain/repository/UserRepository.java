@@ -1,4 +1,6 @@
-package com.comebackhome.user.domain;
+package com.comebackhome.user.domain.repository;
+
+import com.comebackhome.user.domain.User;
 
 import java.util.Optional;
 

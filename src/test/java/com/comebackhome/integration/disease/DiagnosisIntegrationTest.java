@@ -8,7 +8,7 @@ import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseJpaRe
 import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

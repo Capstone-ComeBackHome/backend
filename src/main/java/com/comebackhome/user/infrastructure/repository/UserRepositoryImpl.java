@@ -1,7 +1,7 @@
 package com.comebackhome.user.infrastructure.repository;
 
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

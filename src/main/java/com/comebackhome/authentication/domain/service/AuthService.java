@@ -3,7 +3,7 @@ package com.comebackhome.authentication.domain.service;
 import com.comebackhome.authentication.domain.LogoutAccessToken;
 import com.comebackhome.authentication.domain.LogoutRefreshToken;
 import com.comebackhome.authentication.domain.RefreshToken;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.common.exception.security.NotExistsRefreshTokenException;
 import lombok.RequiredArgsConstructor;

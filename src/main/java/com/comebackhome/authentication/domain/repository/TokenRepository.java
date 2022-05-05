@@ -1,4 +1,8 @@
-package com.comebackhome.authentication.domain;
+package com.comebackhome.authentication.domain.repository;
+
+import com.comebackhome.authentication.domain.LogoutAccessToken;
+import com.comebackhome.authentication.domain.LogoutRefreshToken;
+import com.comebackhome.authentication.domain.RefreshToken;
 
 public interface TokenRepository {
 

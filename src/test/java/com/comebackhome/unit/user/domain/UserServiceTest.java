@@ -2,7 +2,7 @@ package com.comebackhome.unit.user.domain;
 
 import com.comebackhome.common.exception.user.UserNotFoundException;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import com.comebackhome.user.domain.service.UserService;
 import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.domain.service.dto.UserInfoSaveRequestDto;

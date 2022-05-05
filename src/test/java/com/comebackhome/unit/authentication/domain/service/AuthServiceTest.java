@@ -1,6 +1,6 @@
 package com.comebackhome.unit.authentication.domain.service;
 
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.AuthService;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;

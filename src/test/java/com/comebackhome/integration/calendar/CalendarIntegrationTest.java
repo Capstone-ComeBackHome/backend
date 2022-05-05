@@ -1,17 +1,17 @@
 package com.comebackhome.integration.calendar;
 
 import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.ScheduleRepository;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

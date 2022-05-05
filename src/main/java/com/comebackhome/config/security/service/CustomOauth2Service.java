@@ -3,7 +3,7 @@ package com.comebackhome.config.security.service;
 import com.comebackhome.config.security.dto.OAuthAttributes;
 import com.comebackhome.config.security.dto.UserPrincipal;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

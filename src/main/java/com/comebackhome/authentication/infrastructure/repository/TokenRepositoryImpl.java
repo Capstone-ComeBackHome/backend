@@ -3,7 +3,7 @@ package com.comebackhome.authentication.infrastructure.repository;
 import com.comebackhome.authentication.domain.LogoutAccessToken;
 import com.comebackhome.authentication.domain.LogoutRefreshToken;
 import com.comebackhome.authentication.domain.RefreshToken;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

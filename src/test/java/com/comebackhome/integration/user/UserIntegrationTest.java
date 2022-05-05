@@ -2,7 +2,7 @@ package com.comebackhome.integration.user;
 
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import com.comebackhome.user.domain.service.dto.UserEssentialUpdateRequestDto;
 import com.comebackhome.user.presentation.dto.request.UserInfoSaveRequest;
 import com.comebackhome.user.presentation.dto.request.UserMedicineUpdateRequest;

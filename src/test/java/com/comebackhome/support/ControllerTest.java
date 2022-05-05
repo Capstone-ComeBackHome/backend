@@ -1,7 +1,7 @@
 package com.comebackhome.support;
 
 import com.comebackhome.authentication.application.AuthFacade;
-import com.comebackhome.authentication.domain.TokenRepository;
+import com.comebackhome.authentication.domain.repository.TokenRepository;
 import com.comebackhome.authentication.domain.service.TokenProvider;
 import com.comebackhome.authentication.presentation.AuthRestController;
 import com.comebackhome.calendar.application.CalendarFacade;
@@ -16,7 +16,11 @@ import com.comebackhome.diagnosis.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
 import com.comebackhome.user.application.UserFacade;
-import com.comebackhome.user.domain.*;
+import com.comebackhome.user.domain.AuthProvider;
+import com.comebackhome.user.domain.Role;
+import com.comebackhome.user.domain.Sex;
+import com.comebackhome.user.domain.User;
+import com.comebackhome.user.domain.repository.UserRepository;
 import com.comebackhome.user.presentation.UserRestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

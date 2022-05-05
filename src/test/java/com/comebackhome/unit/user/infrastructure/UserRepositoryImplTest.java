@@ -2,7 +2,7 @@ package com.comebackhome.unit.user.infrastructure;
 
 import com.comebackhome.support.JpaRepositoryTest;
 import com.comebackhome.user.domain.User;
-import com.comebackhome.user.domain.UserRepository;
+import com.comebackhome.user.domain.repository.UserRepository;
 import com.comebackhome.user.infrastructure.repository.UserJpaRepository;
 import com.comebackhome.user.infrastructure.repository.UserRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;

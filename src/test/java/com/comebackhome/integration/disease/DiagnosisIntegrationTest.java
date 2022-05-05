@@ -102,12 +102,15 @@ public class DiagnosisIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.diagnosisResponseList[0].createdDate").isNotEmpty())
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diagnosisId").value(diagnosisId))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[0]",is("질병1")))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[1]",is("질병2")))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[2]",is("질병3")))
-                .andExpect(jsonPath("$.hasNext",is(false)))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].createdDate").isNotEmpty())
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diagnosisId").value(diagnosisId))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[0]",is("질병1")))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[1]",is("질병2")))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[2]",is("질병3")))
+                .andExpect(jsonPath("$.data.hasNext",is(false)))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -146,12 +149,15 @@ public class DiagnosisIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.diagnosisResponseList[0].createdDate").isNotEmpty())
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diagnosisId").value(diagnosisId2))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[0]",is("질병1")))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[1]",is("질병2")))
-                .andExpect(jsonPath("$.diagnosisResponseList[0].diseaseNameList[2]",is("질병3")))
-                .andExpect(jsonPath("$.hasNext",is(true)))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].createdDate").isNotEmpty())
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diagnosisId").value(diagnosisId2))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[0]",is("질병1")))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[1]",is("질병2")))
+                .andExpect(jsonPath("$.data.diagnosisResponseList[0].diseaseNameList[2]",is("질병3")))
+                .andExpect(jsonPath("$.data.hasNext",is(true)))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 

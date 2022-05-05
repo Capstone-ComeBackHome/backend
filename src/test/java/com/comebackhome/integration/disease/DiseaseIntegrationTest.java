@@ -35,12 +35,15 @@ public class DiseaseIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name",is("부정맥")))
-                .andExpect(jsonPath("$.definition",is("정의")))
-                .andExpect(jsonPath("$.recommendDepartment",is("내과")))
-                .andExpect(jsonPath("$.symptom",is("증상")))
-                .andExpect(jsonPath("$.cause",is("원인")))
-                .andExpect(jsonPath("$.hospitalCare",is("병원 치료 방법")))
+                .andExpect(jsonPath("$.data.name",is("부정맥")))
+                .andExpect(jsonPath("$.data.definition",is("정의")))
+                .andExpect(jsonPath("$.data.recommendDepartment",is("내과")))
+                .andExpect(jsonPath("$.data.symptom",is("증상")))
+                .andExpect(jsonPath("$.data.cause",is("원인")))
+                .andExpect(jsonPath("$.data.hospitalCare",is("병원 치료 방법")))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -55,12 +58,15 @@ public class DiseaseIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.simpleDiseaseList[0].name",is("부정맥")))
-                .andExpect(jsonPath("$.simpleDiseaseList[0].definition",is("정의")))
-                .andExpect(jsonPath("$.simpleDiseaseList[0].recommendDepartment",is("내과")))
-                .andExpect(jsonPath("$.simpleDiseaseList[1].name",is("후두염")))
-                .andExpect(jsonPath("$.simpleDiseaseList[1].definition",is("정의")))
-                .andExpect(jsonPath("$.simpleDiseaseList[1].recommendDepartment",is("내과")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[0].name",is("부정맥")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[0].definition",is("정의")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[0].recommendDepartment",is("내과")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[1].name",is("후두염")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[1].definition",is("정의")))
+                .andExpect(jsonPath("$.data.simpleDiseaseList[1].recommendDepartment",is("내과")))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 

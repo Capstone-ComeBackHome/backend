@@ -71,9 +71,13 @@ public class CommonDocsControllerTest {
                                 parameterWithName("provider").description("소셜 로그인 제공자, [kakao, naver, google]")
                         ),
                         responseFields(
-                                fieldWithPath("tokenType").type(STRING).description("토큰 타입"),
-                                fieldWithPath("accessToken").type(STRING).description("권한 인증할 때 사용하는 access 토큰"),
-                                fieldWithPath("refreshToken").type(STRING).description("access 토큰 만료시 재발급에 사용하는 refresh 토큰")
+                                fieldWithPath("data.tokenType").type(STRING).description("토큰 타입"),
+                                fieldWithPath("data.accessToken").type(STRING).description("권한 인증할 때 사용하는 access 토큰"),
+                                fieldWithPath("data.refreshToken").type(STRING).description("access 토큰 만료시 재발급에 사용하는 refresh 토큰"),
+                                fieldWithPath("result").type(STRING).description("SUCCESS"),
+                                fieldWithPath("message").description("null"),
+                                fieldWithPath("code").description("null"),
+                                fieldWithPath("errors").description("null")
                         )
                 ))
 

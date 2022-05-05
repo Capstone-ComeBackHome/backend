@@ -253,12 +253,12 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("size").description("가져올 진단 내역 개수, 기본값은 20").optional()
                         ),
                         responseFields(
-                                fieldWithPath("diagnosisResponseList").type(ARRAY).description("진단 내역 리스트"),
-                                fieldWithPath("diagnosisResponseList[0].diagnosisId").type(NUMBER).description("진단 내역 Id").optional(),
-                                fieldWithPath("diagnosisResponseList[0].createdDate").type(STRING).description("진단 시각").optional(),
-                                fieldWithPath("diagnosisResponseList[0].diseaseNameList").type(ARRAY).description("진단된 질병 리스트").optional(),
-                                fieldWithPath("hasNext").type(BOOLEAN).description("다음 페이지가 존재하는지 여부")
-                        )
+                                fieldWithPath("data.diagnosisResponseList").type(ARRAY).description("진단 내역 리스트"),
+                                fieldWithPath("data.diagnosisResponseList[0].diagnosisId").type(NUMBER).description("진단 내역 Id").optional(),
+                                fieldWithPath("data.diagnosisResponseList[0].createdDate").type(STRING).description("진단 시각").optional(),
+                                fieldWithPath("data.diagnosisResponseList[0].diseaseNameList").type(ARRAY).description("진단된 질병 리스트").optional(),
+                                fieldWithPath("data.hasNext").type(BOOLEAN).description("다음 페이지가 존재하는지 여부")
+                        ).and(successDescriptors())
                 ))
         ;
     }

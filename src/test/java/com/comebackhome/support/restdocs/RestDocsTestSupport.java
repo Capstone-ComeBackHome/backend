@@ -20,6 +20,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
@@ -43,8 +44,19 @@ public abstract class RestDocsTestSupport extends ControllerTest {
                 .build();
     }
 
+    protected List<FieldDescriptor> successDescriptors() {
+        return new ArrayList<>(List.of(
+                fieldWithPath("result").type(STRING).description("SUCCESS"),
+                fieldWithPath("message").description("null"),
+                fieldWithPath("code").description("null"),
+                fieldWithPath("errors").description("null")
+        ));
+    }
+
     protected List<FieldDescriptor> errorDescriptors() {
         return new ArrayList<>(List.of(
+                fieldWithPath("result").description("FAIL"),
+                fieldWithPath("data").description("null"),
                 fieldWithPath("message").description("에러 메시지"),
                 fieldWithPath("code").description("에러 코드"),
                 fieldWithPath("errors").description("Error 값 배열 값")
@@ -53,6 +65,8 @@ public abstract class RestDocsTestSupport extends ControllerTest {
 
     public static List<FieldDescriptor> errorDescriptorIncludeErrorFields() {
         return new ArrayList<>(List.of(
+                fieldWithPath("result").description("FAIL"),
+                fieldWithPath("data").description("null"),
                 fieldWithPath("message").description("에러 메시지"),
                 fieldWithPath("code").description("에러 코드"),
                 fieldWithPath("errors").description("Error 값 배열 값"),

@@ -43,10 +43,10 @@ public class AuthRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Refresh Token")
                         ),
                         responseFields(
-                                fieldWithPath("tokenType").type(STRING).description("토큰 타입"),
-                                fieldWithPath("accessToken").type(STRING).description("JWT Access Token"),
-                                fieldWithPath("refreshToken").type(STRING).description("JWT Refresh Token")
-                        )
+                                fieldWithPath("data.tokenType").type(STRING).description("토큰 타입"),
+                                fieldWithPath("data.accessToken").type(STRING).description("JWT Access Token"),
+                                fieldWithPath("data.refreshToken").type(STRING).description("JWT Refresh Token")
+                        ).and(successDescriptors())
                 ));
     }
 

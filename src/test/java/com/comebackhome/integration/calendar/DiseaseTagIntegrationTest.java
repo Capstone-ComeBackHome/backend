@@ -34,29 +34,33 @@ public class DiseaseTagIntegrationTest extends IntegrationTest {
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.get(URL)
-                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
+                .header(HttpHeaders.AUTHORIZATION, TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.headDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.headDiseaseTagList[0].diseaseType", is(HEAD.name())))
-                .andExpect(jsonPath("$.headDiseaseTagList[0].name", is("두통")))
-                .andExpect(jsonPath("$.bronchusDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.bronchusDiseaseTagList[0].diseaseType", is(BRONCHUS.name())))
-                .andExpect(jsonPath("$.bronchusDiseaseTagList[0].name", is("코막힘")))
-                .andExpect(jsonPath("$.chestDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.chestDiseaseTagList[0].diseaseType", is(CHEST.name())))
-                .andExpect(jsonPath("$.chestDiseaseTagList[0].name", is("가슴 통증")))
-                .andExpect(jsonPath("$.stomachDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.stomachDiseaseTagList[0].diseaseType", is(STOMACH.name())))
-                .andExpect(jsonPath("$.stomachDiseaseTagList[0].name", is("공복감")))
-                .andExpect(jsonPath("$.limbDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.limbDiseaseTagList[0].diseaseType", is(LIMB.name())))
-                .andExpect(jsonPath("$.limbDiseaseTagList[0].name", is("관절통")))
-                .andExpect(jsonPath("$.skinDiseaseTagList.length()", is(1)))
-                .andExpect(jsonPath("$.skinDiseaseTagList[0].diseaseType", is(SKIN.name())))
-                .andExpect(jsonPath("$.skinDiseaseTagList[0].name", is("여드름")))
+                .andExpect(jsonPath("$.data.headDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.headDiseaseTagList[0].diseaseType", is(HEAD.name())))
+                .andExpect(jsonPath("$.data.headDiseaseTagList[0].name", is("두통")))
+                .andExpect(jsonPath("$.data.bronchusDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.bronchusDiseaseTagList[0].diseaseType", is(BRONCHUS.name())))
+                .andExpect(jsonPath("$.data.bronchusDiseaseTagList[0].name", is("코막힘")))
+                .andExpect(jsonPath("$.data.chestDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.chestDiseaseTagList[0].diseaseType", is(CHEST.name())))
+                .andExpect(jsonPath("$.data.chestDiseaseTagList[0].name", is("가슴 통증")))
+                .andExpect(jsonPath("$.data.stomachDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.stomachDiseaseTagList[0].diseaseType", is(STOMACH.name())))
+                .andExpect(jsonPath("$.data.stomachDiseaseTagList[0].name", is("공복감")))
+                .andExpect(jsonPath("$.data.limbDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.limbDiseaseTagList[0].diseaseType", is(LIMB.name())))
+                .andExpect(jsonPath("$.data.limbDiseaseTagList[0].name", is("관절통")))
+                .andExpect(jsonPath("$.data.skinDiseaseTagList.length()", is(1)))
+                .andExpect(jsonPath("$.data.skinDiseaseTagList[0].diseaseType", is(SKIN.name())))
+                .andExpect(jsonPath("$.data.skinDiseaseTagList[0].name", is("여드름")))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
+
 
     private void createDiseaseTagListAndSave() {
         List<DiseaseTag> diseaseTagList = List.of(givenDiseaseTag(HEAD, "두통"),

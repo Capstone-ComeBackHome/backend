@@ -1,6 +1,7 @@
 package com.comebackhome.support.restdocs.common;
 
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.support.restdocs.SampleRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonDocsController {
 
     @GetMapping("/api/oauth2/authorization/{provider}")
-    public ResponseEntity<AuthResponse> login() {
-        return ResponseEntity.ok(AuthResponse.of("accessToken","refreshToken"));
+    public ResponseEntity<CommonResponse<AuthResponse>> login() {
+        return ResponseEntity.ok(CommonResponse.success(AuthResponse.of("accessToken","refreshToken")));
     }
 
     @GetMapping("/docs/error")

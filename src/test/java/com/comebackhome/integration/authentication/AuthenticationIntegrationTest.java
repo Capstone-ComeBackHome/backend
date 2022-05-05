@@ -68,9 +68,12 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + refreshToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tokenType",is(TOKEN_TYPE.trim())))
-                .andExpect(jsonPath("$.accessToken").isNotEmpty())
-                .andExpect(jsonPath("$.refreshToken").isNotEmpty())
+                .andExpect(jsonPath("$.data.tokenType",is(TOKEN_TYPE.trim())))
+                .andExpect(jsonPath("$.data.accessToken").isNotEmpty())
+                .andExpect(jsonPath("$.data.refreshToken").isNotEmpty())
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
         assertThat(tokenRepository.existsRefreshTokenById(refreshToken)).isTrue();
     }
@@ -89,9 +92,12 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + refreshToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.tokenType",is(TOKEN_TYPE.trim())))
-                .andExpect(jsonPath("$.accessToken").isNotEmpty())
-                .andExpect(jsonPath("$.refreshToken").isNotEmpty())
+                .andExpect(jsonPath("$.data.tokenType",is(TOKEN_TYPE.trim())))
+                .andExpect(jsonPath("$.data.accessToken").isNotEmpty())
+                .andExpect(jsonPath("$.data.refreshToken").isNotEmpty())
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
 
         assertThat(tokenRepository.existsRefreshTokenById(refreshToken)).isFalse();

@@ -63,8 +63,8 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
                                 fieldWithPath("localDate").type(STRING).description("스케줄 날짜")
                         )
-                ));
-                ;
+                ))
+        ;
     }
 
     @Test
@@ -276,11 +276,11 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("yearMonth").description("yyyy-MM 형식의 년, 월")
                         ),
                         responseFields(
-                                fieldWithPath("simpleScheduleResponseList").type(ARRAY).description("요청한 달의 나의 스케줄 리스트"),
-                                fieldWithPath("simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID").optional(),
-                                fieldWithPath("simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜").optional(),
-                                fieldWithPath("simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수").optional()
-                        )
+                                fieldWithPath("data.simpleScheduleResponseList").type(ARRAY).description("요청한 달의 나의 스케줄 리스트"),
+                                fieldWithPath("data.simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID").optional(),
+                                fieldWithPath("data.simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜").optional(),
+                                fieldWithPath("data.simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수").optional()
+                        ).and(successDescriptors())
                 ))
         ;
     }
@@ -336,13 +336,13 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("scheduleId").description("조회할 스케줄 ID")
                         ),
                         responseFields(
-                                fieldWithPath("scheduleId").type(NUMBER).description("스케줄 Id"),
-                                fieldWithPath("localDate").type(STRING).description("스케줄 날짜"),
-                                fieldWithPath("diseaseTagResponseList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
-                                fieldWithPath("diseaseTagResponseList[0].name").type(STRING).description("질병 이름"),
-                                fieldWithPath("dailyNote").type(STRING).description("하루 일기").optional(),
-                                fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)).optional()
-                        )
+                                fieldWithPath("data.scheduleId").type(NUMBER).description("스케줄 Id"),
+                                fieldWithPath("data.localDate").type(STRING).description("스케줄 날짜"),
+                                fieldWithPath("data.diseaseTagResponseList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
+                                fieldWithPath("data.diseaseTagResponseList[0].name").type(STRING).description("질병 이름"),
+                                fieldWithPath("data.dailyNote").type(STRING).description("하루 일기").optional(),
+                                fieldWithPath("data.painType").type(STRING).description(generateLinkCode(PAIN_TYPE)).optional()
+                        ).and(successDescriptors())
                 ))
         ;
     }
@@ -552,9 +552,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         responseFields(
                                 errorDescriptors()
                         )
-                ));
+                ))
         ;
     }
-
-
 }

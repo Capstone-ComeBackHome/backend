@@ -64,10 +64,13 @@ public class UserIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
-                .andExpect(jsonPath("$.picture", is(user.getPicture())))
-                .andExpect(jsonPath("$.authProvider", is(user.getAuthProvider().name())))
+                .andExpect(jsonPath("$.data.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.data.name", is(user.getName())))
+                .andExpect(jsonPath("$.data.picture", is(user.getPicture())))
+                .andExpect(jsonPath("$.data.authProvider", is(user.getAuthProvider().name())))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -81,16 +84,18 @@ public class UserIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.age", is(user.getAge())))
-                .andExpect(jsonPath("$.sex", is(user.getSex().name())))
-                .andExpect(jsonPath("$.height", is(user.getHeight())))
-                .andExpect(jsonPath("$.weight", is(user.getWeight())))
-                .andExpect(jsonPath("$.history", is(user.getHistory())))
-                .andExpect(jsonPath("$.drugHistory", is(user.getDrugHistory())))
-                .andExpect(jsonPath("$.socialHistory", is(user.getSocialHistory())))
-                .andExpect(jsonPath("$.traumaHistory", is(user.getTraumaHistory())))
-                .andExpect(jsonPath("$.familyHistory", is(user.getFamilyHistory())))
-
+                .andExpect(jsonPath("$.data.age", is(user.getAge())))
+                .andExpect(jsonPath("$.data.sex", is(user.getSex().name())))
+                .andExpect(jsonPath("$.data.height", is(user.getHeight())))
+                .andExpect(jsonPath("$.data.weight", is(user.getWeight())))
+                .andExpect(jsonPath("$.data.history", is(user.getHistory())))
+                .andExpect(jsonPath("$.data.drugHistory", is(user.getDrugHistory())))
+                .andExpect(jsonPath("$.data.socialHistory", is(user.getSocialHistory())))
+                .andExpect(jsonPath("$.data.traumaHistory", is(user.getTraumaHistory())))
+                .andExpect(jsonPath("$.data.familyHistory", is(user.getFamilyHistory())))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -104,10 +109,13 @@ public class UserIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.age", is(user.getAge())))
-                .andExpect(jsonPath("$.sex", is(user.getSex().name())))
-                .andExpect(jsonPath("$.height", is(user.getHeight())))
-                .andExpect(jsonPath("$.weight", is(user.getWeight())))
+                .andExpect(jsonPath("$.data.age", is(user.getAge())))
+                .andExpect(jsonPath("$.data.sex", is(user.getSex().name())))
+                .andExpect(jsonPath("$.data.height", is(user.getHeight())))
+                .andExpect(jsonPath("$.data.weight", is(user.getWeight())))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -141,11 +149,14 @@ public class UserIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.history", is(user.getHistory())))
-                .andExpect(jsonPath("$.drugHistory", is(user.getDrugHistory())))
-                .andExpect(jsonPath("$.socialHistory", is(user.getSocialHistory())))
-                .andExpect(jsonPath("$.traumaHistory", is(user.getTraumaHistory())))
-                .andExpect(jsonPath("$.familyHistory", is(user.getFamilyHistory())))
+                .andExpect(jsonPath("$.data.history", is(user.getHistory())))
+                .andExpect(jsonPath("$.data.drugHistory", is(user.getDrugHistory())))
+                .andExpect(jsonPath("$.data.socialHistory", is(user.getSocialHistory())))
+                .andExpect(jsonPath("$.data.traumaHistory", is(user.getTraumaHistory())))
+                .andExpect(jsonPath("$.data.familyHistory", is(user.getFamilyHistory())))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 

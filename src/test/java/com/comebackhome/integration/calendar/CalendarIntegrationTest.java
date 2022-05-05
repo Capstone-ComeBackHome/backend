@@ -183,12 +183,15 @@ public class CalendarIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.simpleScheduleResponseList[0].scheduleId").value(scheduleId1))
-                .andExpect(jsonPath("$.simpleScheduleResponseList[0].localDate").value(LocalDate.now().toString()))
-                .andExpect(jsonPath("$.simpleScheduleResponseList[0].diseaseTagCount").value(3))
-                .andExpect(jsonPath("$.simpleScheduleResponseList[1].scheduleId").value(scheduleId2))
-                .andExpect(jsonPath("$.simpleScheduleResponseList[1].localDate").value(LocalDate.now().toString()))
-                .andExpect(jsonPath("$.simpleScheduleResponseList[1].diseaseTagCount").value(2))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].scheduleId").value(scheduleId1))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].diseaseTagCount").value(3))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].scheduleId").value(scheduleId2))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].diseaseTagCount").value(2))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 
@@ -215,16 +218,19 @@ public class CalendarIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.scheduleId").value(scheduleId))
-                .andExpect(jsonPath("$.localDate").value(LocalDate.now().toString()))
-                .andExpect(jsonPath("$.dailyNote").value(schedule.getDailyNote()))
-                .andExpect(jsonPath("$.painType").value(schedule.getPainType().name()))
-                .andExpect(jsonPath("$.diseaseTagResponseList[0].diseaseType").value("HEAD"))
-                .andExpect(jsonPath("$.diseaseTagResponseList[0].name").value("두통"))
-                .andExpect(jsonPath("$.diseaseTagResponseList[1].diseaseType").value("CUSTOM"))
-                .andExpect(jsonPath("$.diseaseTagResponseList[1].name").value("디스크"))
-                .andExpect(jsonPath("$.diseaseTagResponseList[2].diseaseType").value("CUSTOM"))
-                .andExpect(jsonPath("$.diseaseTagResponseList[2].name").value("교통사고"))
+                .andExpect(jsonPath("$.data.scheduleId").value(scheduleId))
+                .andExpect(jsonPath("$.data.localDate").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.data.dailyNote").value(schedule.getDailyNote()))
+                .andExpect(jsonPath("$.data.painType").value(schedule.getPainType().name()))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[0].diseaseType").value("HEAD"))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[0].name").value("두통"))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[1].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[1].name").value("디스크"))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[2].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.data.diseaseTagResponseList[2].name").value("교통사고"))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
         ;
     }
 

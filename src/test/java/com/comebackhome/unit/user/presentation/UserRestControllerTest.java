@@ -147,11 +147,11 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("email").type(STRING).description("이메일"),
-                                fieldWithPath("name").type(STRING).description("실명"),
-                                fieldWithPath("picture").type(STRING).description("사진 url").optional(),
-                                fieldWithPath("authProvider").type(STRING).description(generateLinkCode(AUTH_PROVIDER))
-                        )
+                                fieldWithPath("data.email").type(STRING).description("이메일"),
+                                fieldWithPath("data.name").type(STRING).description("실명"),
+                                fieldWithPath("data.picture").type(STRING).description("사진 url").optional(),
+                                fieldWithPath("data.authProvider").type(STRING).description(generateLinkCode(AUTH_PROVIDER))
+                        ).and(successDescriptors())
 
                 ))
         ;
@@ -189,16 +189,16 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("age").type(NUMBER).description("나이"),
-                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
-                                fieldWithPath("height").type(NUMBER).description("키"),
-                                fieldWithPath("weight").type(NUMBER).description("몸무게"),
-                                fieldWithPath("history").type(STRING).description("과거력").optional(),
-                                fieldWithPath("drugHistory").type(STRING).description("약물투여력").optional(),
-                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
-                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional(),
-                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional()
-                        )
+                                fieldWithPath("data.age").type(NUMBER).description("나이"),
+                                fieldWithPath("data.sex").type(STRING).description(generateLinkCode(SEX)),
+                                fieldWithPath("data.height").type(NUMBER).description("키"),
+                                fieldWithPath("data.weight").type(NUMBER).description("몸무게"),
+                                fieldWithPath("data.history").type(STRING).description("과거력").optional(),
+                                fieldWithPath("data.drugHistory").type(STRING).description("약물투여력").optional(),
+                                fieldWithPath("data.socialHistory").type(STRING).description("사회력").optional(),
+                                fieldWithPath("data.traumaHistory").type(STRING).description("외상력").optional(),
+                                fieldWithPath("data.familyHistory").type(STRING).description("가족력").optional()
+                        ).and(successDescriptors())
 
                 ))
         ;
@@ -237,11 +237,11 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("age").type(NUMBER).description("나이"),
-                                fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
-                                fieldWithPath("weight").type(NUMBER).description("몸무게"),
-                                fieldWithPath("height").type(NUMBER).description("키")
-                        )
+                                fieldWithPath("data.age").type(NUMBER).description("나이"),
+                                fieldWithPath("data.sex").type(STRING).description(generateLinkCode(SEX)),
+                                fieldWithPath("data.weight").type(NUMBER).description("몸무게"),
+                                fieldWithPath("data.height").type(NUMBER).description("키")
+                        ).and(successDescriptors())
 
                 ))
         ;
@@ -438,12 +438,12 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("history").type(STRING).description("과거력").optional(),
-                                fieldWithPath("familyHistory").type(STRING).description("가족력").optional(),
-                                fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional(),
-                                fieldWithPath("socialHistory").type(STRING).description("사회력").optional(),
-                                fieldWithPath("traumaHistory").type(STRING).description("외상력").optional()
-                        )
+                                fieldWithPath("data.history").type(STRING).description("과거력").optional(),
+                                fieldWithPath("data.familyHistory").type(STRING).description("가족력").optional(),
+                                fieldWithPath("data.drugHistory").type(STRING).description("약물투약력").optional(),
+                                fieldWithPath("data.socialHistory").type(STRING).description("사회력").optional(),
+                                fieldWithPath("data.traumaHistory").type(STRING).description("외상력").optional()
+                        ).and(successDescriptors())
 
                 ))
         ;

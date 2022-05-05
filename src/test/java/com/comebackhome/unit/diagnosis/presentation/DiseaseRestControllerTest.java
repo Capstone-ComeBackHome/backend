@@ -51,13 +51,13 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("diseaseId").description("질병 ID값")
                         ),
                         responseFields(
-                                fieldWithPath("name").type(STRING).description("질병 이름"),
-                                fieldWithPath("definition").type(STRING).description("질병 정의"),
-                                fieldWithPath("recommendDepartment").type(STRING).description("추천 진료과"),
-                                fieldWithPath("symptom").type(STRING).description("질병의 증상"),
-                                fieldWithPath("cause").type(STRING).description("질병의 원인"),
-                                fieldWithPath("hospitalCare").type(STRING).description("병원에서 제시하는 치료 방법")
-                        )
+                                fieldWithPath("data.name").type(STRING).description("질병 이름"),
+                                fieldWithPath("data.definition").type(STRING).description("질병 정의"),
+                                fieldWithPath("data.recommendDepartment").type(STRING).description("추천 진료과"),
+                                fieldWithPath("data.symptom").type(STRING).description("질병의 증상"),
+                                fieldWithPath("data.cause").type(STRING).description("질병의 원인"),
+                                fieldWithPath("data.hospitalCare").type(STRING).description("병원에서 제시하는 치료 방법")
+                        ).and(successDescriptors())
                 ))
                 ;
     }
@@ -127,11 +127,11 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("diseaseNameList").description("질병 이름 리스트")
                         ),
                         responseFields(
-                                fieldWithPath("simpleDiseaseList[0].diseaseId").type(NUMBER).description("질병 ID"),
-                                fieldWithPath("simpleDiseaseList[0].name").type(STRING).description("질병 이름"),
-                                fieldWithPath("simpleDiseaseList[0].definition").type(STRING).description("질병 정의"),
-                                fieldWithPath("simpleDiseaseList[0].recommendDepartment").type(STRING).description("추천 진료과")
-                        )
+                                fieldWithPath("data.simpleDiseaseList[0].diseaseId").type(NUMBER).description("질병 ID"),
+                                fieldWithPath("data.simpleDiseaseList[0].name").type(STRING).description("질병 이름"),
+                                fieldWithPath("data.simpleDiseaseList[0].definition").type(STRING).description("질병 정의"),
+                                fieldWithPath("data.simpleDiseaseList[0].recommendDepartment").type(STRING).description("추천 진료과")
+                        ).and(successDescriptors())
                 ))
                 ;
     }

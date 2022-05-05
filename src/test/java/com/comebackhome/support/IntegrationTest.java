@@ -13,12 +13,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
 import static com.comebackhome.support.helper.UserGivenHelper.createAuthentication;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @Transactional
 @AutoConfigureMockMvc
@@ -60,6 +63,13 @@ public abstract class IntegrationTest {
     protected void flushAndClear(){
         em.flush();
         em.clear();
+    }
+
+    protected ResultMatcher[] expectCommonSuccess() {
+        return new ResultMatcher[]{jsonPath("$.result", is("SUCCESS")),
+                jsonPath("$.message").isEmpty(),
+                jsonPath("$.code").isEmpty(),
+                jsonPath("$.errors").isEmpty()};
     }
 
 }

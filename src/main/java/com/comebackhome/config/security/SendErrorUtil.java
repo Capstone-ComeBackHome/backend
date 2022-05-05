@@ -1,6 +1,6 @@
 package com.comebackhome.config.security;
 
-import com.comebackhome.common.exception.ErrorResponse;
+import com.comebackhome.common.CommonResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 
@@ -17,14 +17,14 @@ public class SendErrorUtil {
 
     public static void sendUnauthorizedErrorResponse(HttpServletResponse response, ObjectMapper objectMapper) throws IOException {
         String errorResponse = objectMapper.writeValueAsString(
-                ErrorResponse.of(UNAUTHORIZED_MESSAGE, UNAUTHORIZED_CODE));
+                CommonResponse.errorOf(UNAUTHORIZED_MESSAGE, UNAUTHORIZED_CODE));
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         writeErrorResponse(response, errorResponse);
     }
 
     public static void sendServerErrorResponse(HttpServletResponse response, ObjectMapper objectMapper) throws IOException {
         String errorResponse = objectMapper.writeValueAsString(
-                ErrorResponse.of(SERVER_ERROR_MESSAGE, SERVER_ERROR_CODE));
+                CommonResponse.errorOf(SERVER_ERROR_MESSAGE, SERVER_ERROR_CODE));
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         writeErrorResponse(response, errorResponse);
     }

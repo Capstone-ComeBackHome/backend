@@ -1,5 +1,6 @@
 package com.comebackhome.common.exception;
 
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.exception.csv.CSVException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,28 +27,28 @@ public class GlobalExceptionHandler {
     private static final String LOG_CODE_FIELD_FORMAT = "Class : {}, Code : {}, field : {} ,Message : {}";
 
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<ErrorResponse> bindException(BindException e) {
+    public ResponseEntity<CommonResponse> bindException(BindException e) {
 
         final String code = BINDING_EXCEPTION.getCode();
         final String message = BINDING_EXCEPTION.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message);
 
-        ErrorResponse response = ErrorResponse.of(message, code, e.getBindingResult());
+        CommonResponse response = CommonResponse.errorOf(message, code, e.getBindingResult());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
-    public ResponseEntity handleMissingParams(MissingRequestHeaderException e) {
+    public ResponseEntity<CommonResponse> handleMissingParams(MissingRequestHeaderException e) {
 
         final String code = MISSING_REQUEST_HEADER.getCode();
         final String message = MISSING_REQUEST_HEADER.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message);
 
-        ErrorResponse response = ErrorResponse.of(message,code);
+        CommonResponse response = CommonResponse.errorOf(message,code);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
@@ -55,19 +56,19 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(ApplicationException.class)
-    public ResponseEntity<ErrorResponse> applicationException(ApplicationException e) {
+    public ResponseEntity<CommonResponse> applicationException(ApplicationException e) {
 
         final String errorCode = e.getErrorCode();
         final String exceptionClassName = e.getClass().getSimpleName();
         final String message = e.getMessage();
-        ErrorResponse errorResponse = null;
+        CommonResponse errorResponse = null;
 
         if (e.getErrors() != null) {
             log.warn(LOG_CODE_FORMAT, exceptionClassName, errorCode, "@valid");
-            errorResponse = ErrorResponse.of(message, errorCode, e.getErrors());
+            errorResponse = CommonResponse.errorOf(message, errorCode, e.getErrors());
         } else {
             log.warn(LOG_CODE_FORMAT, exceptionClassName, errorCode, message);
-            errorResponse = ErrorResponse.of(message, errorCode);
+            errorResponse = CommonResponse.errorOf(message, errorCode);
         }
 
         return ResponseEntity
@@ -76,7 +77,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ErrorResponse> missingServletRequestParameterException(MissingServletRequestParameterException e) {
+    public ResponseEntity<CommonResponse> missingServletRequestParameterException(MissingServletRequestParameterException e) {
         final String message = MISSING_REQUEST_PARAM.getMessage();
         final String code = MISSING_REQUEST_PARAM.getCode();
 
@@ -86,61 +87,61 @@ public class GlobalExceptionHandler {
                 e.getParameterName(),
                 message);
 
-        ErrorResponse response = ErrorResponse.of(message,code);
+        CommonResponse response = CommonResponse.errorOf(message,code);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> constraintViolationException(ConstraintViolationException e) {
+    public ResponseEntity<CommonResponse> constraintViolationException(ConstraintViolationException e) {
 
         log.warn(LOG_FIELD_FORMAT,
                 e.getClass().getSimpleName(),
                 e.getConstraintViolations(),
                 e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(BINDING_EXCEPTION.getMessage(), BINDING_EXCEPTION.getCode());
+        CommonResponse response = CommonResponse.errorOf(BINDING_EXCEPTION.getMessage(), BINDING_EXCEPTION.getCode());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> httpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseEntity<CommonResponse> httpMessageNotReadableException(HttpMessageNotReadableException e) {
 
         log.warn(LOG_FORMAT,
                 e.getClass().getSimpleName(),
                 e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(BINDING_EXCEPTION.getMessage(), BINDING_EXCEPTION.getCode());
+        CommonResponse response = CommonResponse.errorOf(BINDING_EXCEPTION.getMessage(), BINDING_EXCEPTION.getCode());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ErrorResponse> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public ResponseEntity<CommonResponse> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 
         log.warn(LOG_FORMAT,
                 e.getClass().getSimpleName(),
                 e.getMessage());
 
-        ErrorResponse response = ErrorResponse.of(NOT_SUPPORT_METHOD.getMessage(), NOT_SUPPORT_METHOD.getCode());
+        CommonResponse response = CommonResponse.errorOf(NOT_SUPPORT_METHOD.getMessage(), NOT_SUPPORT_METHOD.getCode());
         return ResponseEntity
                 .status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(response);
     }
 
     @ExceptionHandler(CSVException.class)
-    public ResponseEntity<ErrorResponse> csvException(CSVException e) {
+    public ResponseEntity<CommonResponse> csvException(CSVException e) {
 
         final String code = BINDING_EXCEPTION.getCode();
         final String message = BINDING_EXCEPTION.getMessage();
 
         log.warn(LOG_CODE_FORMAT, e.getClass().getSimpleName(), code, message,e);
 
-        ErrorResponse response = ErrorResponse.of(message, code);
+        CommonResponse response = CommonResponse.errorOf(message, code);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(response);

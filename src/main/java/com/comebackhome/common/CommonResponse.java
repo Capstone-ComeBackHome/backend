@@ -1,10 +1,6 @@
-package com.comebackhome.common.exception;
+package com.comebackhome.common;
 
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
@@ -13,40 +9,42 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Getter
-public class ErrorResponse {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CommonResponse<T> {
+    private Result result;
+    private T data;
 
     private String message;
-
     private String code;
-
+    @Builder.Default
     private List<FieldError> errors = new ArrayList<>();
 
-    private ErrorResponse(String message) {
-        this.message = message;
+    private CommonResponse(String message, String code) {
+        this(message,code,null);
     }
 
-    private ErrorResponse(String message, String code) {
-        this.message = message;
-        this.code = code;
-    }
-
-    private ErrorResponse(String message, String code, List<FieldError> errors) {
+    private CommonResponse(String message, String code, List<FieldError> errors) {
+        this.result = Result.FAIL;
         this.message = message;
         this.code = code;
         this.errors = errors;
     }
 
-
-    public static ErrorResponse from(String message){
-        return new ErrorResponse(message);
+    public static CommonResponse errorOf(String message, String code) {
+        return new CommonResponse(message, code);
     }
 
-    public static ErrorResponse of(String message, String code) {
-        return new ErrorResponse(message, code);
+    public static CommonResponse errorOf(String message, String code, BindingResult result) {
+        return new CommonResponse(message, code, FieldError.of(result));
     }
 
-    public static ErrorResponse of(String message, String code, BindingResult result) {
-        return new ErrorResponse(message, code, FieldError.of(result));
+    public static <T> CommonResponse<T> success(T data) {
+        return (CommonResponse<T>) CommonResponse.builder()
+                .result(Result.SUCCESS)
+                .data(data)
+                .build();
     }
 
 
@@ -78,5 +76,9 @@ public class ErrorResponse {
         }
     }
 
+    public enum Result {
+        SUCCESS, FAIL
+    }
 
 }
+

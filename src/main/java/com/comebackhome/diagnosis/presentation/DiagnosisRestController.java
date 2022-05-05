@@ -1,9 +1,9 @@
 package com.comebackhome.diagnosis.presentation;
 
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.diagnosis.application.DiagnosisFacade;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
 import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.diagnosis.presentation.dto.response.DiagnosisResponseList;
 import com.comebackhome.user.domain.User;
@@ -46,14 +46,14 @@ public class DiagnosisRestController {
     }
 
     @GetMapping
-    public ResponseEntity<DiagnosisResponseList> getMyDiagnoses(
+    public ResponseEntity<CommonResponse<DiagnosisResponseList>> getMyDiagnoses(
                                                   @RequestParam(required = false) Long lastDiagnosisId,
                                                   @PageableDefault(size = 20) Pageable pageable,
                                                   @LoginUser User user){
 
-        DiagnosisResponseDtoList diagnosisResponseDtoList
-                = diagnosisFacade.getMyDiagnoses(lastDiagnosisId, user.getId(), pageable);
-        return ResponseEntity.ok(DiagnosisResponseList.from(diagnosisResponseDtoList));
+        DiagnosisResponseList diagnosisResponseList
+                = DiagnosisResponseList.from(diagnosisFacade.getMyDiagnoses(lastDiagnosisId, user.getId(), pageable));
+        return ResponseEntity.ok(CommonResponse.success(diagnosisResponseList));
     }
 
 }

@@ -1,8 +1,8 @@
 package com.comebackhome.authentication.presentation;
 
 import com.comebackhome.authentication.application.AuthFacade;
-import com.comebackhome.authentication.domain.service.dto.AuthResponseDto;
 import com.comebackhome.authentication.presentation.dto.AuthResponse;
+import com.comebackhome.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,9 +28,9 @@ public class AuthRestController {
 
 
     @PostMapping("/reissue")
-    public ResponseEntity<AuthResponse> reissueToken(@RequestHeader(value = "Authorization") String refreshToken){
-        AuthResponseDto authResponseDto = authFacade.reissue(refreshToken);
-        return ResponseEntity.ok(AuthResponse.from(authResponseDto));
+    public ResponseEntity<CommonResponse<AuthResponse>> reissueToken(@RequestHeader(value = "Authorization") String refreshToken){
+        AuthResponse authResponse = AuthResponse.from(authFacade.reissue(refreshToken));
+        return ResponseEntity.ok(CommonResponse.success(authResponse));
     }
 
 }

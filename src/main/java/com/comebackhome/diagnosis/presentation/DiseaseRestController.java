@@ -1,6 +1,7 @@
 package com.comebackhome.diagnosis.presentation;
 
 import com.comebackhome.common.CSVUtil;
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.diagnosis.application.DiseaseFacade;
 import com.comebackhome.diagnosis.domain.disease.service.dto.request.DiseaseSaveRequestDto;
 import com.comebackhome.diagnosis.presentation.dto.request.DiseaseSaveRequest;
@@ -28,17 +29,19 @@ public class DiseaseRestController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping
-    public ResponseEntity<DiseaseResponse> getDisease(@RequestParam Long diseaseId){
-        return ResponseEntity.ok(DiseaseResponse.from(diseaseFacade.getDisease(diseaseId)));
+    public ResponseEntity<CommonResponse<DiseaseResponse>> getDisease(@RequestParam Long diseaseId){
+        DiseaseResponse diseaseResponse = DiseaseResponse.from(diseaseFacade.getDisease(diseaseId));
+        return ResponseEntity.ok(CommonResponse.success(diseaseResponse));
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/simple")
-    public ResponseEntity<SimpleDiseaseResponseList> getSimpleDisease
+    public ResponseEntity<CommonResponse<SimpleDiseaseResponseList>> getSimpleDisease
                             (@RequestParam @NotEmpty List<@NotBlank(message = "질병명이 빈칸입니다.") String> diseaseNameList){
 
-        return ResponseEntity.ok(SimpleDiseaseResponseList
-                .from(diseaseFacade.getSimpleDiseaseList(diseaseNameList)));
+        SimpleDiseaseResponseList simpleDiseaseResponseList = SimpleDiseaseResponseList
+                .from(diseaseFacade.getSimpleDiseaseList(diseaseNameList));
+        return ResponseEntity.ok(CommonResponse.success(simpleDiseaseResponseList));
     }
 
     @PostMapping

@@ -2,6 +2,7 @@ package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.DiseaseTagFacade;
 import com.comebackhome.calendar.presentation.dto.response.DefaultTypeDiseaseTagListResponse;
+import com.comebackhome.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +19,9 @@ public class DiseaseTagRestController {
     private final DiseaseTagFacade diseaseTagFacade;
 
     @GetMapping
-    public ResponseEntity<DefaultTypeDiseaseTagListResponse> getDiseaseTagExceptCustomType() {
-        return ResponseEntity.ok(DefaultTypeDiseaseTagListResponse.from(diseaseTagFacade.getDiseaseTagExceptCustomType()));
+    public ResponseEntity<CommonResponse<DefaultTypeDiseaseTagListResponse>> getDiseaseTagExceptCustomType() {
+        DefaultTypeDiseaseTagListResponse defaultTypeDiseaseTagListResponse =
+                DefaultTypeDiseaseTagListResponse.from(diseaseTagFacade.getDiseaseTagExceptCustomType());
+        return ResponseEntity.ok(CommonResponse.success(defaultTypeDiseaseTagListResponse));
     }
 }

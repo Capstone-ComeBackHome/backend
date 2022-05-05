@@ -5,6 +5,7 @@ import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
 import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponseList;
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.domain.User;
@@ -41,17 +42,19 @@ public class CalendarRestController {
     }
 
     @GetMapping
-    public ResponseEntity<SimpleScheduleResponseList> getMyMonthSchedule(@RequestParam YearMonth yearMonth,
-                                                                         @LoginUser User user){
+    public ResponseEntity<CommonResponse<SimpleScheduleResponseList>> getMyMonthSchedule(@RequestParam YearMonth yearMonth,
+                                                                                        @LoginUser User user){
 
-        return ResponseEntity.ok(SimpleScheduleResponseList
-                .from(calendarFacade.getMyMonthSchedule(yearMonth,user.getId())));
+        SimpleScheduleResponseList simpleScheduleResponseList
+                = SimpleScheduleResponseList.from(calendarFacade.getMyMonthSchedule(yearMonth, user.getId()));
+        return ResponseEntity.ok(CommonResponse.success(simpleScheduleResponseList));
     }
 
     @GetMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleResponse> getMySchedule(@PathVariable Long scheduleId,
+    public ResponseEntity<CommonResponse<ScheduleResponse>> getMySchedule(@PathVariable Long scheduleId,
                                                           @LoginUser User user){
-        return ResponseEntity.ok(ScheduleResponse.from(calendarFacade.getMySchedule(scheduleId, user.getId())));
+        ScheduleResponse scheduleResponse = ScheduleResponse.from(calendarFacade.getMySchedule(scheduleId, user.getId()));
+        return ResponseEntity.ok(CommonResponse.success(scheduleResponse));
     }
 
     @PatchMapping("/{scheduleId}")
@@ -62,6 +65,7 @@ public class CalendarRestController {
         if (errors.hasErrors()){
             throw new ValidatedException(errors);
         }
+
         calendarFacade.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
         return ResponseEntity.ok().build();
     }

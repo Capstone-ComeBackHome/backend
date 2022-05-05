@@ -1,6 +1,7 @@
 package com.comebackhome.user.presentation;
 
 
+import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
 import com.comebackhome.user.application.UserFacade;
@@ -41,13 +42,13 @@ public class UserRestController {
     }
 
     @GetMapping
-    public ResponseEntity<UserSimpleInfoResponse> getMySimpleInfo(@LoginUser User user){
-        return ResponseEntity.ok(UserSimpleInfoResponse.from(user));
+    public ResponseEntity<CommonResponse<UserSimpleInfoResponse>> getMySimpleInfo(@LoginUser User user){
+        return ResponseEntity.ok(CommonResponse.success(UserSimpleInfoResponse.from(user)));
     }
 
     @GetMapping("/essential")
-    public ResponseEntity<UserEssentialResponse> getMyEssentialInfo(@LoginUser User user){
-        return ResponseEntity.ok(UserEssentialResponse.from(user));
+    public ResponseEntity<CommonResponse<UserEssentialResponse>> getMyEssentialInfo(@LoginUser User user){
+        return ResponseEntity.ok(CommonResponse.success(UserEssentialResponse.from(user)));
     }
 
     @PatchMapping("/essential")
@@ -63,8 +64,8 @@ public class UserRestController {
     }
 
     @GetMapping("/medicine")
-    public ResponseEntity<UserMedicineResponse> getMyMedicineInfo(@LoginUser User user){
-        return ResponseEntity.ok(UserMedicineResponse.from(user));
+    public ResponseEntity<CommonResponse<UserMedicineResponse>> getMyMedicineInfo(@LoginUser User user){
+        return ResponseEntity.ok(CommonResponse.success(UserMedicineResponse.from(user)));
     }
 
     @PatchMapping("/medicine")
@@ -83,8 +84,8 @@ public class UserRestController {
 
 
     @GetMapping("/info")
-    public ResponseEntity<UserInfoResponse> getMyInfo(@LoginUser User user){
-        return ResponseEntity.ok(UserInfoResponse.from(user));
+    public ResponseEntity<CommonResponse<UserInfoResponse>> getMyInfo(@LoginUser User user){
+        return ResponseEntity.ok(CommonResponse.success(UserInfoResponse.from(user)));
     }
 
 }

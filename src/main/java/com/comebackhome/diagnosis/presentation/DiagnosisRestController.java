@@ -26,7 +26,7 @@ public class DiagnosisRestController {
     private final DiagnosisFacade diagnosisFacade;
 
     @PostMapping
-    public ResponseEntity<Void> createDiagnosis(@Validated @RequestBody DiagnosisSaveRequest diagnosisSaveRequest,
+    public ResponseEntity<CommonResponse> createDiagnosis(@Validated @RequestBody DiagnosisSaveRequest diagnosisSaveRequest,
                                                 BindingResult errors,
                                                 @LoginUser User user){
         if (errors.hasErrors()){
@@ -34,15 +34,15 @@ public class DiagnosisRestController {
         }
 
         diagnosisFacade.createDiagnosis(diagnosisSaveRequest.getDiseaseNameList(),user.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     @DeleteMapping("/{diagnosisId}")
-    public ResponseEntity<Void> deleteMyDiagnosis(@PathVariable Long diagnosisId,
+    public ResponseEntity<CommonResponse> deleteMyDiagnosis(@PathVariable Long diagnosisId,
                                                 @LoginUser User user){
 
         diagnosisFacade.deleteMyDiagnosis(diagnosisId,user.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     @GetMapping

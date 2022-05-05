@@ -92,6 +92,9 @@ public class AuthRestControllerTest extends RestDocsTestSupport {
                         requestHeaders(
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token"),
                                 headerWithName(REFRESH_HEADER).description("Bearer 타입 refresh Token")
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;

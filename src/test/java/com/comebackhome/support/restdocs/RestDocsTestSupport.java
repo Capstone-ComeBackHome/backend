@@ -53,6 +53,16 @@ public abstract class RestDocsTestSupport extends ControllerTest {
         ));
     }
 
+    protected List<FieldDescriptor> voidSuccessDescriptors() {
+        return new ArrayList<>(List.of(
+                fieldWithPath("result").type(STRING).description("SUCCESS"),
+                fieldWithPath("message").description("null"),
+                fieldWithPath("code").description("null"),
+                fieldWithPath("errors").description("null"),
+                fieldWithPath("data").description("null")
+        ));
+    }
+
     protected List<FieldDescriptor> errorDescriptors() {
         return new ArrayList<>(List.of(
                 fieldWithPath("result").description("FAIL"),

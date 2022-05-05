@@ -20,10 +20,10 @@ public class AuthRestController {
     private final AuthFacade authFacade;
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestHeader(value = "Authorization") String accessToken,
+    public ResponseEntity<CommonResponse> logout(@RequestHeader(value = "Authorization") String accessToken,
                                        @RequestHeader(value = "refreshToken") String refreshToken) {
         authFacade.logout(accessToken,refreshToken);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
 

@@ -55,6 +55,9 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional().attributes(field("constraints", "50자 이내")),
                                 fieldWithPath("socialHistory").type(STRING).description("사회력").optional().attributes(field("constraints", "50자 이내")),
                                 fieldWithPath("traumaHistory").type(STRING).description("외상력").optional().attributes(field("constraints", "50자 이내"))
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;
@@ -285,6 +288,9 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("sex").type(STRING).description(generateLinkCode(SEX)),
                                 fieldWithPath("height").type(NUMBER).description("키").attributes(field("constraints", "양수")),
                                 fieldWithPath("weight").type(NUMBER).description("몸무게").attributes(field("constraints", "양수"))
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
 
                 ))
@@ -488,6 +494,9 @@ public class UserRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("drugHistory").type(STRING).description("약물투약력").optional().attributes(field("constraints", "50자 이내")),
                                 fieldWithPath("socialHistory").type(STRING).description("사회력").optional().attributes(field("constraints", "50자 이내")),
                                 fieldWithPath("traumaHistory").type(STRING).description("외상력").optional().attributes(field("constraints", "50자 이내"))
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
 
                 ))

@@ -53,6 +53,9 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
                         ),
                         requestFields(
                                 fieldWithPath("diseaseNameList").type(ARRAY).description("질병명 리스트").attributes(field("constraints", "최소 3개, 최대 3개"))
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;
@@ -154,6 +157,9 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
                         ),
                         pathParameters(
                                 parameterWithName("diagnosisId").description("삭제할 진단 내역 Id")
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;

@@ -40,6 +40,12 @@ public class CommonResponse<T> {
         return new CommonResponse(message, code, FieldError.of(result));
     }
 
+    public static CommonResponse success() {
+        return CommonResponse.builder()
+                .result(Result.SUCCESS)
+                .build();
+    }
+
     public static <T> CommonResponse<T> success(T data) {
         return (CommonResponse<T>) CommonResponse.builder()
                 .result(Result.SUCCESS)

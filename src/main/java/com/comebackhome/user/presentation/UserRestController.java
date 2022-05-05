@@ -29,7 +29,7 @@ public class UserRestController {
     private final UserFacade userFacade;
 
     @PatchMapping
-    public ResponseEntity<Void> saveMyInfo(@Validated @RequestBody UserInfoSaveRequest userInfoSaveRequest,
+    public ResponseEntity<CommonResponse> saveMyInfo(@Validated @RequestBody UserInfoSaveRequest userInfoSaveRequest,
                                            BindingResult errors,
                                            @LoginUser User user){
 
@@ -38,7 +38,7 @@ public class UserRestController {
         }
 
         userFacade.saveMyInfo(userInfoSaveRequest.toUserInfoSaveRequestDto(),user.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     @GetMapping
@@ -52,7 +52,7 @@ public class UserRestController {
     }
 
     @PatchMapping("/essential")
-    public ResponseEntity<Void> updateMyEssentialInfo(@LoginUser User user,
+    public ResponseEntity<CommonResponse> updateMyEssentialInfo(@LoginUser User user,
                                                       @Validated @RequestBody UserEssentialUpdateRequest userEssentialUpdateRequest,
                                                       BindingResult errors){
         if (errors.hasErrors()){
@@ -60,7 +60,7 @@ public class UserRestController {
         }
 
         userFacade.updateMyEssentialInfo(userEssentialUpdateRequest.toUserEssentialUpdateRequestDto(), user.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     @GetMapping("/medicine")
@@ -69,7 +69,7 @@ public class UserRestController {
     }
 
     @PatchMapping("/medicine")
-    public ResponseEntity<Void> updateMyMedicineInfo(@LoginUser User user,
+    public ResponseEntity<CommonResponse> updateMyMedicineInfo(@LoginUser User user,
                         @Validated @RequestBody UserMedicineUpdateRequest userMedicineUpdateRequest,
                         BindingResult errors){
 
@@ -79,7 +79,7 @@ public class UserRestController {
 
         userFacade.updateMyMedicineInfo(userMedicineUpdateRequest.toUserMedicineUpdateRequestDto(),user.getId());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
 

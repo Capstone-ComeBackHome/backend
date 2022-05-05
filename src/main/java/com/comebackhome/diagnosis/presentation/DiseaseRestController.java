@@ -45,9 +45,9 @@ public class DiseaseRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createDisease(@RequestPart MultipartFile file){
+    public ResponseEntity<CommonResponse> createDisease(@RequestPart MultipartFile file){
         diseaseFacade.createDisease(getDiseaseSaveRequestDtoList(file));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     private List<DiseaseSaveRequestDto> getDiseaseSaveRequestDtoList(MultipartFile file) {

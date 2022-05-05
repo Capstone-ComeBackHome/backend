@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.YearMonth;
 
 @RestController
-@RequestMapping("/api/v1/calendars")
+@RequestMapping(value = "/api/v1/calendars")
 @PreAuthorize("isAuthenticated()")
 @RequiredArgsConstructor
 public class CalendarRestController {
@@ -27,18 +27,18 @@ public class CalendarRestController {
     private final CalendarFacade calendarFacade;
 
     @PostMapping
-    public ResponseEntity<Void> saveMySchedule(@Validated @RequestBody ScheduleSaveRequest scheduleSaveRequest,
+    public ResponseEntity<CommonResponse> saveMySchedule(@Validated @RequestBody ScheduleSaveRequest scheduleSaveRequest,
                                                @LoginUser User user){
         calendarFacade.saveMySchedule(scheduleSaveRequest.toScheduleSaveRequestDto(user.getId()));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
 
     @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<Void> deleteMySchedule(@PathVariable Long scheduleId,
+    public ResponseEntity<CommonResponse> deleteMySchedule(@PathVariable Long scheduleId,
                                                  @LoginUser User user){
         calendarFacade.deleteSchedule(scheduleId,user.getId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
     @GetMapping
@@ -58,7 +58,7 @@ public class CalendarRestController {
     }
 
     @PatchMapping("/{scheduleId}")
-    public ResponseEntity<Void> modifyMySchedule(@PathVariable Long scheduleId,
+    public ResponseEntity<CommonResponse> modifyMySchedule(@PathVariable Long scheduleId,
                                                  @Validated @RequestBody ScheduleModifyRequest scheduleModifyRequest,
                                                           BindingResult errors,
                                                           @LoginUser User user){
@@ -67,7 +67,7 @@ public class CalendarRestController {
         }
 
         calendarFacade.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
 }

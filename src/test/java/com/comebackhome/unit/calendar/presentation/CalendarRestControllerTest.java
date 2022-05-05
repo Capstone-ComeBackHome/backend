@@ -62,6 +62,9 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("dailyNote").type(STRING).description("하루 일기").optional(),
                                 fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
                                 fieldWithPath("localDate").type(STRING).description("스케줄 날짜")
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;
@@ -197,6 +200,9 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         ),
                         pathParameters(
                                 parameterWithName("scheduleId").description("삭제할 스케줄 ID")
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
                 ;
@@ -422,6 +428,9 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("diseaseTagRequestList[0].name").type(STRING).description("질병 이름"),
                                 fieldWithPath("dailyNote").type(STRING).description("아픔 일기").optional(),
                                 fieldWithPath("painType").type(STRING).description("아픔 정도")
+                        ),
+                        responseFields(
+                                voidSuccessDescriptors()
                         )
                 ))
         ;

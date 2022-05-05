@@ -1,9 +1,9 @@
-package com.comebackhome.unit.disease.infrastructure;
+package com.comebackhome.unit.diagnosis.infrastructure;
 
-import com.comebackhome.disease.domain.Diagnosis;
-import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisJpaRepository;
-import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisQuerydslRepository;
-import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisRepositoryImpl;
+import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisJpaRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisQuerydslRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisRepositoryImpl;
 import com.comebackhome.support.QuerydslRepositoryTest;
 import com.comebackhome.user.infrastructure.repository.UserJpaRepository;
 import org.junit.jupiter.api.Test;

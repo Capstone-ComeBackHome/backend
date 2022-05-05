@@ -1,13 +1,12 @@
-package com.comebackhome.unit.disease.application;
+package com.comebackhome.unit.diagnosis.domain.disease.service;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
-import com.comebackhome.disease.application.DiseaseService;
-import com.comebackhome.disease.application.dto.DiseaseRequestDto;
-import com.comebackhome.disease.application.dto.DiseaseResponseDto;
-import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
-import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
-import com.comebackhome.disease.domain.repository.DiseaseRepository;
+import com.comebackhome.diagnosis.domain.disease.Disease;
+import com.comebackhome.diagnosis.domain.disease.repository.DiseaseRepository;
+import com.comebackhome.diagnosis.domain.disease.service.DiseaseService;
+import com.comebackhome.diagnosis.domain.disease.service.dto.request.DiseaseSaveRequestDto;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.DiseaseResponseDto;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.SimpleDiseaseResponseDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -64,28 +63,28 @@ public class DiseaseServiceTest {
     void diseaseNameList에_있는_이름들로_SimpleDiseaseResponseDto_찾기() throws Exception{
         //given
         List<String> diseaseNameList = List.of("부정맥");
-        SimpleDiseaseQueryDto simpleDiseaseQueryDto = givenSimpleDiseaseQueryDto(diseaseNameList.get(0),1L);
+        SimpleDiseaseResponseDto simpleDiseaseResponseDto = givenSimpleDiseaseResponseDto(diseaseNameList.get(0),1L);
         given(diseaseRepository.findSimpleDiseaseQueryDtoByName(any()))
-                .willReturn(simpleDiseaseQueryDto);
+                .willReturn(simpleDiseaseResponseDto);
 
         //when
         List<SimpleDiseaseResponseDto> result = diseaseService.getSimpleDiseaseList(diseaseNameList);
 
         //then
         assertThat(result.size()).isEqualTo(1);
-        assertThat(result.get(0).getDiseaseId()).isEqualTo(simpleDiseaseQueryDto.getDiseaseId());
-        assertThat(result.get(0).getName()).isEqualTo(simpleDiseaseQueryDto.getName());
-        assertThat(result.get(0).getDefinition()).isEqualTo(simpleDiseaseQueryDto.getDefinition());
-        assertThat(result.get(0).getRecommendDepartment()).isEqualTo(simpleDiseaseQueryDto.getRecommendDepartment());
+        assertThat(result.get(0).getDiseaseId()).isEqualTo(simpleDiseaseResponseDto.getDiseaseId());
+        assertThat(result.get(0).getName()).isEqualTo(simpleDiseaseResponseDto.getName());
+        assertThat(result.get(0).getDefinition()).isEqualTo(simpleDiseaseResponseDto.getDefinition());
+        assertThat(result.get(0).getRecommendDepartment()).isEqualTo(simpleDiseaseResponseDto.getRecommendDepartment());
     }
 
     @Test
     void disease_저장하기() throws Exception{
         // given
-        List<DiseaseRequestDto> diseaseRequestDtoList = List.of(givenDiseaseRequestDto());
+        List<DiseaseSaveRequestDto> diseaseSaveRequestDtoList = List.of(givenDiseaseRequestDto());
 
         //when
-        diseaseService.createDisease(diseaseRequestDtoList);
+        diseaseService.createDisease(diseaseSaveRequestDtoList);
 
         //then
         then(diseaseRepository).should().saveAll(any());

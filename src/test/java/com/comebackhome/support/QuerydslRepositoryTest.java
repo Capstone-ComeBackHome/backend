@@ -5,13 +5,13 @@ import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTag
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleQuerydslRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleRepositoryImpl;
 import com.comebackhome.config.QuerydslConfig;
-import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisQuerydslRepository;
-import com.comebackhome.disease.infrastructure.repository.diagnosis.DiagnosisRepositoryImpl;
-import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJdbcRepository;
-import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseRepositoryImpl;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJdbcRepository;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseQuerydslRepository;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseRepositoryImpl;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisQuerydslRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisRepositoryImpl;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJdbcRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseRepositoryImpl;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseJdbcRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseQuerydslRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseRepositoryImpl;
 import org.springframework.context.annotation.Import;
 
 @Import({

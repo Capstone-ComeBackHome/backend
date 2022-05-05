@@ -1,7 +1,7 @@
-package com.comebackhome.unit.disease.presentation;
+package com.comebackhome.unit.diagnosis.presentation;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
-import com.comebackhome.disease.application.dto.SimpleDiseaseResponseDto;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.SimpleDiseaseResponseDto;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +36,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void diseaseId로_상세정보_찾기() throws Exception{
         // given
-        given(diseaseQueryUseCase.getDisease(any())).willReturn(givenDiseaseResponseDto());
+        given(diseaseFacade.getDisease(any())).willReturn(givenDiseaseResponseDto());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
@@ -75,7 +75,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
    @WithMockUser(roles = "USER")
    void 없는_diseaseId로_상세조회() throws Exception{
        // given
-       willThrow(new DiseaseNotFoundException()).given(diseaseQueryUseCase).getDisease(any());
+       willThrow(new DiseaseNotFoundException()).given(diseaseFacade).getDisease(any());
 
        // when then docs
        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
@@ -112,7 +112,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                         givenSimpleDiseaseResponseDto("질병2",2L),
                         givenSimpleDiseaseResponseDto("질병3",3L));
 
-        given(diseaseQueryUseCase.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
+        given(diseaseFacade.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")

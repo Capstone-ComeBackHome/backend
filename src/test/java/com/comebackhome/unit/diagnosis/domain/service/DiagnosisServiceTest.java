@@ -1,16 +1,16 @@
-package com.comebackhome.unit.disease.application;
+package com.comebackhome.unit.diagnosis.domain.service;
 
 
 import com.comebackhome.common.RepositorySliceHelper;
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
-import com.comebackhome.disease.application.DiagnosisService;
-import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
-import com.comebackhome.disease.domain.Diagnosis;
-import com.comebackhome.disease.domain.repository.DiagnosisDiseaseRepository;
-import com.comebackhome.disease.domain.repository.DiagnosisRepository;
-import com.comebackhome.disease.domain.repository.DiseaseRepository;
+import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.disease.repository.DiagnosisDiseaseRepository;
+import com.comebackhome.diagnosis.domain.disease.repository.DiseaseRepository;
+import com.comebackhome.diagnosis.domain.repository.DiagnosisRepository;
+import com.comebackhome.diagnosis.domain.service.DiagnosisService;
+import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

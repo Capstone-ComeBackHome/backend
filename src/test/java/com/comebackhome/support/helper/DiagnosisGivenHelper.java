@@ -1,10 +1,10 @@
 package com.comebackhome.support.helper;
 
-import com.comebackhome.disease.application.dto.DiagnosisResponseDto;
-import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
-import com.comebackhome.disease.domain.Diagnosis;
-import com.comebackhome.disease.domain.DiagnosisDisease;
-import com.comebackhome.disease.presentation.dto.request.DiagnosisSaveRequest;
+import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDto;
+import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.user.domain.User;
 
 import java.time.LocalDateTime;

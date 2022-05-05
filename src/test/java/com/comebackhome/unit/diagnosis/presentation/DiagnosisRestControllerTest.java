@@ -1,10 +1,10 @@
-package com.comebackhome.unit.disease.presentation;
+package com.comebackhome.unit.diagnosis.presentation;
 
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
-import com.comebackhome.disease.application.dto.DiagnosisResponseDtoList;
-import com.comebackhome.disease.presentation.dto.request.DiagnosisSaveRequest;
+import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -120,7 +120,7 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
     void 존재하지_않는_질병명으로_진단_저장하기_실패() throws Exception{
         //given
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new DiseaseNotFoundException()).given(diagnosisCommandUseCase).createDiagnosis(any(),any());
+        willThrow(new DiseaseNotFoundException()).given(diagnosisFacade).createDiagnosis(any(),any());
         DiagnosisSaveRequest diagnosisSaveRequest = givenDiagnosisRequest();
 
         //when
@@ -196,7 +196,7 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
 
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new NotMyDiagnosisException()).given(diagnosisCommandUseCase).deleteMyDiagnosis(any(),any());
+        willThrow(new NotMyDiagnosisException()).given(diagnosisFacade).deleteMyDiagnosis(any(),any());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
@@ -215,7 +215,7 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
 
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        willThrow(new DiagnosisNotFoundException()).given(diagnosisCommandUseCase).deleteMyDiagnosis(any(),any());
+        willThrow(new DiagnosisNotFoundException()).given(diagnosisFacade).deleteMyDiagnosis(any(),any());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.delete(URL+"/{diagnosisId}",1)
@@ -236,7 +236,7 @@ public class DiagnosisRestControllerTest extends RestDocsTestSupport {
         // given
         mockingSecurityFilterForLoginUserAnnotation();
         DiagnosisResponseDtoList diagnosisResponseDtoList = givenDiagnosisResponseDtoList();
-        given(diagnosisQueryUseCase.getMyDiagnoses(any(),any(),any())).willReturn(diagnosisResponseDtoList);
+        given(diagnosisFacade.getMyDiagnoses(any(),any(),any())).willReturn(diagnosisResponseDtoList);
 
 
         // when then docs

@@ -4,7 +4,7 @@ import com.comebackhome.common.CSVUtil;
 import com.comebackhome.common.exception.csv.FileNotFoundException;
 import com.comebackhome.common.exception.csv.FileReadException;
 import com.comebackhome.common.exception.csv.NotCSVFileException;
-import com.comebackhome.disease.application.dto.DiseaseRequestDto;
+import com.comebackhome.diagnosis.presentation.dto.request.DiseaseSaveRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
@@ -21,7 +21,7 @@ public class CSVUtilTest {
         //given
         MockMultipartFile file = createMockMultipartFile();
         //when
-        List<DiseaseRequestDto> result = CSVUtil.toDiseaseRequestDto(file);
+        List<DiseaseSaveRequest> result = CSVUtil.toDiseaseSaveRequest(file);
 
         //then
         assertThat(result.size()).isEqualTo(1);
@@ -44,7 +44,7 @@ public class CSVUtilTest {
     void file이_null_경우() throws Exception{
 
         //when then
-        assertThatThrownBy(() -> CSVUtil.toDiseaseRequestDto(null))
+        assertThatThrownBy(() -> CSVUtil.toDiseaseSaveRequest(null))
                 .isInstanceOf(FileNotFoundException.class);
     }
 
@@ -52,7 +52,7 @@ public class CSVUtilTest {
     void file이_빈_경우() throws Exception{
         MockMultipartFile file = createEmptyMockMultipartFile();
         //when then
-        assertThatThrownBy(() -> CSVUtil.toDiseaseRequestDto(file))
+        assertThatThrownBy(() -> CSVUtil.toDiseaseSaveRequest(file))
                 .isInstanceOf(FileNotFoundException.class);
     }
 
@@ -68,7 +68,7 @@ public class CSVUtilTest {
         MockMultipartFile file = createMockMultipartFileNotCsv();
 
         //when then
-        assertThatThrownBy(() -> CSVUtil.toDiseaseRequestDto(file))
+        assertThatThrownBy(() -> CSVUtil.toDiseaseSaveRequest(file))
                 .isInstanceOf(NotCSVFileException.class);
     }
 
@@ -84,7 +84,7 @@ public class CSVUtilTest {
         MockMultipartFile file = createMockMultipartFilNotMatchWithDiseaseRequestDto();
 
         //when then
-        assertThatThrownBy(() -> CSVUtil.toDiseaseRequestDto(file))
+        assertThatThrownBy(() -> CSVUtil.toDiseaseSaveRequest(file))
                 .isInstanceOf(FileReadException.class);
     }
 

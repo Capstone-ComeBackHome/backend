@@ -1,11 +1,11 @@
 package com.comebackhome.integration.disease;
 
-import com.comebackhome.disease.application.DiseaseService;
-import com.comebackhome.disease.application.dto.DiseaseResponseDto;
-import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
-import com.comebackhome.disease.domain.repository.DiseaseRepository;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJpaRepository;
+import com.comebackhome.diagnosis.domain.disease.Disease;
+import com.comebackhome.diagnosis.domain.disease.repository.DiseaseRepository;
+import com.comebackhome.diagnosis.domain.disease.service.DiseaseService;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.DiseaseResponseDto;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.SimpleDiseaseResponseDto;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseJpaRepository;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.support.helper.DiseaseGivenHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,8 +55,8 @@ public class DiseaseCachingTest extends IntegrationTest {
         diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
 
         //then
-        Optional<SimpleDiseaseQueryDto> result = Optional.ofNullable(cacheManager.getCache("simpleDisease"))
-                .map(cache -> cache.get(disease.getName(), SimpleDiseaseQueryDto.class));
+        Optional<SimpleDiseaseResponseDto> result = Optional.ofNullable(cacheManager.getCache("simpleDisease"))
+                .map(cache -> cache.get(disease.getName(), SimpleDiseaseResponseDto.class));
         assertThat(result).isNotEmpty();
 
     }

@@ -1,7 +1,7 @@
-package com.comebackhome.unit.disease.presentation.dto;
+package com.comebackhome.unit.diagnosis.presentation.dto.response;
 
-import com.comebackhome.disease.application.dto.DiagnosisResponseDto;
-import com.comebackhome.disease.presentation.dto.response.DiagnosisResponse;
+import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDto;
+import com.comebackhome.diagnosis.presentation.dto.response.DiagnosisResponse;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.DiagnosisGivenHelper.givenDiagnosisResponseDto;

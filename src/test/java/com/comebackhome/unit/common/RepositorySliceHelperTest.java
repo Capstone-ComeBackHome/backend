@@ -1,7 +1,7 @@
 package com.comebackhome.unit.common;
 
 import com.comebackhome.common.RepositorySliceHelper;
-import com.comebackhome.disease.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.Diagnosis;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;

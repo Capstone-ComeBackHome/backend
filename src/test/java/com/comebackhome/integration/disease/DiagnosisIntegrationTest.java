@@ -1,11 +1,11 @@
 package com.comebackhome.integration.disease;
 
-import com.comebackhome.disease.domain.Diagnosis;
-import com.comebackhome.disease.domain.DiagnosisDisease;
-import com.comebackhome.disease.domain.repository.DiagnosisRepository;
-import com.comebackhome.disease.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJpaRepository;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJpaRepository;
-import com.comebackhome.disease.presentation.dto.request.DiagnosisSaveRequest;
+import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.repository.DiagnosisRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJpaRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseJpaRepository;
+import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.support.IntegrationTest;
 import com.comebackhome.user.domain.User;
 import com.comebackhome.user.domain.UserRepository;

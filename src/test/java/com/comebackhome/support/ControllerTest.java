@@ -9,12 +9,10 @@ import com.comebackhome.calendar.application.DiseaseTagFacade;
 import com.comebackhome.calendar.presentation.CalendarRestController;
 import com.comebackhome.calendar.presentation.DiseaseTagRestController;
 import com.comebackhome.config.SecurityTestConfig;
-import com.comebackhome.disease.application.DiagnosisCommandUseCase;
-import com.comebackhome.disease.application.DiagnosisQueryUseCase;
-import com.comebackhome.disease.application.DiseaseCommandUseCase;
-import com.comebackhome.disease.application.DiseaseQueryUseCase;
-import com.comebackhome.disease.presentation.DiagnosisRestController;
-import com.comebackhome.disease.presentation.DiseaseRestController;
+import com.comebackhome.diagnosis.application.DiagnosisFacade;
+import com.comebackhome.diagnosis.application.DiseaseFacade;
+import com.comebackhome.diagnosis.presentation.DiagnosisRestController;
+import com.comebackhome.diagnosis.presentation.DiseaseRestController;
 import com.comebackhome.support.restdocs.common.CommonDocsController;
 import com.comebackhome.support.restdocs.enums.EnumDocController;
 import com.comebackhome.user.application.UserFacade;
@@ -53,11 +51,8 @@ public abstract class ControllerTest {
     @MockBean protected DiseaseTagFacade diseaseTagFacade;
     @MockBean protected CalendarFacade calendarFacade;
     @MockBean protected UserFacade userFacade;
-
-    @MockBean protected DiseaseQueryUseCase diseaseQueryUseCase;
-    @MockBean protected DiseaseCommandUseCase diseaseCommandUseCase;
-    @MockBean protected DiagnosisCommandUseCase diagnosisCommandUseCase;
-    @MockBean protected DiagnosisQueryUseCase diagnosisQueryUseCase;
+    @MockBean protected DiseaseFacade diseaseFacade;
+    @MockBean protected DiagnosisFacade diagnosisFacade;
 
     // security
     @MockBean protected TokenProvider tokenProvider;

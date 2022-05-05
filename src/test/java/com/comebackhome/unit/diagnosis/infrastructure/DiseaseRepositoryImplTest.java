@@ -1,10 +1,10 @@
-package com.comebackhome.unit.disease.infrastructure;
+package com.comebackhome.unit.diagnosis.infrastructure;
 
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
-import com.comebackhome.disease.domain.Disease;
-import com.comebackhome.disease.domain.dto.SimpleDiseaseQueryDto;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseJpaRepository;
-import com.comebackhome.disease.infrastructure.repository.disease.DiseaseRepositoryImpl;
+import com.comebackhome.diagnosis.domain.disease.Disease;
+import com.comebackhome.diagnosis.domain.disease.service.dto.response.SimpleDiseaseResponseDto;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseJpaRepository;
+import com.comebackhome.diagnosis.infrastructure.repository.disease.DiseaseRepositoryImpl;
 import com.comebackhome.support.QuerydslRepositoryTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         Disease disease = diseaseJpaRepository.save(givenDisease());
 
         //when
-        SimpleDiseaseQueryDto result = diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
+        SimpleDiseaseResponseDto result = diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
 
         //then
         assertThat(result.getDiseaseId()).isEqualTo(disease.getId());

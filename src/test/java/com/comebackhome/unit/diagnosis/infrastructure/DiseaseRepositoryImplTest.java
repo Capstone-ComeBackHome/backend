@@ -28,12 +28,12 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
     }
 
     @Test
-    void 질병이름으로_SimpleDiseaseQueryDto_찾기() throws Exception{
+    void 질병이름으로_SimpleDiseaseResponseDto_찾기() throws Exception{
         //given
         Disease disease = diseaseJpaRepository.save(givenDisease());
 
         //when
-        SimpleDiseaseResponseDto result = diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
+        SimpleDiseaseResponseDto result = diseaseRepository.findSimpleDiseaseResponseDtoByName(disease.getName());
 
         //then
         assertThat(result.getDiseaseId()).isEqualTo(disease.getId());
@@ -43,10 +43,10 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
     }
 
     @Test
-    void 없는_질병이름으로_SimpleDiseaseQueryDto_찾기() throws Exception{
+    void 없는_질병이름으로_SimpleDiseaseResponseDto_찾기() throws Exception{
         //when then
         assertThatThrownBy(
-                () -> diseaseRepository.findSimpleDiseaseQueryDtoByName(""))
+                () -> diseaseRepository.findSimpleDiseaseResponseDtoByName(""))
                 .isInstanceOf(DiseaseNotFoundException.class);
     }
 
@@ -56,7 +56,7 @@ public class DiseaseRepositoryImplTest extends QuerydslRepositoryTest {
         Disease disease = diseaseJpaRepository.save(givenDisease());
 
         //when
-        Disease result = diseaseRepository.findDiseaseById(disease.getId()).get();
+        Disease result = diseaseRepository.findById(disease.getId()).get();
 
         //then
         assertThat(result.getId()).isEqualTo(disease.getId());

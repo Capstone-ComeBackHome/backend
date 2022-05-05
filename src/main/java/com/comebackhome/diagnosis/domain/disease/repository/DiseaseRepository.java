@@ -10,13 +10,13 @@ import java.util.Optional;
 public interface DiseaseRepository {
 
     // todo disease 지운다.
-    Optional<Disease> findDiseaseById(Long diseaseId);
+    Optional<Disease> findById(Long diseaseId);
 
     @Cacheable(value = "simpleDisease",
             key = "#diseaseName",
             unless = "#result == null"
     )
-    SimpleDiseaseResponseDto findSimpleDiseaseQueryDtoByName(String diseaseName);
+    SimpleDiseaseResponseDto findSimpleDiseaseResponseDtoByName(String diseaseName);
 
     void saveAll(List<Disease> diseaseList);
 

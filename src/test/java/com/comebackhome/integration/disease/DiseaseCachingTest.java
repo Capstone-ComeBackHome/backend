@@ -47,12 +47,12 @@ public class DiseaseCachingTest extends IntegrationTest {
     }
 
     @Test
-    void DiseaseRepositoryImpl클래스의_findSimpleDiseaseQueryDtoByName메서드_결과값_캐싱() throws Exception{
+    void DiseaseRepositoryImpl클래스의_findSimpleDiseaseResponseDtoByName메서드_결과값_캐싱() throws Exception{
         //given
         Disease disease = diseaseJpaRepository.save(DiseaseGivenHelper.givenDisease());
 
         //when
-        diseaseRepository.findSimpleDiseaseQueryDtoByName(disease.getName());
+        diseaseRepository.findSimpleDiseaseResponseDtoByName(disease.getName());
 
         //then
         Optional<SimpleDiseaseResponseDto> result = Optional.ofNullable(cacheManager.getCache("simpleDisease"))

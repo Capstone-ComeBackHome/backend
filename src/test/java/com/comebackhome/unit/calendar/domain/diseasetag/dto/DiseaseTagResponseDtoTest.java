@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DiseaseTagResponseDtoTest {
 
     @Test
-    void 정적_메서드_from_으로_생성_인자_diseaseTagQueryDto() throws Exception{
+    void 정적_메서드_from_으로_생성_인자_diseaseTagResponseDto() throws Exception{
         //given
         DiseaseTag diseaseTag = givenDiseaseTag(HEAD, "두통");
 

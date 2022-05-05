@@ -17,7 +17,7 @@ public class DiseaseQuerydslRepository {
 
     private final JPAQueryFactory query;
 
-    public Optional<SimpleDiseaseResponseDto> findDiseaseSimpleQueryDtoByName(String diseaseName){
+    public Optional<SimpleDiseaseResponseDto> findDiseaseSimpleResponseDtoByName(String diseaseName){
 
         // diseaseName이 index이므로 커버링 인덱스 방식 사용
         Long id = query.select(disease.id)

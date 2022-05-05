@@ -23,7 +23,7 @@ public class DiseaseService implements DiseaseQueryUseCase, DiseaseCommandUseCas
 
     @Override
     public DiseaseResponseDto getDisease(Long diseaseId) {
-        return DiseaseResponseDto.from(diseaseRepository.findDiseaseById(diseaseId)
+        return DiseaseResponseDto.from(diseaseRepository.findById(diseaseId)
                 .orElseThrow(() -> new DiseaseNotFoundException()));
     }
 
@@ -31,7 +31,7 @@ public class DiseaseService implements DiseaseQueryUseCase, DiseaseCommandUseCas
     public List<SimpleDiseaseResponseDto> getSimpleDiseaseList(List<String> diseaseNameList) {
         List<SimpleDiseaseResponseDto> simpleDiseaseResponseDtoList = new ArrayList<>();
         for (String diseaseName : diseaseNameList) {
-            SimpleDiseaseResponseDto simpleDiseaseResponseDto = diseaseRepository.findSimpleDiseaseQueryDtoByName(diseaseName);
+            SimpleDiseaseResponseDto simpleDiseaseResponseDto = diseaseRepository.findSimpleDiseaseResponseDtoByName(diseaseName);
             simpleDiseaseResponseDtoList.add(simpleDiseaseResponseDto);
         }
         return simpleDiseaseResponseDtoList;

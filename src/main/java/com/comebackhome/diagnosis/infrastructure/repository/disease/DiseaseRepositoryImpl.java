@@ -19,13 +19,13 @@ public class DiseaseRepositoryImpl implements DiseaseRepository {
     private final DiseaseJdbcRepository diseaseJdbcRepository;
 
     @Override
-    public Optional<Disease> findDiseaseById(Long diseaseId) {
+    public Optional<Disease> findById(Long diseaseId) {
         return diseaseJpaRepository.findById(diseaseId);
     }
 
     @Override
-    public SimpleDiseaseResponseDto findSimpleDiseaseQueryDtoByName(String diseaseName) {
-        return diseaseQuerydslRepository.findDiseaseSimpleQueryDtoByName(diseaseName)
+    public SimpleDiseaseResponseDto findSimpleDiseaseResponseDtoByName(String diseaseName) {
+        return diseaseQuerydslRepository.findDiseaseSimpleResponseDtoByName(diseaseName)
                 .orElseThrow(() -> new DiseaseNotFoundException());
     }
 

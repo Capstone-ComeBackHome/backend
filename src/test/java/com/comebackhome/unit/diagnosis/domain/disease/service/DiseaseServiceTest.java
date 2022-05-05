@@ -33,7 +33,7 @@ public class DiseaseServiceTest {
     void diseaseId로_DiseaseResponseDto_가져오기() throws Exception{
         //given
         Disease disease = givenDisease();
-        given(diseaseRepository.findDiseaseById(any())).willReturn(Optional.of(disease));
+        given(diseaseRepository.findById(any())).willReturn(Optional.of(disease));
 
         //when
         DiseaseResponseDto result = diseaseService.getDisease(1L);
@@ -50,7 +50,7 @@ public class DiseaseServiceTest {
     @Test
     void 없는_diseaseId로_DiseaseResponseDto_가져오기() throws Exception{
         //given
-        given(diseaseRepository.findDiseaseById(any())).willReturn(Optional.empty());
+        given(diseaseRepository.findById(any())).willReturn(Optional.empty());
 
         //when then
         assertThatThrownBy(
@@ -64,7 +64,7 @@ public class DiseaseServiceTest {
         //given
         List<String> diseaseNameList = List.of("부정맥");
         SimpleDiseaseResponseDto simpleDiseaseResponseDto = givenSimpleDiseaseResponseDto(diseaseNameList.get(0),1L);
-        given(diseaseRepository.findSimpleDiseaseQueryDtoByName(any()))
+        given(diseaseRepository.findSimpleDiseaseResponseDtoByName(any()))
                 .willReturn(simpleDiseaseResponseDto);
 
         //when

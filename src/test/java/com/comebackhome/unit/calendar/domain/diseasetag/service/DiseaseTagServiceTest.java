@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagQueryDto;
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagResponseDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -47,12 +47,12 @@ public class DiseaseTagServiceTest {
     private List<DiseaseTagResponseDto> createDiseaseTagList() {
         List<DiseaseTagResponseDto> diseaseTagResponseDtoList = new ArrayList<>();
         diseaseTagResponseDtoList.addAll(List.of(
-                givenDiseaseTagQueryDto(DiseaseType.HEAD,"두통"),
-                givenDiseaseTagQueryDto(DiseaseType.BRONCHUS,"코막힘"),
-                givenDiseaseTagQueryDto(DiseaseType.CHEST,"가슴 통증"),
-                givenDiseaseTagQueryDto(DiseaseType.STOMACH,"공복감"),
-                givenDiseaseTagQueryDto(DiseaseType.LIMB,"관절통"),
-                givenDiseaseTagQueryDto(DiseaseType.SKIN,"여드름")
+                givenDiseaseTagResponseDto(DiseaseType.HEAD,"두통"),
+                givenDiseaseTagResponseDto(DiseaseType.BRONCHUS,"코막힘"),
+                givenDiseaseTagResponseDto(DiseaseType.CHEST,"가슴 통증"),
+                givenDiseaseTagResponseDto(DiseaseType.STOMACH,"공복감"),
+                givenDiseaseTagResponseDto(DiseaseType.LIMB,"관절통"),
+                givenDiseaseTagResponseDto(DiseaseType.SKIN,"여드름")
         ));
         return diseaseTagResponseDtoList;
     }

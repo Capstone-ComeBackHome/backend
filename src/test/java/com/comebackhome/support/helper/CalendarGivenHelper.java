@@ -32,13 +32,6 @@ public class CalendarGivenHelper {
                 .build();
     }
 
-    public static DiseaseTagResponseDto givenDiseaseTagQueryDto(DiseaseType diseaseType, String name){
-        return DiseaseTagResponseDto.builder()
-                .diseaseType(diseaseType)
-                .name(name)
-                .build();
-    }
-
     public static DiseaseTagListResponseDto givenDiseaseTagListResponseDto(){
         return DiseaseTagListResponseDto.builder()
                 .headDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(HEAD).name("두통").build()))

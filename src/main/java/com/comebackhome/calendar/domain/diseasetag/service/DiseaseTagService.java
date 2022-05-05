@@ -2,8 +2,9 @@ package com.comebackhome.calendar.domain.diseasetag.service;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DefaultTypeDiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
-import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,23 +21,30 @@ public class DiseaseTagService implements DiseaseTagQueryUseCase{
 
 
     @Override
-    public DiseaseTagListResponseDto getDiseaseTagExceptCustomType() {
-        List<DiseaseTagResponseDto> diseaseTagList = diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CUSTOM);
-        DiseaseTagListResponseDto diseaseTagListResponseDto = new DiseaseTagListResponseDto();
-        setDiseaseTagResponseDtoByDiseaseType(diseaseTagList, diseaseTagListResponseDto);
-        return diseaseTagListResponseDto;
+    public DefaultTypeDiseaseTagListResponseDto getDiseaseTagExceptCustomType() {
+        List<DiseaseTagQueryDto> diseaseTagQueryDtoList
+                = diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CUSTOM);
+        DefaultTypeDiseaseTagListResponseDto defaultTypeDiseaseTagListResponseDto = new DefaultTypeDiseaseTagListResponseDto();
+        setDiseaseTagResponseDtoByDiseaseType(diseaseTagQueryDtoList, defaultTypeDiseaseTagListResponseDto);
+        return defaultTypeDiseaseTagListResponseDto;
     }
 
-    private void setDiseaseTagResponseDtoByDiseaseType(List<DiseaseTagResponseDto> diseaseTagList, DiseaseTagListResponseDto diseaseTagListResponseDto) {
-        diseaseTagListResponseDto.setHeadDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.HEAD));
-        diseaseTagListResponseDto.setBronchusDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.BRONCHUS));
-        diseaseTagListResponseDto.setChestDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.CHEST));
-        diseaseTagListResponseDto.setStomachDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.STOMACH));
-        diseaseTagListResponseDto.setLimbDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.LIMB));
-        diseaseTagListResponseDto.setSkinDiseaseTagList(getDiseaseTagList(diseaseTagList, DiseaseType.SKIN));
+    private void setDiseaseTagResponseDtoByDiseaseType(List<DiseaseTagQueryDto> diseaseTagList,
+                                                       DefaultTypeDiseaseTagListResponseDto defaultTypeDiseaseTagListResponseDto) {
+
+        defaultTypeDiseaseTagListResponseDto.setHead(getDiseaseTagResponseDto(DiseaseType.HEAD,diseaseTagList));
+        defaultTypeDiseaseTagListResponseDto.setBronchus(getDiseaseTagResponseDto(DiseaseType.BRONCHUS,diseaseTagList));
+        defaultTypeDiseaseTagListResponseDto.setChest(getDiseaseTagResponseDto(DiseaseType.CHEST,diseaseTagList));
+        defaultTypeDiseaseTagListResponseDto.setStomach(getDiseaseTagResponseDto(DiseaseType.STOMACH,diseaseTagList));
+        defaultTypeDiseaseTagListResponseDto.setLimb(getDiseaseTagResponseDto(DiseaseType.LIMB,diseaseTagList));
+        defaultTypeDiseaseTagListResponseDto.setSkin(getDiseaseTagResponseDto(DiseaseType.SKIN,diseaseTagList));
     }
 
-    private List<DiseaseTagResponseDto> getDiseaseTagList(List<DiseaseTagResponseDto> diseaseTagList, DiseaseType type) {
+    private DiseaseTagListResponseDto getDiseaseTagResponseDto(DiseaseType diseaseType, List<DiseaseTagQueryDto> diseaseTagList) {
+        return DiseaseTagListResponseDto.of(diseaseType.getDescription(), getDiseaseTagList(diseaseTagList, diseaseType));
+    }
+
+    private List<DiseaseTagQueryDto> getDiseaseTagList(List<DiseaseTagQueryDto> diseaseTagList, DiseaseType type) {
         return diseaseTagList.parallelStream()
                 .filter(diseaseTag -> diseaseTag.getDiseaseType().equals(type))
                 .collect(Collectors.toList());

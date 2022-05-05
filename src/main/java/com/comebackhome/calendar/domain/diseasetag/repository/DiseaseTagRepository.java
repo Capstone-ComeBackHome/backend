@@ -2,13 +2,13 @@ package com.comebackhome.calendar.domain.diseasetag.repository;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
-import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 
 import java.util.List;
 
 public interface DiseaseTagRepository {
 
-    List<DiseaseTagResponseDto> findAllDiseaseTagExceptDiseaseType(DiseaseType diseaseType);
+    List<DiseaseTagQueryDto> findAllDiseaseTagExceptDiseaseType(DiseaseType diseaseType);
 
     List<Long> findDiseaseTagIdListByDiseaseTagNameList(List<String> diseaseTagNameList);
 

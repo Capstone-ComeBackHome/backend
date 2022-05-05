@@ -3,25 +3,24 @@ package com.comebackhome.calendar.domain.diseasetag.service.dto;
 import lombok.*;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Getter
-@Setter
 @Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@AllArgsConstructor
 public class DiseaseTagListResponseDto {
 
-    private List<DiseaseTagResponseDto> headDiseaseTagList;
+    private String diseaseTypeDescription;
 
-    private List<DiseaseTagResponseDto> bronchusDiseaseTagList;
+    private List<String> diseaseTagNameList;
 
-    private List<DiseaseTagResponseDto> chestDiseaseTagList;
-
-    private List<DiseaseTagResponseDto> stomachDiseaseTagList;
-
-    private List<DiseaseTagResponseDto> limbDiseaseTagList;
-
-    private List<DiseaseTagResponseDto> skinDiseaseTagList;
-
+    public static DiseaseTagListResponseDto of(String diseaseTypeDescription, List<DiseaseTagQueryDto> diseaseTagQueryDtoList) {
+        return DiseaseTagListResponseDto.builder()
+                .diseaseTypeDescription(diseaseTypeDescription)
+                .diseaseTagNameList(diseaseTagQueryDtoList.stream()
+                        .map(DiseaseTagQueryDto::getName)
+                        .collect(Collectors.toList()))
+                .build();
+    }
 }

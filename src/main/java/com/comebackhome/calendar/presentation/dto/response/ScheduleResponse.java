@@ -1,6 +1,5 @@
 package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
 import lombok.*;
 
@@ -22,7 +21,7 @@ public class ScheduleResponse {
 
     private String dailyNote;
 
-    private PainType painType;
+    private String painType;
 
     public static ScheduleResponse from(ScheduleResponseDto scheduleResponseDto){
         return ScheduleResponse.builder()

@@ -3,7 +3,7 @@ package com.comebackhome.calendar.infrastructure.repository.diseasetag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +18,7 @@ public class DiseaseTagRepositoryImpl implements DiseaseTagRepository {
     private final DiseaseTagJpaRepository diseaseTagJpaRepository;
 
     @Override
-    public List<DiseaseTagResponseDto> findAllDiseaseTagExceptDiseaseType(DiseaseType diseaseType) {
+    public List<DiseaseTagQueryDto> findAllDiseaseTagExceptDiseaseType(DiseaseType diseaseType) {
         return diseaseTagQuerydslRepository.findAllDiseaseTagExceptDiseaseType(diseaseType);
     }
 

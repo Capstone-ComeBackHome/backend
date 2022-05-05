@@ -1,6 +1,6 @@
 package com.comebackhome.calendar.presentation.dto.response;
 
-import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DiseaseTagResponse {
 
-    private DiseaseType diseaseType;
+    private String diseaseType;
 
     private String name;
 
@@ -19,5 +19,6 @@ public class DiseaseTagResponse {
                 .diseaseType(diseaseTagResponseDto.getDiseaseType())
                 .name(diseaseTagResponseDto.getName())
                 .build();
+
     }
 }

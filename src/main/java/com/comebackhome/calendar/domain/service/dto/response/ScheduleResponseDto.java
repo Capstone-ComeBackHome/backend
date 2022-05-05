@@ -1,6 +1,5 @@
 package com.comebackhome.calendar.domain.service.dto.response;
 
-import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import lombok.AccessLevel;
@@ -25,7 +24,7 @@ public class ScheduleResponseDto {
 
     private String dailyNote;
 
-    private PainType painType;
+    private String painType;
 
     public static ScheduleResponseDto from(Schedule schedule){
         return ScheduleResponseDto.builder()
@@ -35,7 +34,7 @@ public class ScheduleResponseDto {
                         .map(scheduleDiseaseTag -> DiseaseTagResponseDto.from(scheduleDiseaseTag.getDiseaseTag()))
                         .collect(Collectors.toList()))
                 .dailyNote(schedule.getDailyNote())
-                .painType(schedule.getPainType())
+                .painType(schedule.getPainType().name())
                 .build();
     }
 

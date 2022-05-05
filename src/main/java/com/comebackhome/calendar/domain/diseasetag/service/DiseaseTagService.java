@@ -41,10 +41,10 @@ public class DiseaseTagService implements DiseaseTagQueryUseCase{
     }
 
     private DiseaseTagListResponseDto getDiseaseTagResponseDto(DiseaseType diseaseType, List<DiseaseTagQueryDto> diseaseTagList) {
-        return DiseaseTagListResponseDto.of(diseaseType.getDescription(), getDiseaseTagList(diseaseTagList, diseaseType));
+        return DiseaseTagListResponseDto.of(diseaseType.getDescription(), getDiseaseTagQueryDtoList(diseaseTagList, diseaseType));
     }
 
-    private List<DiseaseTagQueryDto> getDiseaseTagList(List<DiseaseTagQueryDto> diseaseTagList, DiseaseType type) {
+    private List<DiseaseTagQueryDto> getDiseaseTagQueryDtoList(List<DiseaseTagQueryDto> diseaseTagList, DiseaseType type) {
         return diseaseTagList.parallelStream()
                 .filter(diseaseTag -> diseaseTag.getDiseaseType().equals(type))
                 .collect(Collectors.toList());

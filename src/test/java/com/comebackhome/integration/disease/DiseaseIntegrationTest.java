@@ -31,7 +31,7 @@ public class DiseaseIntegrationTest extends IntegrationTest {
         Disease disease = diseaseJpaRepository.save(givenDisease());
 
         // when then
-        mockMvc.perform(MockMvcRequestBuilders.get(URL+"?diseaseId="+disease.getId())
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/{diseaseId}",disease.getId())
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -54,7 +54,7 @@ public class DiseaseIntegrationTest extends IntegrationTest {
         diseaseJpaRepository.save(givenDisease("후두염"));
 
         // when then
-        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/simple?diseaseNameList=부정맥,후두염")
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"?diseaseNameList=부정맥,후두염")
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

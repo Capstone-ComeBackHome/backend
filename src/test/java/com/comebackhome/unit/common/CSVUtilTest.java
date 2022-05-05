@@ -1,10 +1,10 @@
 package com.comebackhome.unit.common;
 
-import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import com.comebackhome.common.exception.csv.FileNotFoundException;
 import com.comebackhome.common.exception.csv.FileReadException;
 import com.comebackhome.common.exception.csv.NotCSVFileException;
 import com.comebackhome.diagnosis.presentation.dto.request.DiseaseSaveRequest;
+import com.comebackhome.diagnosis.presentation.util.CSVUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;

@@ -23,8 +23,7 @@ import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DiseaseRestControllerTest extends RestDocsTestSupport {
@@ -39,7 +38,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
         given(diseaseFacade.getDisease(any())).willReturn(givenDiseaseResponseDto());
 
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{diseaseId}",1)
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -47,7 +46,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                         requestHeaders(
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
-                        requestParameters(
+                        pathParameters(
                                 parameterWithName("diseaseId").description("질병 ID값")
                         ),
                         responseFields(
@@ -65,7 +64,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @Test
     void 토큰_없이_diseaseId로_상세정보_찾기() throws Exception{
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{diseaseId}",1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
         ;
@@ -78,7 +77,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
        willThrow(new DiseaseNotFoundException()).given(diseaseFacade).getDisease(any());
 
        // when then docs
-       mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseId=1")
+       mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/{diseaseId}",1)
                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                .contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isBadRequest())
@@ -88,20 +87,6 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
                        )
                ));
    }
-
-
-    @Test
-    void diseaseId_파라미터_없이_상세조회() throws Exception{
-        // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andDo(restDocumentationResultHandler.document(
-                        responseFields(
-                                errorDescriptors()
-                        )
-                ));
-    }
 
     @Test
     @WithMockUser(roles = "USER")
@@ -115,7 +100,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
         given(diseaseFacade.getSimpleDiseaseList(any())).willReturn(simpleDiseaseResponseDtoList);
 
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseNameList=질병1,질병2,질병3")
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -139,7 +124,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @Test
     void 토큰_없이_여러_질병명으로_간략하게_질병_조회하기() throws Exception{
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=질병1,질병2,질병3")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseNameList=질병1,질병2,질병3")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
         ;
@@ -149,7 +134,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void 질병명이_콤마를_기준으로_빈칸으로_들어온_경우_실패() throws Exception{
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=,,")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseNameList=,,")
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -163,7 +148,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void 질병명이_빈칸으로_들어온_경우_실패() throws Exception{
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple?diseaseNameList=")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"?diseaseNameList=")
                 .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
@@ -176,7 +161,7 @@ public class DiseaseRestControllerTest extends RestDocsTestSupport {
     @Test
     void 질병명_파라미터가_들어오지_않은_경우_실패() throws Exception{
         // when then docs
-        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/simple")
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(

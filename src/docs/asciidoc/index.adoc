@@ -157,14 +157,11 @@ include::{snippets}/disease-rest-controller-test/질병명이_빈칸으로_들�
 
 === 질병 상세 조회
 ==== 질병 상세 조회 성공
-operation::disease-rest-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-headers,request-parameters,http-response,response-fields']
+operation::disease-rest-controller-test/disease-id로_상세정보_찾기[snippets='http-request,request-headers,path-parameters,http-response,response-fields']
 
 ==== 질병 상세 조회 실패
-토큰 없이 접근하는 경우
+토큰 없이 접근하는 경우회
 include::{snippets}/disease-rest-controller-test/토큰_없이_disease-id로_상세정보_찾기/http-response.adoc[]
-
-diseaseId 파라미터가 들어오지 않으면 실패합니다.
-include::{snippets}/disease-rest-controller-test/disease-id_파라미터_없이_상세조회/http-response.adoc[]
 
 DB에 존재하지 않은 diseaseId인 경우 실패합니다.
 include::{snippets}/disease-rest-controller-test/없는_disease-id로_상세조회/http-response.adoc[]

@@ -3,7 +3,7 @@ package com.comebackhome.common;
 import com.comebackhome.common.exception.csv.FileNotFoundException;
 import com.comebackhome.common.exception.csv.FileReadException;
 import com.comebackhome.common.exception.csv.NotCSVFileException;
-import com.comebackhome.disease.application.dto.DiseaseRequestDto;
+import com.comebackhome.diagnosis.presentation.dto.request.DiseaseSaveRequest;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,11 +20,11 @@ public class CSVUtil {
 
     private static final String TYPE = "text/csv";
 
-    public static List<DiseaseRequestDto> toDiseaseRequestDto(MultipartFile file) {
+    public static List<DiseaseSaveRequest> toDiseaseSaveRequest(MultipartFile file) {
         CheckIsCSVFile(file);
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            return new CsvToBeanBuilder<DiseaseRequestDto>(reader)
-                    .withType(DiseaseRequestDto.class)
+            return new CsvToBeanBuilder<DiseaseSaveRequest>(reader)
+                    .withType(DiseaseSaveRequest.class)
                     .build()
                     .parse();
         } catch (RuntimeException | IOException e) {

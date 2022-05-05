@@ -5,7 +5,6 @@ import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagReposito
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +18,7 @@ public class DiseaseTagService implements DiseaseTagQueryUseCase{
 
     private final DiseaseTagRepository diseaseTagRepository;
 
-    @Cacheable(value = "diseaseTag",
-            key = "'tags'",
-            unless = "#result == null"
-    )
+
     @Override
     public DiseaseTagListResponseDto getDiseaseTagExceptCustomType() {
         List<DiseaseTagResponseDto> diseaseTagList = diseaseTagRepository.findAllDiseaseTagExceptDiseaseType(DiseaseType.CUSTOM);

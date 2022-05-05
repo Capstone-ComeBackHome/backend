@@ -7,7 +7,6 @@ import com.comebackhome.diagnosis.domain.disease.service.dto.request.DiseaseSave
 import com.comebackhome.diagnosis.domain.disease.service.dto.response.DiseaseResponseDto;
 import com.comebackhome.diagnosis.domain.disease.service.dto.response.SimpleDiseaseResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +21,6 @@ public class DiseaseService implements DiseaseQueryUseCase, DiseaseCommandUseCas
 
     private final DiseaseRepository diseaseRepository;
 
-    @Cacheable(value = "disease",
-            key = "#diseaseId",
-            unless = "#result == null"
-    )
     @Override
     public DiseaseResponseDto getDisease(Long diseaseId) {
         return DiseaseResponseDto.from(diseaseRepository.findDiseaseById(diseaseId)

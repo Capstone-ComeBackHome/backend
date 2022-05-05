@@ -5,7 +5,9 @@ import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DefaultTypeDiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
 import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
 import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
@@ -32,14 +34,21 @@ public class CalendarGivenHelper {
                 .build();
     }
 
-    public static DiseaseTagListResponseDto givenDiseaseTagListResponseDto(){
+    public static DefaultTypeDiseaseTagListResponseDto givenDefaultTypeDiseaseTagListResponseDto(){
+        return DefaultTypeDiseaseTagListResponseDto.builder()
+                .head(givenDiseaseTagListResponseDto(List.of("두통"), HEAD))
+                .bronchus(givenDiseaseTagListResponseDto(List.of("코막힘"), BRONCHUS))
+                .chest(givenDiseaseTagListResponseDto(List.of("가슴 통증"), CHEST))
+                .stomach(givenDiseaseTagListResponseDto(List.of("공복감"), STOMACH))
+                .limb(givenDiseaseTagListResponseDto(List.of("관절통"), LIMB))
+                .skin(givenDiseaseTagListResponseDto(List.of("여드름"), SKIN))
+                .build();
+    }
+
+    public static DiseaseTagListResponseDto givenDiseaseTagListResponseDto(List<String> nameList,DiseaseType diseaseType){
         return DiseaseTagListResponseDto.builder()
-                .headDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(HEAD).name("두통").build()))
-                .bronchusDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(BRONCHUS).name("코막힘").build()))
-                .chestDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(CHEST).name("가슴 통증").build()))
-                .stomachDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(STOMACH).name("공복감").build()))
-                .limbDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(LIMB).name("관절통").build()))
-                .skinDiseaseTagList(List.of(DiseaseTagResponseDto.builder().diseaseType(SKIN).name("여드름").build()))
+                .diseaseTagNameList(nameList)
+                .diseaseTypeDescription(diseaseType.getDescription())
                 .build();
     }
 
@@ -81,6 +90,23 @@ public class CalendarGivenHelper {
                 .build();
     }
 
+    public static Schedule givenSchedule() {
+        User user = User.builder().id(1L).build();
+        ScheduleDiseaseTag scheduleDiseaseTag = ScheduleDiseaseTag.builder()
+                .id(1L)
+                .diseaseTag(givenDiseaseTag(DiseaseType.HEAD, "두통"))
+                .schedule(givenSchedule(user))
+                .build();
+        Schedule schedule = Schedule.builder()
+                .user(user)
+                .localDate(LocalDate.now())
+                .scheduleDiseaseTagList(List.of(scheduleDiseaseTag))
+                .dailyNote("오늘은 조금 괜찮아요.")
+                .painType(PainType.GOOD)
+                .build();
+        return schedule;
+    }
+
     public static SimpleScheduleResponseList givenSimpleScheduleResponseList(List<SimpleScheduleResponseDto> simpleScheduleResponseDtoList) {
         return SimpleScheduleResponseList.from(simpleScheduleResponseDtoList);
     }
@@ -102,12 +128,19 @@ public class CalendarGivenHelper {
                         givenDiseaseTagResponseDto(CUSTOM,"디스크")
                 ))
                 .dailyNote("오늘은 조금 괜찮아요.")
-                .painType(PainType.GOOD)
+                .painType(PainType.GOOD.name())
                 .build();
     }
 
     public static DiseaseTagResponseDto givenDiseaseTagResponseDto(DiseaseType diseaseType, String name){
         return DiseaseTagResponseDto.builder()
+                .diseaseType(diseaseType.name())
+                .name(name)
+                .build();
+    }
+
+    public static DiseaseTagQueryDto givenDiseaseTagQueryDto(DiseaseType diseaseType, String name){
+        return DiseaseTagQueryDto.builder()
                 .diseaseType(diseaseType)
                 .name(name)
                 .build();

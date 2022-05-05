@@ -1,14 +1,14 @@
 package com.comebackhome.unit.calendar.domain.diseasetag.dto;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
-import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.HEAD;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DiseaseTagResponseDtoTest {
+public class DiseaseTagQueryDtoTest {
 
     @Test
     void 정적_메서드_from_으로_생성_인자_diseaseTagResponseDto() throws Exception{
@@ -16,7 +16,7 @@ public class DiseaseTagResponseDtoTest {
         DiseaseTag diseaseTag = givenDiseaseTag(HEAD, "두통");
 
         //when
-        DiseaseTagResponseDto result = DiseaseTagResponseDto.from(diseaseTag);
+        DiseaseTagQueryDto result = DiseaseTagQueryDto.from(diseaseTag);
 
         //then
         assertThat(result.getDiseaseType()).isEqualTo(diseaseTag.getDiseaseType());
@@ -29,7 +29,7 @@ public class DiseaseTagResponseDtoTest {
         DiseaseTag diseaseTag = givenDiseaseTag(HEAD, "두통");
 
         //when
-        DiseaseTagResponseDto result = DiseaseTagResponseDto.from(diseaseTag);
+        DiseaseTagQueryDto result = DiseaseTagQueryDto.from(diseaseTag);
 
         //then
         assertThat(result.getDiseaseType()).isEqualTo(diseaseTag.getDiseaseType());

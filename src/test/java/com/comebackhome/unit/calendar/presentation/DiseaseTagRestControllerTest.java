@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTagListResponseDto;
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenDefaultTypeDiseaseTagListResponseDto;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -26,7 +26,7 @@ public class DiseaseTagRestControllerTest extends RestDocsTestSupport {
     @WithMockUser(roles = "USER")
     void CustomType을_제외한_diseaseTag_가져오기() throws Exception{
         // given
-        given(diseaseTagFacade.getDiseaseTagExceptCustomType()).willReturn(givenDiseaseTagListResponseDto());
+        given(diseaseTagFacade.getDiseaseTagExceptCustomType()).willReturn(givenDefaultTypeDiseaseTagListResponseDto());
 
         // when then docs
         mockMvc.perform(RestDocumentationRequestBuilders.get(URL)
@@ -38,24 +38,18 @@ public class DiseaseTagRestControllerTest extends RestDocsTestSupport {
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
                         ),
                         responseFields(
-                                fieldWithPath("data.headDiseaseTagList").type(ARRAY).description("머리 관련 태그 리스트"),
-                                fieldWithPath("data.headDiseaseTagList[0].diseaseType").type(STRING).description("머리 관련 태그 타입은 HEAD"),
-                                fieldWithPath("data.headDiseaseTagList[0].name").type(STRING).description("태그 이름"),
-                                fieldWithPath("data.bronchusDiseaseTagList").type(ARRAY).description("기관지 관련 태그 리스트"),
-                                fieldWithPath("data.bronchusDiseaseTagList[0].diseaseType").type(STRING).description("기관지 관련 태그 타입은 BRONCHUS"),
-                                fieldWithPath("data.bronchusDiseaseTagList[0].name").type(STRING).description("태그 이름"),
-                                fieldWithPath("data.chestDiseaseTagList").type(ARRAY).description("가슴 관련 태그 리스트"),
-                                fieldWithPath("data.chestDiseaseTagList[0].diseaseType").type(STRING).description("가슴 관련 태그 타입은 CHEST"),
-                                fieldWithPath("data.chestDiseaseTagList[0].name").type(STRING).description("태그 이름"),
-                                fieldWithPath("data.stomachDiseaseTagList").type(ARRAY).description("배 관련 태그 리스트"),
-                                fieldWithPath("data.stomachDiseaseTagList[0].diseaseType").type(STRING).description("배 관련 태그 타입은 STOMACH"),
-                                fieldWithPath("data.stomachDiseaseTagList[0].name").type(STRING).description("태그 이름"),
-                                fieldWithPath("data.limbDiseaseTagList").type(ARRAY).description("팔다리 관련 태그 리스트"),
-                                fieldWithPath("data.limbDiseaseTagList[0].diseaseType").type(STRING).description("팔다리 관련 태그 타입은 LIMB"),
-                                fieldWithPath("data.limbDiseaseTagList[0].name").type(STRING).description("태그 이름"),
-                                fieldWithPath("data.skinDiseaseTagList").type(ARRAY).description("피부 관련 태그 리스트"),
-                                fieldWithPath("data.skinDiseaseTagList[0].diseaseType").type(STRING).description("피부 관련 태그 타입은 SKIN"),
-                                fieldWithPath("data.skinDiseaseTagList[0].name").type(STRING).description("태그 이름")
+                                fieldWithPath("data.head.diseaseTypeDescription").type(STRING).description("head는 머리 태그"),
+                                fieldWithPath("data.head.diseaseTagNameList").type(ARRAY).description("머리 관련 태그 리스트"),
+                                fieldWithPath("data.bronchus.diseaseTypeDescription").type(STRING).description("bronchus는 기관지 태그"),
+                                fieldWithPath("data.bronchus.diseaseTagNameList").type(ARRAY).description("기관지 관련 태그 리스트"),
+                                fieldWithPath("data.chest.diseaseTypeDescription").type(STRING).description("chest 가슴 태그"),
+                                fieldWithPath("data.chest.diseaseTagNameList").type(ARRAY).description("가슴 관련 태그 리스트"),
+                                fieldWithPath("data.stomach.diseaseTypeDescription").type(STRING).description("stomach 배 태그"),
+                                fieldWithPath("data.stomach.diseaseTagNameList").type(ARRAY).description("배 관련 태그 리스트"),
+                                fieldWithPath("data.limb.diseaseTypeDescription").type(STRING).description("limb는 팔다리 태그"),
+                                fieldWithPath("data.limb.diseaseTagNameList").type(ARRAY).description("팔다리 관련 태그 리스트"),
+                                fieldWithPath("data.skin.diseaseTypeDescription").type(STRING).description("skin은 피부 태그"),
+                                fieldWithPath("data.skin.diseaseTagNameList").type(ARRAY).description("피부 관련 태그 리스트")
                         ).and(successDescriptors())
                 ))
                 ;

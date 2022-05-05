@@ -2,7 +2,6 @@ package com.comebackhome.unit.calendar.domain.service.dto.response;
 
 import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
@@ -13,7 +12,7 @@ public class ScheduleResponseDtoTest {
     @Test
     void 정적_메서드_from_으로_생성_인자_diseaseTag() throws Exception{
         //given
-        Schedule schedule = givenSchedule(User.builder().id(1L).build());
+        Schedule schedule = givenSchedule();
 
         //when
         ScheduleResponseDto result = ScheduleResponseDto.from(schedule);
@@ -23,6 +22,7 @@ public class ScheduleResponseDtoTest {
         assertThat(result.getLocalDate()).isEqualTo(schedule.getLocalDate());
         assertThat(result.getDiseaseTagResponseDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
         assertThat(result.getDailyNote()).isEqualTo(schedule.getDailyNote());
-        assertThat(result.getPainType()).isEqualTo(schedule.getPainType());
+        assertThat(result.getPainType()).isEqualTo(schedule.getPainType().name());
     }
+
 }

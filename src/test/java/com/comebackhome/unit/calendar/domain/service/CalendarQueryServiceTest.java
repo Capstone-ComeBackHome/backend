@@ -6,7 +6,6 @@ import com.comebackhome.calendar.domain.service.CalendarQueryService;
 import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
-import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -50,7 +49,7 @@ public class CalendarQueryServiceTest {
     @Test
     void 특정_스케줄_가져오기() throws Exception{
         //given
-        Schedule schedule = givenSchedule(User.builder().id(1L).build());
+        Schedule schedule = givenSchedule();
 
         given(scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(any(),any()))
                 .willReturn(Optional.of(schedule));
@@ -63,7 +62,7 @@ public class CalendarQueryServiceTest {
         assertThat(result.getLocalDate()).isEqualTo(schedule.getLocalDate());
         assertThat(result.getDiseaseTagResponseDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
         assertThat(result.getDailyNote()).isEqualTo(schedule.getDailyNote());
-        assertThat(result.getPainType()).isEqualTo(schedule.getPainType());
+        assertThat(result.getPainType()).isEqualTo(schedule.getPainType().name());
     }
 
     @Test

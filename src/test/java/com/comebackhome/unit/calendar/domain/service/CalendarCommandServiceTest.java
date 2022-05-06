@@ -1,9 +1,9 @@
 package com.comebackhome.unit.calendar.domain.service;
 
-import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.diseasetag.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.repository.ScheduleRepository;
 import com.comebackhome.calendar.domain.service.CalendarCommandService;
+import com.comebackhome.calendar.domain.service.ScheduleDiseaseSeriesFactory;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ public class CalendarCommandServiceTest {
     @InjectMocks CalendarCommandService calendarCommandService;
     @Mock ScheduleRepository scheduleRepository;
     @Mock ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
-    @Mock DiseaseTagRepository diseaseTagRepository;
+    @Mock ScheduleDiseaseSeriesFactory scheduleDiseaseSeriesFactory;
 
     @Test
     void scheduleId로_스케줄_삭제() throws Exception{

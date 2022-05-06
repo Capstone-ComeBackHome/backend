@@ -4,8 +4,7 @@ public enum ErrorCode {
 
 
     BINDING_EXCEPTION("FORM-400", "적절하지 않은 요청 값입니다."),
-    MISSING_REQUEST_HEADER("HEADER-400", "특정 헤더값이 들어오지 않았습니다."),
-    MISSING_REQUEST_PARAM("PARAM-400","특정 파라미터가 들어오지 않았습니다."),
+    MISSING_REQUEST_VALUE("PARAM-400","요청 필수 파라미터가 들어오지 않았습니다."),
     NO_AUTHORIZATION_TOKEN("TOKEN-401", "헤더에 Authorization 토큰이 없습니다."),
     NOT_SUPPORT_METHOD("METHOD-405","지원하지 않는 HTTP Method입니다."),
 

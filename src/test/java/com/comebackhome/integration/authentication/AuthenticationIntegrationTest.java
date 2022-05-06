@@ -81,6 +81,7 @@ public class AuthenticationIntegrationTest extends IntegrationTest {
     @Test
     void Refresh토큰이_reissue_time보다_적게_남은_경우_토큰_재발급() throws Exception{
         //given
+        refreshTokenRedisRepository.deleteAll();
         User user = userRepository.save(givenUser());
         Authentication authentication = createAuthentication(user);
         TokenProvider stubJWTTokenProvider = new JWTTokenProvider("test", 21600000L, 259200000L, 259200000L);

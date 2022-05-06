@@ -33,8 +33,16 @@
 |===
 
 
-=== 공통 에러 코드 예시
+=== 공통 응답 코드 예시
 operation::common-docs-controller-test/에러_샘플[snippets='http-response,response-fields']
+
+모든 요청에 대한 응답은 위와 같은 형식입니다.
+
+result가 SUCCESS 이면 요청이 정상적으로 동작한 것으로 data 안에 들어가 있는 응답 값을 사용하시면 됩니다.
+
+result가 FAIL 이면 요청이 실패한 것으로 message 값과 errors 안에 있는 응답 값을 사용하시면 됩니다.
+
+code 값은 어떤 곳에서 발생한 것인지 간략하게 명시한 것으로 프론트에서 이 값을 사용해야 할 일은 LOGIN-401로 코드값이 내려갔을 때입니다. 이에 관한 내용은 토큰 재발급 부분에 명시해 두었습니다.
 
 
 

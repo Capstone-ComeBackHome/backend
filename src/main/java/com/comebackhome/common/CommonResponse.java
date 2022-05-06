@@ -32,11 +32,11 @@ public class CommonResponse<T> {
         this.errors = errors;
     }
 
-    public static CommonResponse errorOf(String message, String code) {
+    public static CommonResponse failOf(String message, String code) {
         return new CommonResponse(message, code);
     }
 
-    public static CommonResponse errorOf(String message, String code, BindingResult result) {
+    public static CommonResponse failOf(String message, String code, BindingResult result) {
         return new CommonResponse(message, code, FieldError.of(result));
     }
 

@@ -17,14 +17,14 @@ public class SendErrorUtil {
 
     public static void sendUnauthorizedErrorResponse(HttpServletResponse response, ObjectMapper objectMapper) throws IOException {
         String errorResponse = objectMapper.writeValueAsString(
-                CommonResponse.errorOf(UNAUTHORIZED_MESSAGE, UNAUTHORIZED_CODE));
+                CommonResponse.failOf(UNAUTHORIZED_MESSAGE, UNAUTHORIZED_CODE));
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         writeErrorResponse(response, errorResponse);
     }
 
     public static void sendServerErrorResponse(HttpServletResponse response, ObjectMapper objectMapper) throws IOException {
         String errorResponse = objectMapper.writeValueAsString(
-                CommonResponse.errorOf(SERVER_ERROR_MESSAGE, SERVER_ERROR_CODE));
+                CommonResponse.failOf(SERVER_ERROR_MESSAGE, SERVER_ERROR_CODE));
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         writeErrorResponse(response, errorResponse);
     }

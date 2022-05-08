@@ -1,4 +1,4 @@
-package com.comebackhome.unit.diagnosis.domain.service;
+package com.comebackhome.unit.diagnosis.domain.diagnosis.service;
 
 
 import com.comebackhome.common.RepositorySliceHelper;

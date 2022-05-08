@@ -1,4 +1,4 @@
-package com.comebackhome.unit.diagnosis.domain.service.dto;
+package com.comebackhome.unit.diagnosis.domain.diagnosis.service.dto;
 
 import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
 import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDto;

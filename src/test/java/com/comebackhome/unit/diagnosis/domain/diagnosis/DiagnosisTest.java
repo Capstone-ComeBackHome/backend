@@ -1,4 +1,4 @@
-package com.comebackhome.unit.diagnosis.domain;
+package com.comebackhome.unit.diagnosis.domain.diagnosis;
 
 import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
 import org.junit.jupiter.api.Test;

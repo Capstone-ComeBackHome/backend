@@ -1,8 +1,7 @@
-package com.comebackhome.diagnosis.domain;
+package com.comebackhome.diagnosis.domain.diagnosis;
 
 
 import com.comebackhome.common.domain.BaseEntity;
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
 import com.comebackhome.user.domain.User;
 import lombok.*;
 

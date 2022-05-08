@@ -1,6 +1,6 @@
 package com.comebackhome.unit.diagnosis.infrastructure;
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
 import com.comebackhome.diagnosis.domain.disease.Disease;
 import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisJpaRepository;
 import com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease.DiagnosisDiseaseJdbcRepository;

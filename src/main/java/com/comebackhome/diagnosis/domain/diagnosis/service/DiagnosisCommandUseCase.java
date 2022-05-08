@@ -1,4 +1,4 @@
-package com.comebackhome.diagnosis.domain.service;
+package com.comebackhome.diagnosis.domain.diagnosis.service;
 
 import java.util.List;
 

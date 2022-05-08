@@ -1,8 +1,8 @@
-package com.comebackhome.diagnosis.domain.disease;
+package com.comebackhome.diagnosis.domain.diagnosis;
 
 
 import com.comebackhome.common.domain.BaseEntity;
-import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.disease.Disease;
 import lombok.*;
 
 import javax.persistence.*;

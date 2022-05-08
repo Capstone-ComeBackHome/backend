@@ -1,6 +1,6 @@
 package com.comebackhome.unit.diagnosis.domain;
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

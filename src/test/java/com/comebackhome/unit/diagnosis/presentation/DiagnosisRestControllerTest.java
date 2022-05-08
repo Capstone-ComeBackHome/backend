@@ -3,7 +3,7 @@ package com.comebackhome.unit.diagnosis.presentation;
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDtoList;
 import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import org.junit.jupiter.api.Test;

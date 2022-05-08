@@ -1,6 +1,6 @@
 package com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease;
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

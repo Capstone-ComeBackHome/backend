@@ -1,7 +1,7 @@
 package com.comebackhome.diagnosis.infrastructure.repository.diagnosis;
 
 import com.comebackhome.common.RepositorySliceHelper;
-import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.comebackhome.diagnosis.domain.QDiagnosis.diagnosis;
-import static com.comebackhome.diagnosis.domain.disease.QDiagnosisDisease.diagnosisDisease;
+import static com.comebackhome.diagnosis.domain.diagnosis.QDiagnosis.diagnosis;
+import static com.comebackhome.diagnosis.domain.diagnosis.QDiagnosisDisease.diagnosisDisease;
 import static com.comebackhome.diagnosis.domain.disease.QDisease.disease;
 
 @Repository

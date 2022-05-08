@@ -1,6 +1,6 @@
-package com.comebackhome.diagnosis.domain.service;
+package com.comebackhome.diagnosis.domain.diagnosis.service;
 
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDtoList;
 import org.springframework.data.domain.Pageable;
 
 public interface DiagnosisQueryUseCase {

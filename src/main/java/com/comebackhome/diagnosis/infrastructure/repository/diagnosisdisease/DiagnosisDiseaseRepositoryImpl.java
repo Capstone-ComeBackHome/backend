@@ -1,8 +1,8 @@
 package com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease;
 
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
-import com.comebackhome.diagnosis.domain.disease.repository.DiagnosisDiseaseRepository;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.repository.DiagnosisDiseaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.comebackhome.diagnosis.domain.service.dto;
+package com.comebackhome.diagnosis.domain.diagnosis.service.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

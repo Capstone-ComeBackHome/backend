@@ -1,6 +1,6 @@
 package com.comebackhome.diagnosis.infrastructure.repository.diagnosisdisease;
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;

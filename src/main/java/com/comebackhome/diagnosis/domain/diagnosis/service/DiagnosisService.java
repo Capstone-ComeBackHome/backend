@@ -1,15 +1,15 @@
-package com.comebackhome.diagnosis.domain.service;
+package com.comebackhome.diagnosis.domain.diagnosis.service;
 
 import com.comebackhome.common.exception.disease.DiagnosisNotFoundException;
 import com.comebackhome.common.exception.disease.DiseaseNotFoundException;
 import com.comebackhome.common.exception.disease.NotMyDiagnosisException;
-import com.comebackhome.diagnosis.domain.Diagnosis;
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
-import com.comebackhome.diagnosis.domain.disease.repository.DiagnosisDiseaseRepository;
+import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.repository.DiagnosisDiseaseRepository;
+import com.comebackhome.diagnosis.domain.diagnosis.repository.DiagnosisRepository;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDto;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDtoList;
 import com.comebackhome.diagnosis.domain.disease.repository.DiseaseRepository;
-import com.comebackhome.diagnosis.domain.repository.DiagnosisRepository;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDto;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

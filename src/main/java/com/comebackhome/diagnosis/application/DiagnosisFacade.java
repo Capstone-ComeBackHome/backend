@@ -1,8 +1,8 @@
 package com.comebackhome.diagnosis.application;
 
-import com.comebackhome.diagnosis.domain.service.DiagnosisCommandUseCase;
-import com.comebackhome.diagnosis.domain.service.DiagnosisQueryUseCase;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.domain.diagnosis.service.DiagnosisCommandUseCase;
+import com.comebackhome.diagnosis.domain.diagnosis.service.DiagnosisQueryUseCase;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDtoList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

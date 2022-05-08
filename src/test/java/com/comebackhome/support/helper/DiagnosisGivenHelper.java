@@ -1,9 +1,9 @@
 package com.comebackhome.support.helper;
 
-import com.comebackhome.diagnosis.domain.Diagnosis;
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDto;
-import com.comebackhome.diagnosis.domain.service.dto.DiagnosisResponseDtoList;
+import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDto;
+import com.comebackhome.diagnosis.domain.diagnosis.service.dto.DiagnosisResponseDtoList;
 import com.comebackhome.diagnosis.presentation.dto.request.DiagnosisSaveRequest;
 import com.comebackhome.user.domain.User;
 

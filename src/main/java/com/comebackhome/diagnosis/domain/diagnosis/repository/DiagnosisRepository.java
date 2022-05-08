@@ -1,6 +1,6 @@
-package com.comebackhome.diagnosis.domain.repository;
+package com.comebackhome.diagnosis.domain.diagnosis.repository;
 
-import com.comebackhome.diagnosis.domain.Diagnosis;
+import com.comebackhome.diagnosis.domain.diagnosis.Diagnosis;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

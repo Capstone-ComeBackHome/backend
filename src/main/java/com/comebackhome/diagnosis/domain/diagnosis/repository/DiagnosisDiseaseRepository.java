@@ -1,6 +1,6 @@
-package com.comebackhome.diagnosis.domain.disease.repository;
+package com.comebackhome.diagnosis.domain.diagnosis.repository;
 
-import com.comebackhome.diagnosis.domain.disease.DiagnosisDisease;
+import com.comebackhome.diagnosis.domain.diagnosis.DiagnosisDisease;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.domain;
 
-import com.comebackhome.calendar.domain.PainType;
-import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.schedule.PainType;
+import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.user.domain.User;
 import org.junit.jupiter.api.Test;
 

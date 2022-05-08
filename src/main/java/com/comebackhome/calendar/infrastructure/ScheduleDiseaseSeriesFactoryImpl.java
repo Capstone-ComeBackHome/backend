@@ -2,11 +2,11 @@ package com.comebackhome.calendar.infrastructure;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.diseasetag.repository.ScheduleDiseaseTagRepository;
-import com.comebackhome.calendar.domain.service.ScheduleDiseaseSeriesFactory;
-import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.schedule.service.ScheduleDiseaseSeriesFactory;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

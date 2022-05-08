@@ -1,12 +1,12 @@
-package com.comebackhome.calendar.domain.service;
+package com.comebackhome.calendar.domain.schedule.service;
 
-import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.diseasetag.repository.ScheduleDiseaseTagRepository;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
-import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

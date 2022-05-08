@@ -1,6 +1,6 @@
 package com.comebackhome.unit.calendar.presentation.dto.request;
 
-import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import org.junit.jupiter.api.Test;
 

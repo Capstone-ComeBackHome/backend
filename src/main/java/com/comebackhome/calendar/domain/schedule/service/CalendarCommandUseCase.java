@@ -1,8 +1,8 @@
-package com.comebackhome.calendar.domain.service;
+package com.comebackhome.calendar.domain.schedule.service;
 
 
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
 
 public interface CalendarCommandUseCase {
 

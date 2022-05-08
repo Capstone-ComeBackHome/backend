@@ -1,8 +1,8 @@
 package com.comebackhome.calendar.infrastructure.repository.schedule;
 
-import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

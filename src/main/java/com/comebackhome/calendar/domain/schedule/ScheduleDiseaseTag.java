@@ -1,6 +1,6 @@
-package com.comebackhome.calendar.domain.diseasetag;
+package com.comebackhome.calendar.domain.schedule;
 
-import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import lombok.*;
 
 import javax.persistence.*;

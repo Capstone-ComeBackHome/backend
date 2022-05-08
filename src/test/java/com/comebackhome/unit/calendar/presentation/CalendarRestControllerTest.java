@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.presentation;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;

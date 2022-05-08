@@ -1,7 +1,7 @@
 package com.comebackhome.support.restdocs.enums;
 
-import com.comebackhome.calendar.domain.PainType;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
+import com.comebackhome.calendar.domain.schedule.PainType;
 import com.comebackhome.user.domain.AuthProvider;
 import com.comebackhome.user.domain.Sex;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
 package com.comebackhome.calendar.infrastructure.repository.schedule;
 
-import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.schedule.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScheduleJpaRepository extends JpaRepository<Schedule,Long> {

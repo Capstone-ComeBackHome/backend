@@ -1,7 +1,7 @@
-package com.comebackhome.calendar.domain.service.dto.response;
+package com.comebackhome.calendar.domain.schedule.service.dto.response;
 
-import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

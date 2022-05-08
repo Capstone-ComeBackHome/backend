@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.domain.service.dto.response;
+package com.comebackhome.calendar.domain.schedule.service.dto.response;
 
 import lombok.*;
 

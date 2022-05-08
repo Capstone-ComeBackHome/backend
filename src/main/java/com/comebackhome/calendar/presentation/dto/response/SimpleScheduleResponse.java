@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.presentation.dto.response;
 
 
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import lombok.*;
 
 import java.time.LocalDate;

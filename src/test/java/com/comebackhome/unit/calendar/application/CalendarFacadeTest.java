@@ -1,10 +1,10 @@
 package com.comebackhome.unit.calendar.application;
 
 import com.comebackhome.calendar.application.CalendarFacade;
-import com.comebackhome.calendar.domain.service.CalendarCommandUseCase;
-import com.comebackhome.calendar.domain.service.CalendarQueryUseCase;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.CalendarCommandUseCase;
+import com.comebackhome.calendar.domain.schedule.service.CalendarQueryUseCase;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

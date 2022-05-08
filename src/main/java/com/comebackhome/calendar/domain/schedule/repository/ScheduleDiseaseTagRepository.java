@@ -1,6 +1,6 @@
-package com.comebackhome.calendar.domain.diseasetag.repository;
+package com.comebackhome.calendar.domain.schedule.repository;
 
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 
 import java.util.List;
 

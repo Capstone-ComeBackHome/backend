@@ -1,8 +1,8 @@
 package com.comebackhome.unit.calendar.infrastructure;
 
-import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;

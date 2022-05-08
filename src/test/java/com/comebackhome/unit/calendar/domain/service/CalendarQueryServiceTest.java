@@ -1,10 +1,10 @@
 package com.comebackhome.unit.calendar.domain.service;
 
-import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
-import com.comebackhome.calendar.domain.service.CalendarQueryService;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.schedule.service.CalendarQueryService;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

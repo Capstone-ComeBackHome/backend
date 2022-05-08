@@ -1,7 +1,7 @@
-package com.comebackhome.calendar.domain.service.dto.request;
+package com.comebackhome.calendar.domain.schedule.service.dto.request;
 
-import com.comebackhome.calendar.domain.PainType;
-import com.comebackhome.calendar.domain.Schedule;
+import com.comebackhome.calendar.domain.schedule.PainType;
+import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.user.domain.User;
 import lombok.*;
 

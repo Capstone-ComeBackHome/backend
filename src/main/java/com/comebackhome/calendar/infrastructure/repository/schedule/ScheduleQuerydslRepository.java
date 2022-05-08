@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.infrastructure.repository.schedule;
 
-import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,9 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.calendar.domain.QSchedule.schedule;
 import static com.comebackhome.calendar.domain.diseasetag.QDiseaseTag.diseaseTag;
-import static com.comebackhome.calendar.domain.diseasetag.QScheduleDiseaseTag.scheduleDiseaseTag;
+import static com.comebackhome.calendar.domain.schedule.QSchedule.schedule;
+import static com.comebackhome.calendar.domain.schedule.QScheduleDiseaseTag.scheduleDiseaseTag;
 
 @Repository
 @RequiredArgsConstructor

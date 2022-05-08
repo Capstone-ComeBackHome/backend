@@ -1,19 +1,19 @@
 package com.comebackhome.support.helper;
 
-import com.comebackhome.calendar.domain.PainType;
-import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DefaultTypeDiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagListResponseDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagQueryDto;
 import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagResponseDto;
-import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.PainType;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;

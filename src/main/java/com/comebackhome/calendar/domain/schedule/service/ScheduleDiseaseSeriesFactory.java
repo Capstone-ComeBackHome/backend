@@ -1,6 +1,6 @@
-package com.comebackhome.calendar.domain.service;
+package com.comebackhome.calendar.domain.schedule.service;
 
-import com.comebackhome.calendar.domain.service.dto.request.DiseaseTagRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
 
 import java.util.List;
 

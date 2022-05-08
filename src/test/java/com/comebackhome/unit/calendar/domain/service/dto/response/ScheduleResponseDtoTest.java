@@ -1,7 +1,7 @@
 package com.comebackhome.unit.calendar.domain.service.dto.response;
 
-import com.comebackhome.calendar.domain.Schedule;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import org.junit.jupiter.api.Test;
 
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;

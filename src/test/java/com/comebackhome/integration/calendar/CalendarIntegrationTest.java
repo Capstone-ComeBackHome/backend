@@ -1,10 +1,10 @@
 package com.comebackhome.integration.calendar;
 
-import com.comebackhome.calendar.domain.Schedule;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
-import com.comebackhome.calendar.domain.diseasetag.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
-import com.comebackhome.calendar.domain.repository.ScheduleRepository;
+import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;

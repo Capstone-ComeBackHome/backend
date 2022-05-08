@@ -1,7 +1,7 @@
 package com.comebackhome.calendar.presentation.dto.request;
 
-import com.comebackhome.calendar.domain.PainType;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.PainType;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;

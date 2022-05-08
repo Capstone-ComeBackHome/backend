@@ -1,11 +1,11 @@
 package com.comebackhome.calendar.application;
 
-import com.comebackhome.calendar.domain.service.CalendarCommandUseCase;
-import com.comebackhome.calendar.domain.service.CalendarQueryUseCase;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleModifyRequestDto;
-import com.comebackhome.calendar.domain.service.dto.request.ScheduleSaveRequestDto;
-import com.comebackhome.calendar.domain.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.service.dto.response.SimpleScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.CalendarCommandUseCase;
+import com.comebackhome.calendar.domain.schedule.service.CalendarQueryUseCase;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

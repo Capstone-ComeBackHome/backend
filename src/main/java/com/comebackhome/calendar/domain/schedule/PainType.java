@@ -1,4 +1,4 @@
-package com.comebackhome.calendar.domain;
+package com.comebackhome.calendar.domain.schedule;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.comebackhome.unit.calendar.domain.service.dto.response;
+package com.comebackhome.unit.calendar.domain.schedule.service.dto.response;
 
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;

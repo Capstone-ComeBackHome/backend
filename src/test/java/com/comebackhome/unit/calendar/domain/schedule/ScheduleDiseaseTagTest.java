@@ -1,4 +1,4 @@
-package com.comebackhome.unit.calendar.domain.diseasetag;
+package com.comebackhome.unit.calendar.domain.schedule;
 
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import org.junit.jupiter.api.Test;

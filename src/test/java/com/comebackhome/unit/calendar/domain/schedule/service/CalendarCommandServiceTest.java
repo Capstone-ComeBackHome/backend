@@ -1,4 +1,4 @@
-package com.comebackhome.unit.calendar.domain.service;
+package com.comebackhome.unit.calendar.domain.schedule.service;
 
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;

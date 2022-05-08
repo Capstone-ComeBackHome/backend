@@ -1,4 +1,4 @@
-package com.comebackhome.unit.calendar.domain;
+package com.comebackhome.unit.calendar.domain.schedule;
 
 import com.comebackhome.calendar.domain.schedule.PainType;
 import com.comebackhome.calendar.domain.schedule.Schedule;

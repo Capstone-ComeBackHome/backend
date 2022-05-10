@@ -96,7 +96,15 @@ public class CommonDocsControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(restDocumentationResultHandler.document(
-                        PayloadDocumentation.responseFields(RestDocsTestSupport.errorDescriptorIncludeErrorFields())
+                        PayloadDocumentation.responseFields(
+                                fieldWithPath("result").type(STRING).description("성공 시 SUCCESS, 실패시 FAIL"),
+                                fieldWithPath("data").description("응답 데이터"),
+                                fieldWithPath("message").description("에러 메시지"),
+                                fieldWithPath("code").description("에러 코드"),
+                                fieldWithPath("errors").description("Error 값 배열 값"),
+                                fieldWithPath("errors[0].field").description("에러 필드명").optional(),
+                                fieldWithPath("errors[0].value").description("에러 필드값").optional(),
+                                fieldWithPath("errors[0].reason").description("에러 이유").optional())
                 ));
     }
 }

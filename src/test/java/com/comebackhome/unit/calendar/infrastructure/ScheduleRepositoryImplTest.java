@@ -3,7 +3,6 @@ package com.comebackhome.unit.calendar.infrastructure;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleRepositoryImpl;
@@ -99,19 +98,19 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         ));
 
         //when
-        List<SimpleScheduleResponseDto> result
-                = scheduleRepository.findByYearMonthAndUserId(YearMonth.now(), user.getId());
+        List<Schedule> result = scheduleRepository.findWithScheduleDiseaseTagByYearMonthAndUserId(YearMonth.now(), user.getId());
 
         //then
         assertThat(result.size()).isEqualTo(2);
 
-        assertThat(result.get(0).getScheduleId()).isEqualTo(schedule1.getId());
+        assertThat(result.get(0).getId()).isEqualTo(schedule1.getId());
+        assertThat(result.get(0).getDailyNote()).isEqualTo(schedule1.getDailyNote());
+        assertThat(result.get(0).getPainType()).isEqualTo(schedule1.getPainType());
+        assertThat(result.get(0).getScheduleDiseaseTagList().size()).isEqualTo(schedule1.getScheduleDiseaseTagList().size());
+        assertThat(result.get(0).getScheduleDiseaseTagList().get(0).getDiseaseTag().getId())
+                .isEqualTo(schedule1.getScheduleDiseaseTagList().get(0).getDiseaseTag().getId());
         assertThat(result.get(0).getLocalDate()).isEqualTo(schedule1.getLocalDate());
-        assertThat(result.get(0).getDiseaseTagCount()).isEqualTo(3);
-
-        assertThat(result.get(1).getScheduleId()).isEqualTo(schedule2.getId());
-        assertThat(result.get(1).getLocalDate()).isEqualTo(schedule2.getLocalDate());
-        assertThat(result.get(1).getDiseaseTagCount()).isEqualTo(2);
+        assertThat(result.get(0).getUser()).isEqualTo(schedule2.getUser());
     }
 
     @Test

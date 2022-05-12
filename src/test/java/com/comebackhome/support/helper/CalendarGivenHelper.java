@@ -9,15 +9,13 @@ import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagRespons
 import com.comebackhome.calendar.domain.schedule.PainType;
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
-import com.comebackhome.calendar.domain.schedule.service.dto.request.DiseaseTagRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
-import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponseList;
+import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
 import com.comebackhome.user.domain.User;
 
 import java.time.LocalDate;
@@ -76,14 +74,20 @@ public class CalendarGivenHelper {
                 .build();
     }
 
-    public static DiseaseTagRequestDto givenDiseaseTagRequestDto(DiseaseType diseaseType, String name) {
-        return givenDiseaseTagRequest(diseaseType,name).toDiseaseTagRequestDto();
-    }
-
     public static Schedule givenSchedule(User user) {
         return Schedule.builder()
                 .user(user)
                 .localDate(LocalDate.now())
+                .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
+                .dailyNote("오늘은 조금 괜찮아요.")
+                .painType(PainType.GOOD)
+                .build();
+    }
+
+    public static Schedule givenSchedule(User user, LocalDate localDate) {
+        return Schedule.builder()
+                .user(user)
+                .localDate(localDate)
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -107,17 +111,6 @@ public class CalendarGivenHelper {
         return schedule;
     }
 
-    public static SimpleScheduleResponseList givenSimpleScheduleResponseList(List<SimpleScheduleResponseDto> simpleScheduleResponseDtoList) {
-        return SimpleScheduleResponseList.from(simpleScheduleResponseDtoList);
-    }
-
-    public static SimpleScheduleResponseDto givenSimpleScheduleResponseDto(Long scheduleId, LocalDate localDate, int diseaseTagCount) {
-        return SimpleScheduleResponseDto.builder()
-                .scheduleId(scheduleId)
-                .localDate(localDate)
-                .diseaseTagCount(diseaseTagCount)
-                .build();
-    }
 
     public static ScheduleResponseDto givenScheduleResponseDto() {
         return ScheduleResponseDto.builder()
@@ -130,6 +123,23 @@ public class CalendarGivenHelper {
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD.name())
                 .build();
+    }
+
+    public static ScheduleResponseDto givenScheduleResponseDto(Long scheduleId, LocalDate localDate) {
+        return ScheduleResponseDto.builder()
+                .scheduleId(scheduleId)
+                .localDate(localDate)
+                .diseaseTagResponseDtoList(List.of(
+                        givenDiseaseTagResponseDto(HEAD,"두통"),
+                        givenDiseaseTagResponseDto(CUSTOM,"디스크")
+                ))
+                .dailyNote("오늘은 조금 괜찮아요.")
+                .painType(PainType.GOOD.name())
+                .build();
+    }
+
+    public static ScheduleResponse givenScheduleResponse() {
+        return ScheduleResponse.from(givenScheduleResponseDto());
     }
 
     public static DiseaseTagResponseDto givenDiseaseTagResponseDto(DiseaseType diseaseType, String name){

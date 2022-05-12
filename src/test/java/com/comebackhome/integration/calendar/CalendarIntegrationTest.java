@@ -165,30 +165,45 @@ public class CalendarIntegrationTest extends IntegrationTest {
         Long diseaseTagId2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크")).getId();
         Long diseaseTagId3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고")).getId();
 
-        Long scheduleId1 = scheduleRepository.save(givenSchedule(user));
+        Long scheduleId1 = scheduleRepository.save(givenSchedule(user, LocalDate.of(2022,5,3)));
         scheduleDiseaseTagJpaRepository.saveAll(List.of(
                 ScheduleDiseaseTag.of(scheduleId1,diseaseTagId1),
                 ScheduleDiseaseTag.of(scheduleId1,diseaseTagId2),
                 ScheduleDiseaseTag.of(scheduleId1,diseaseTagId3)
         ));
 
-        Long scheduleId2 = scheduleRepository.save(givenSchedule(user));
+        Long scheduleId2 = scheduleRepository.save(givenSchedule(user,LocalDate.of(2022,5,1)));
         scheduleDiseaseTagJpaRepository.saveAll(List.of(
                 ScheduleDiseaseTag.of(scheduleId2,diseaseTagId1),
                 ScheduleDiseaseTag.of(scheduleId2,diseaseTagId2)
         ));
+
+        flushAndClear();
 
         // when then
         mockMvc.perform(MockMvcRequestBuilders.get(URL+"?yearMonth="+ YearMonth.now())
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].scheduleId").value(scheduleId1))
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].localDate").value(LocalDate.now().toString()))
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[0].diseaseTagCount").value(3))
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].scheduleId").value(scheduleId2))
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].localDate").value(LocalDate.now().toString()))
-                .andExpect(jsonPath("$.data.simpleScheduleResponseList[1].diseaseTagCount").value(2))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].scheduleId").value(scheduleId2))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].localDate").value(LocalDate.of(2022,5,1).toString()))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].dailyNote").value("오늘은 조금 괜찮아요."))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].painType").value("GOOD"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].diseaseTagResponseList[0].diseaseType").value("HEAD"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].diseaseTagResponseList[0].name").value("두통"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].diseaseTagResponseList[1].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[0].diseaseTagResponseList[1].name").value("디스크"))
+
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].scheduleId").value(scheduleId1))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].localDate").value(LocalDate.of(2022,5,3).toString()))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].dailyNote").value("오늘은 조금 괜찮아요."))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].painType").value("GOOD"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[0].diseaseType").value("HEAD"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[0].name").value("두통"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[1].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[1].name").value("디스크"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[2].diseaseType").value("CUSTOM"))
+                .andExpect(jsonPath("$.data.scheduleResponseList[1].diseaseTagResponseList[2].name").value("교통사고"))
                 .andExpectAll(
                         expectCommonSuccess()
                 )

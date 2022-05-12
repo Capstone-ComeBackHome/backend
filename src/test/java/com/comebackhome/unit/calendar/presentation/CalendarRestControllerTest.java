@@ -2,7 +2,6 @@ package com.comebackhome.unit.calendar.presentation;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
@@ -261,12 +260,12 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     void 특정_월의_자신의_스케줄_조회() throws Exception{
         // given
         mockingSecurityFilterForLoginUserAnnotation();
-        List<SimpleScheduleResponseDto> simpleScheduleResponseDtoList = List.of(
-                givenSimpleScheduleResponseDto(1L, LocalDate.of(2022, 3, 1), 1),
-                givenSimpleScheduleResponseDto(2L, LocalDate.of(2022, 3, 2), 2),
-                givenSimpleScheduleResponseDto(3L, LocalDate.of(2022, 3, 3), 3)
+        List<ScheduleResponseDto> scheduleResponseDtoList = List.of(
+                givenScheduleResponseDto(1L,LocalDate.of(2022,5,1)),
+                givenScheduleResponseDto(2L,LocalDate.of(2022,5,2))
         );
-        given(calendarFacade.getMyMonthSchedule(any(),any())).willReturn(simpleScheduleResponseDtoList);
+
+        given(calendarFacade.getMyMonthSchedule(any(),any())).willReturn(scheduleResponseDtoList);
 
 
         // when then docs
@@ -282,11 +281,16 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 parameterWithName("yearMonth").description("yyyy-MM 형식의 년, 월")
                         ),
                         responseFields(
-                                fieldWithPath("data.simpleScheduleResponseList").type(ARRAY).description("요청한 달의 나의 스케줄 리스트"),
-                                fieldWithPath("data.simpleScheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID").optional(),
-                                fieldWithPath("data.simpleScheduleResponseList[0].localDate").type(STRING).description("스케줄 날짜").optional(),
-                                fieldWithPath("data.simpleScheduleResponseList[0].diseaseTagCount").type(NUMBER).description("증상 개수").optional()
-                        ).and(successDescriptors())
+                                fieldWithPath("data.scheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID"),
+                                fieldWithPath("data.scheduleResponseList[0].localDate").type(STRING).description("등록 날짜"),
+                                fieldWithPath("data.scheduleResponseList[0].dailyNote").type(STRING).description("일기").optional(),
+                                fieldWithPath("data.scheduleResponseList[0].painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
+                                fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList").type(ARRAY).description("태그 리스트"),
+                                fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList[0].diseaseType").type(STRING).description("질병 태그 타입"),
+                                fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList[0].name").type(STRING).description("질병명"),
+                                fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList[1].diseaseType").type(STRING).description("질병 태그 타입"),
+                                fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList[1].name").type(STRING).description("질병명")
+                                ).and(successDescriptors())
                 ))
         ;
     }

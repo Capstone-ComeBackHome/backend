@@ -3,7 +3,6 @@ package com.comebackhome.support.restdocs.common;
 
 import com.comebackhome.common.exception.GlobalExceptionHandler;
 import com.comebackhome.config.RestDocsConfig;
-import com.comebackhome.support.restdocs.RestDocsTestSupport;
 import com.comebackhome.support.restdocs.SampleRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

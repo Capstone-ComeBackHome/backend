@@ -1,8 +1,6 @@
 package com.comebackhome.calendar.infrastructure.repository.schedule;
 
 import com.comebackhome.calendar.domain.schedule.Schedule;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -21,13 +19,10 @@ public class ScheduleQuerydslRepository {
 
     private final JPAQueryFactory query;
 
-    public List<SimpleScheduleResponseDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId){
-        return query.select(Projections.fields(SimpleScheduleResponseDto.class,
-                schedule.id.as("scheduleId"),
-                schedule.localDate,
-                schedule.scheduleDiseaseTagList.size().as("diseaseTagCount")
-        ))
-                .from(schedule).distinct()
+    public List<Schedule> findByYearMonthAndUserId(YearMonth yearMonth, Long userId){
+        return query.selectFrom(schedule).distinct()
+                .leftJoin(schedule.scheduleDiseaseTagList, scheduleDiseaseTag).fetchJoin()
+                .leftJoin(scheduleDiseaseTag.diseaseTag, diseaseTag).fetchJoin()
                 .where(schedule.user.id.eq(userId),
                         schedule.localDate.between(yearMonth.atDay(1),yearMonth.atEndOfMonth()))
                 .fetch();

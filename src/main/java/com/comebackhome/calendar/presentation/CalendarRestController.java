@@ -4,7 +4,7 @@ import com.comebackhome.calendar.application.CalendarFacade;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
 import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
-import com.comebackhome.calendar.presentation.dto.response.SimpleScheduleResponseList;
+import com.comebackhome.calendar.presentation.dto.response.ScheduleResponseList;
 import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/calendars")
@@ -42,12 +44,15 @@ public class CalendarRestController {
     }
 
     @GetMapping
-    public ResponseEntity<CommonResponse<SimpleScheduleResponseList>> getMyMonthSchedule(@RequestParam YearMonth yearMonth,
+    public ResponseEntity<CommonResponse<ScheduleResponseList>> getMyMonthSchedule(@RequestParam YearMonth yearMonth,
                                                                                         @LoginUser User user){
 
-        SimpleScheduleResponseList simpleScheduleResponseList
-                = SimpleScheduleResponseList.from(calendarFacade.getMyMonthSchedule(yearMonth, user.getId()));
-        return ResponseEntity.ok(CommonResponse.success(simpleScheduleResponseList));
+        List<ScheduleResponse> scheduleResponseList = calendarFacade.getMyMonthSchedule(yearMonth, user.getId())
+                .parallelStream()
+                .map(ScheduleResponse::from)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(CommonResponse.success(ScheduleResponseList.from(scheduleResponseList)));
     }
 
     @GetMapping("/{scheduleId}")

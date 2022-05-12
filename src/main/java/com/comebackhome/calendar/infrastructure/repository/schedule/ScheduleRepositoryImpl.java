@@ -2,7 +2,6 @@ package com.comebackhome.calendar.infrastructure.repository.schedule;
 
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +37,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository {
     }
 
     @Override
-    public List<SimpleScheduleResponseDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId) {
+    public List<Schedule> findWithScheduleDiseaseTagByYearMonthAndUserId(YearMonth yearMonth, Long userId) {
         return scheduleQuerydslRepository.findByYearMonthAndUserId(yearMonth,userId);
     }
+
 }

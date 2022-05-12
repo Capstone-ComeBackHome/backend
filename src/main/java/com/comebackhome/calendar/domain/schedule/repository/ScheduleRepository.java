@@ -1,7 +1,6 @@
 package com.comebackhome.calendar.domain.schedule.repository;
 
 import com.comebackhome.calendar.domain.schedule.Schedule;
-import com.comebackhome.calendar.domain.schedule.service.dto.response.SimpleScheduleResponseDto;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -15,7 +14,7 @@ public interface ScheduleRepository {
 
     Optional<Schedule> findWithScheduleDiseaseTagByIdAndUserId(Long id,Long userId);
 
-    List<SimpleScheduleResponseDto> findByYearMonthAndUserId(YearMonth yearMonth, Long userId);
+    List<Schedule> findWithScheduleDiseaseTagByYearMonthAndUserId(YearMonth yearMonth, Long userId);
 
     void deleteById(Long id);
 

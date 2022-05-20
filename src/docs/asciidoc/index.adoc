@@ -313,3 +313,13 @@ include::{snippets}/calendar-rest-controller-test/스케줄_id_없이_스케줄_
 
 내 스케줄 중 존재하지 않는 scheduleId인 경우
 include::{snippets}/calendar-rest-controller-test/내_스케줄_중_존재하지_않는_schedule-id안_경우_실패/http-response.adoc[]
+
+---
+
+=== Bubble 그래프 데이터 조회
+==== 그래프 데이터 조회 성공
+operation::calendar-rest-controller-test/나의_1개월치_bubble_그래프_데이터_조회[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 그래프 데이터 조회 실패
+토근 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토큰_없이_bubble_그래프_데이터_조회/http-response.adoc[]

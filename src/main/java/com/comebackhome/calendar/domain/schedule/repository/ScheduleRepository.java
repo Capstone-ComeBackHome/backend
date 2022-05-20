@@ -17,6 +17,4 @@ public interface ScheduleRepository {
     List<Schedule> findWithScheduleDiseaseTagByYearMonthAndUserId(YearMonth yearMonth, Long userId);
 
     void deleteById(Long id);
-
-
 }

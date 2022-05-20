@@ -4,6 +4,7 @@ import com.comebackhome.calendar.domain.schedule.service.CalendarCommandUseCase;
 import com.comebackhome.calendar.domain.schedule.service.CalendarQueryUseCase;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,10 @@ public class CalendarFacade {
 
     public ScheduleResponseDto getMySchedule(Long scheduleId, Long userId) {
         return calendarQueryUseCase.getMySchedule(scheduleId, userId);
+    }
+
+    public List<BubbleResponseDto> getBubbleStatisticData(Long userId){
+        return calendarQueryUseCase.getBubbleStatisticData(userId);
     }
 
 

@@ -2,6 +2,7 @@ package com.comebackhome.calendar.infrastructure.repository.schedulediseasetag;
 
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
+import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepository {
 
     private final ScheduleDiseaseTagJpaRepository scheduleDiseaseTagJpaRepository;
+    private final ScheduleDiseaseTagQuerydslRepository scheduleDiseaseTagQuerydslRepository;
 
     @Override
     public List<Long> saveAll(List<ScheduleDiseaseTag> scheduleDiseaseTagList) {
@@ -30,6 +32,11 @@ public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepos
     @Override
     public void deleteByIdList(List<Long> idList) {
         scheduleDiseaseTagJpaRepository.deleteByIdList(idList);
+    }
+
+    @Override
+    public List<BubbleQueryDto> findBubbleQueryDtoByUserId(Long userId) {
+        return scheduleDiseaseTagQuerydslRepository.findBubbleQueryDtoByUserId(userId);
     }
 
 

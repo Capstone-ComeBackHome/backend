@@ -21,6 +21,7 @@ public class DiagnosisQuerydslRepository {
 
     private final JPAQueryFactory query;
 
+    // 쿼리최적화 no offset
     public Slice<Diagnosis> findDiagnosisListByLastDiagnosisIdAndUserId(Long lastDiagnosisId, Long userId, Pageable pageable) {
         List<Diagnosis> content = query.selectFrom(diagnosis)
                 .leftJoin(diagnosis.diagnosisDiseaseList, diagnosisDisease).fetchJoin()

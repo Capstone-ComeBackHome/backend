@@ -93,7 +93,7 @@ public class ScheduleDiseaseSeriesFactoryImpl implements ScheduleDiseaseSeriesFa
     private List<Long> saveNewCustomTypeDiseaseTagList(List<DiseaseTag> newCustomTypeDiseaseTagList) {
         if (newCustomTypeDiseaseTagList.isEmpty())
             return new ArrayList<>();
-        return diseaseTagRepository.saveAll(newCustomTypeDiseaseTagList);
+        return diseaseTagRepository.saveAll(newCustomTypeDiseaseTagList); // save
     }
 
     private void saveScheduleDiseaseTagList(Long scheduleId, Set<Long> diseaseTagIdSet) {

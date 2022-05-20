@@ -23,7 +23,10 @@ public class CalendarCommandService implements CalendarCommandUseCase {
     private final ScheduleRepository scheduleRepository;
     private final ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
     private final ScheduleDiseaseSeriesFactory scheduleDiseaseSeriesFactory;
-
+    
+    // 가독성 개선 factory
+    // schedule과 diseaseTag과 다대다 관계 -> 다대다 관계 매핑 테이블 컨트롤 이슈로 지양 ->
+    // 일대다 다대일 관계로 풀어내면서 이에 대한 로직은 항상 schedule이 save시 연관된 diseaseTag와 매핑테이블도 save가 되어야 한다.
     /**
      * schedule을 저장한다.
      * DB에 없는 diseaseTag는 저장하고 scheduleId와 diseaseTagId를 ScheduleDisease에 연관관계 세팅 후 Bulk Insert 한다.

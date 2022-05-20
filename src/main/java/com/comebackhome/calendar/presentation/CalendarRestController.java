@@ -1,8 +1,11 @@
 package com.comebackhome.calendar.presentation;
 
 import com.comebackhome.calendar.application.CalendarFacade;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
+import com.comebackhome.calendar.presentation.dto.response.BubbleResponse;
+import com.comebackhome.calendar.presentation.dto.response.BubbleResponseList;
 import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
 import com.comebackhome.calendar.presentation.dto.response.ScheduleResponseList;
 import com.comebackhome.common.CommonResponse;
@@ -73,6 +76,15 @@ public class CalendarRestController {
 
         calendarFacade.modifyMySchedule(scheduleId, user.getId(), scheduleModifyRequest.toScheduleModifyRequestDto());
         return ResponseEntity.ok(CommonResponse.success());
+    }
+
+    @GetMapping("/statistics/bubble")
+    public ResponseEntity<CommonResponse<BubbleResponseList>> getBubbleStatisticData(@LoginUser User user){
+        List<BubbleResponseDto> bubbleResponseDtoList = calendarFacade.getBubbleStatisticData(user.getId());
+        List<BubbleResponse> bubbleResponseList = bubbleResponseDtoList.stream()
+                .map(BubbleResponse::from)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(CommonResponse.success(BubbleResponseList.from(bubbleResponseList)));
     }
 
 }

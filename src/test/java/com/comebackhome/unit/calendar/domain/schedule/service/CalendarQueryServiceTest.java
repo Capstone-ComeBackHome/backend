@@ -89,7 +89,7 @@ public class CalendarQueryServiceTest {
     @Test
     void bubble_그래프_데이터_조회() {
         //given
-        given(scheduleDiseaseTagRepository.findBubbleQueryDtoByUserId(any())).willReturn(givenBubbleQueryDtoList());
+        given(scheduleDiseaseTagRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(any())).willReturn(givenBubbleQueryDtoList());
 
         //when
         List<BubbleResponseDto> result = calendarQueryService.getBubbleStatisticData(any());

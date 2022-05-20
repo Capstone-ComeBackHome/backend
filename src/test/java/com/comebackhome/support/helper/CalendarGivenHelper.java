@@ -87,6 +87,16 @@ public class CalendarGivenHelper {
                 .build();
     }
 
+    public static Schedule givenScheduleBeforeTwoMonth(User user) {
+        return Schedule.builder()
+                .user(user)
+                .localDate(LocalDate.now().minusMonths(2))
+                .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
+                .dailyNote("오늘은 조금 괜찮아요.")
+                .painType(PainType.GOOD)
+                .build();
+    }
+
     public static Schedule givenSchedule(User user, LocalDate localDate) {
         return Schedule.builder()
                 .user(user)

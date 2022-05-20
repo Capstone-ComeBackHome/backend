@@ -47,7 +47,7 @@ public class CalendarQueryService implements CalendarQueryUseCase{
     // 6개 카테고리 구분해아한다.
     @Override
     public List<BubbleResponseDto> getBubbleStatisticData(Long userId) {
-        List<BubbleQueryDto> bubbleQueryDtoList = scheduleDiseaseTagRepository.findBubbleQueryDtoByUserId(userId);
+        List<BubbleQueryDto> bubbleQueryDtoList = scheduleDiseaseTagRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(userId);
 
         List<BubbleResponseDto> bubbleResponseDtoList = new ArrayList<>();
         addBubbleResponseDtoGroupByDiseaseType(bubbleQueryDtoList, bubbleResponseDtoList);

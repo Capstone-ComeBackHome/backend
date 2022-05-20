@@ -13,6 +13,6 @@ public interface ScheduleDiseaseTagRepository {
 
     void deleteByIdList(List<Long> idList);
 
-    List<BubbleQueryDto> findBubbleQueryDtoByUserId(Long userId);
+    List<BubbleQueryDto> findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(Long userId);
 
 }

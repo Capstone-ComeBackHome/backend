@@ -35,8 +35,8 @@ public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepos
     }
 
     @Override
-    public List<BubbleQueryDto> findBubbleQueryDtoByUserId(Long userId) {
-        return scheduleDiseaseTagQuerydslRepository.findBubbleQueryDtoByUserId(userId);
+    public List<BubbleQueryDto> findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(Long userId) {
+        return scheduleDiseaseTagQuerydslRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(userId);
     }
 
 

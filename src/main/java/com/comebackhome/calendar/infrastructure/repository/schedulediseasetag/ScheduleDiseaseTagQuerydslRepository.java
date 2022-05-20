@@ -20,7 +20,7 @@ public class ScheduleDiseaseTagQuerydslRepository {
 
     private final JPAQueryFactory query;
 
-    public List<BubbleQueryDto> findBubbleQueryDtoByUserId(Long userId) {
+    public List<BubbleQueryDto> findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(Long userId) {
         return query.select(Projections.fields(BubbleQueryDto.class,
                 scheduleDiseaseTag.schedule.painType,
                 scheduleDiseaseTag.diseaseTag.diseaseType

@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 import static com.comebackhome.calendar.domain.schedule.PainType.GOOD;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenDiseaseTag;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
+import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -121,7 +120,7 @@ public class ScheduleDiseaseTagRepositoryImplTest extends QuerydslRepositoryTest
 
 
         //when
-        List<BubbleQueryDto> result = scheduleDiseaseTagRepository.findBubbleQueryDtoByUserId(user.getId());
+        List<BubbleQueryDto> result = scheduleDiseaseTagRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(user.getId());
 
         //then
         assertThat(result.get(0).getDiseaseType()).isEqualTo(HEAD);
@@ -132,7 +131,6 @@ public class ScheduleDiseaseTagRepositoryImplTest extends QuerydslRepositoryTest
 
         assertThat(result.get(2).getDiseaseType()).isEqualTo(SKIN);
         assertThat(result.get(2).getPainType()).isEqualTo(GOOD);
-
     }
 
 

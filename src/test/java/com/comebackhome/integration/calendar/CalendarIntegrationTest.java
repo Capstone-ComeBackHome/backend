@@ -1,5 +1,6 @@
 package com.comebackhome.integration.calendar;
 
+import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.diseasetag.repository.DiseaseTagRepository;
 import com.comebackhome.calendar.domain.schedule.Schedule;
@@ -28,6 +29,7 @@ import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -516,6 +518,54 @@ public class CalendarIntegrationTest extends IntegrationTest {
         assertThat(result.getScheduleDiseaseTagList().size()).isEqualTo(3);
     }
 
+    @Test
+    void bubble_그래프_데이터_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        Long scheduleId = scheduleRepository.save(givenSchedule(user));
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
+        DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "피부염"));
+        DiseaseTag diseaseTag4 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
+
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTag3.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId,diseaseTag4.getId()));
+
+        flushAndClear();
+
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/statistics/bubble")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.data.bubbleResponseList[0].diseaseType").value("HEAD"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[0].count").value(1))
+                .andExpect(jsonPath("$.data.bubbleResponseList[0].painAverage").value(1.0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[1].diseaseType").value("BRONCHUS"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[1].count").value(0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[1].painAverage").value(0.0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[2].diseaseType").value("CHEST"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[2].count").value(0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[2].painAverage").value(0.0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[3].diseaseType").value("STOMACH"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[3].count").value(0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[3].painAverage").value(0.0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[4].diseaseType").value("LIMB"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[4].count").value(0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[4].painAverage").value(0.0))
+                .andExpect(jsonPath("$.data.bubbleResponseList[5].diseaseType").value("SKIN"))
+                .andExpect(jsonPath("$.data.bubbleResponseList[5].count").value(2))
+                .andExpect(jsonPath("$.data.bubbleResponseList[5].painAverage").value(1.0))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
+        ;
+
+    }
 
 
 }

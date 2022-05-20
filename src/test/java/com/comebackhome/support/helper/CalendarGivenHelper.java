@@ -9,8 +9,10 @@ import com.comebackhome.calendar.domain.diseasetag.service.dto.DiseaseTagRespons
 import com.comebackhome.calendar.domain.schedule.PainType;
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
+import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
@@ -19,6 +21,7 @@ import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
 import com.comebackhome.user.domain.User;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
@@ -169,6 +172,24 @@ public class CalendarGivenHelper {
 
     public static ScheduleModifyRequestDto givenScheduleModifyRequestDto(){
         return givenScheduleModifyRequest().toScheduleModifyRequestDto();
+    }
+
+    public static List<BubbleResponseDto> givenBubbleResponseDtoList(){
+        List<BubbleResponseDto> arr = new ArrayList<>();
+        for (DiseaseType type : values()) {
+            if (type.equals(CUSTOM))
+                continue;
+            arr.add(new BubbleResponseDto(type,1,3.3));
+        }
+        return arr;
+    }
+
+    public static List<BubbleQueryDto> givenBubbleQueryDtoList(){
+        List<BubbleQueryDto> arr = new ArrayList<>();
+        arr.add(new BubbleQueryDto(PainType.WORST, HEAD));
+        arr.add(new BubbleQueryDto(PainType.BAD, HEAD));
+        arr.add(new BubbleQueryDto(PainType.NORMAL, SKIN));
+        return arr;
     }
 
 }

@@ -4,6 +4,8 @@ import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTag
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagRepositoryImpl;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleQuerydslRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleRepositoryImpl;
+import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagQuerydslRepository;
+import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagRepositoryImpl;
 import com.comebackhome.config.QuerydslConfig;
 import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisQuerydslRepository;
 import com.comebackhome.diagnosis.infrastructure.repository.diagnosis.DiagnosisRepositoryImpl;
@@ -26,7 +28,9 @@ import org.springframework.context.annotation.Import;
         DiagnosisDiseaseJdbcRepository.class,
         DiagnosisDiseaseRepositoryImpl.class,
         DiagnosisQuerydslRepository.class,
-        DiagnosisRepositoryImpl.class
+        DiagnosisRepositoryImpl.class,
+        ScheduleDiseaseTagQuerydslRepository.class,
+        ScheduleDiseaseTagRepositoryImpl.class
 })
 public abstract class QuerydslRepositoryTest extends JpaRepositoryTest{
 }

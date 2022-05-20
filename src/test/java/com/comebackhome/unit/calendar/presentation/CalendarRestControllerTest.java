@@ -568,4 +568,44 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                 ))
         ;
     }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_1개월치_bubble_그래프_데이터_조회() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        given(calendarFacade.getBubbleStatisticData(any())).willReturn(givenBubbleResponseDtoList());
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/statistics/bubble")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("data.bubbleResponseList").type(ARRAY).description("버블 그래프 데이터"),
+                                fieldWithPath("data.bubbleResponseList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
+                                fieldWithPath("data.bubbleResponseList[0].count").type(NUMBER).description("질병 빈도수"),
+                                fieldWithPath("data.bubbleResponseList[0].painAverage").type(NUMBER).description("아픔 정도 평균")
+                        ).and(successDescriptors())
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_bubble_그래프_데이터_조회() throws Exception{
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/statistics/bubble")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+    }
 }

@@ -1,8 +1,11 @@
 package com.comebackhome.unit.calendar.domain.schedule.service;
 
+import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.schedule.Schedule;
+import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
 import com.comebackhome.calendar.domain.schedule.service.CalendarQueryService;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static com.comebackhome.support.helper.CalendarGivenHelper.givenBubbleQueryDtoList;
 import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -25,6 +29,7 @@ public class CalendarQueryServiceTest {
 
     @InjectMocks CalendarQueryService calendarQueryService;
     @Mock ScheduleRepository scheduleRepository;
+    @Mock ScheduleDiseaseTagRepository scheduleDiseaseTagRepository;
 
     @Test
     void 특정_월_스케줄_가져오기() throws Exception{
@@ -79,5 +84,40 @@ public class CalendarQueryServiceTest {
         assertThatThrownBy(
                 () -> calendarQueryService.getMySchedule(any(),any()))
                 .isInstanceOf(ScheduleNotFoundException.class);
+    }
+
+    @Test
+    void bubble_그래프_데이터_조회() {
+        //given
+        given(scheduleDiseaseTagRepository.findBubbleQueryDtoByUserId(any())).willReturn(givenBubbleQueryDtoList());
+
+        //when
+        List<BubbleResponseDto> result = calendarQueryService.getBubbleStatisticData(any());
+
+        //then
+        assertThat(result.get(0).getDiseaseType()).isEqualTo(DiseaseType.HEAD);
+        assertThat(result.get(0).getCount()).isEqualTo(2);
+        assertThat(result.get(0).getPainAverage()).isEqualTo(4.5);
+
+        assertThat(result.get(1).getDiseaseType()).isEqualTo(DiseaseType.BRONCHUS);
+        assertThat(result.get(1).getCount()).isEqualTo(0);
+        assertThat(result.get(1).getPainAverage()).isEqualTo(0.0);
+
+        assertThat(result.get(2).getDiseaseType()).isEqualTo(DiseaseType.CHEST);
+        assertThat(result.get(2).getCount()).isEqualTo(0);
+        assertThat(result.get(2).getPainAverage()).isEqualTo(0.0);
+
+        assertThat(result.get(3).getDiseaseType()).isEqualTo(DiseaseType.STOMACH);
+        assertThat(result.get(3).getCount()).isEqualTo(0);
+        assertThat(result.get(3).getPainAverage()).isEqualTo(0.0);
+
+        assertThat(result.get(4).getDiseaseType()).isEqualTo(DiseaseType.LIMB);
+        assertThat(result.get(4).getCount()).isEqualTo(0);
+        assertThat(result.get(4).getPainAverage()).isEqualTo(0.0);
+
+        assertThat(result.get(5).getDiseaseType()).isEqualTo(DiseaseType.SKIN);
+        assertThat(result.get(5).getCount()).isEqualTo(1);
+        assertThat(result.get(5).getPainAverage()).isEqualTo(3.0);
+
     }
 }

@@ -1,27 +1,29 @@
-package com.comebackhome.calendar.presentation.dto.response;
+package com.comebackhome.unit.calendar.presentation.dto.response;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.comebackhome.calendar.presentation.dto.response.BubbleResponse;
+import org.junit.jupiter.api.Test;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class BubbleResponse {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private DiseaseType diseaseType;
 
-    private int count;
+class BubbleResponseTest {
 
-    private double painAverage;
+    @Test
+    void 정적_메서드_from_으로_생성() {
+        //given
+        DiseaseType type = DiseaseType.CUSTOM;
+        int count = 0;
+        double avg = 1.0;
 
-    public static BubbleResponse from(BubbleResponseDto bubbleResponseDto){
-        return new BubbleResponse(bubbleResponseDto.getDiseaseType(),
-                bubbleResponseDto.getCount(),
-                bubbleResponseDto.getPainAverage());
+        //when
+        BubbleResponse result = BubbleResponse.from(new BubbleResponseDto(type, count, avg));
+
+        //then
+        assertThat(result.getDiseaseType()).isEqualTo(type);
+        assertThat(result.getCount()).isEqualTo(count);
+        assertThat(result.getPainAverage()).isEqualTo(avg);
+
     }
 }

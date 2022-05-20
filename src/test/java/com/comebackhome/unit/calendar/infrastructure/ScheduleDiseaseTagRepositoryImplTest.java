@@ -134,4 +134,27 @@ public class ScheduleDiseaseTagRepositoryImplTest extends QuerydslRepositoryTest
     }
 
 
+    @Test
+    void bubble_그래프_데이터_조회_데이터가_모두_1달_전인_경우() {
+        //given
+        User user = userJpaRepository.save(givenUser());
+        Schedule schedule = scheduleJpaRepository.save(givenScheduleBeforeTwoMonth(user));
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
+        DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "피부염"));
+        DiseaseTag diseaseTag4 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
+
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag3.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag4.getId()));
+
+
+        //when
+        List<BubbleQueryDto> result = scheduleDiseaseTagRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(user.getId());
+
+        //then
+        assertThat(result.size()).isEqualTo(0);
+    }
+
 }

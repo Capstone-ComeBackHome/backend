@@ -323,3 +323,14 @@ operation::calendar-rest-controller-test/나의_1개월치_bubble_그래프_데�
 ==== 그래프 데이터 조회 실패
 토근 없이 접근하는 경우
 include::{snippets}/calendar-rest-controller-test/토큰_없이_bubble_그래프_데이터_조회/http-response.adoc[]
+
+
+---
+
+=== Line 그래프 데이터 조회
+==== 그래프 데이터 조회 성공
+operation::calendar-rest-controller-test/나의_3개월치_line_그래프_데이터_조회[snippets='http-request,request-headers,http-response,response-fields']
+
+==== 그래프 데이터 조회 실패
+토근 없이 접근하는 경우
+include::{snippets}/calendar-rest-controller-test/토큰_없이_line_그래프_데이터_조회/http-response.adoc[]

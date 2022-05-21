@@ -2,6 +2,7 @@ package com.comebackhome.calendar.domain.schedule.service;
 
 
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.LineResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 
 import java.time.YearMonth;
@@ -14,5 +15,7 @@ public interface CalendarQueryUseCase {
     ScheduleResponseDto getMySchedule(Long scheduleId, Long UserId);
 
     List<BubbleResponseDto> getBubbleStatisticData(Long userId);
+
+    LineResponseDto getLineStatisticDate(Long userId);
 
 }

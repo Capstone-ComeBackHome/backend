@@ -4,10 +4,7 @@ import com.comebackhome.calendar.application.CalendarFacade;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleSaveRequest;
-import com.comebackhome.calendar.presentation.dto.response.BubbleResponse;
-import com.comebackhome.calendar.presentation.dto.response.BubbleResponseList;
-import com.comebackhome.calendar.presentation.dto.response.ScheduleResponse;
-import com.comebackhome.calendar.presentation.dto.response.ScheduleResponseList;
+import com.comebackhome.calendar.presentation.dto.response.*;
 import com.comebackhome.common.CommonResponse;
 import com.comebackhome.common.LoginUser;
 import com.comebackhome.common.exception.ValidatedException;
@@ -85,6 +82,13 @@ public class CalendarRestController {
                 .map(BubbleResponse::from)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(CommonResponse.success(BubbleResponseList.from(bubbleResponseList)));
+    }
+
+    @GetMapping("/statistics/line")
+    public ResponseEntity<CommonResponse<LineResponseList>> getLineStatisticDate(@LoginUser User user){
+        return ResponseEntity.ok(CommonResponse.success(
+                LineResponseList.from(calendarFacade.getLineStatisticDate(user.getId())))
+        );
     }
 
 }

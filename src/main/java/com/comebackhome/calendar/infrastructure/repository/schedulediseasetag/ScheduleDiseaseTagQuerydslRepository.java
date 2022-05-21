@@ -2,6 +2,7 @@ package com.comebackhome.calendar.infrastructure.repository.schedulediseasetag;
 
 import com.comebackhome.calendar.domain.diseasetag.DiseaseType;
 import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
+import com.comebackhome.calendar.domain.schedule.repository.dto.LineQueryDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +28,26 @@ public class ScheduleDiseaseTagQuerydslRepository {
         )).from(scheduleDiseaseTag)
                 .join(scheduleDiseaseTag.schedule,schedule)
                 .join(scheduleDiseaseTag.diseaseTag, diseaseTag)
-                .where(scheduleDiseaseTag.schedule.localDate.after(LocalDate.now().minusMonths(1)),
+                .where(scheduleDiseaseTag.schedule.localDate.after(LocalDate.now().minusMonths(1).minusDays(1)),
                         scheduleDiseaseTag.schedule.user.id.eq(userId),
                         scheduleDiseaseTag.diseaseTag.diseaseType.ne(DiseaseType.CUSTOM)
                         )
+                .fetch();
+    }
+
+    public List<LineQueryDto> findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(Long userId) {
+        return query.select(Projections.fields(LineQueryDto.class,
+                scheduleDiseaseTag.schedule.localDate.as("scheduleDate"),
+                scheduleDiseaseTag.schedule.painType,
+                scheduleDiseaseTag.diseaseTag.name.as("diseaseName")
+                ))
+                .from(scheduleDiseaseTag)
+                .join(scheduleDiseaseTag.schedule,schedule)
+                .join(scheduleDiseaseTag.diseaseTag, diseaseTag)
+                .where(scheduleDiseaseTag.schedule.localDate.after(LocalDate.now().minusMonths(3).minusDays(1)),
+                        scheduleDiseaseTag.schedule.user.id.eq(userId),
+                        scheduleDiseaseTag.diseaseTag.diseaseType.ne(DiseaseType.CUSTOM)
+                )
                 .fetch();
     }
 }

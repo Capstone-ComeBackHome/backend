@@ -3,6 +3,7 @@ package com.comebackhome.calendar.infrastructure.repository.schedulediseasetag;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRepository;
 import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
+import com.comebackhome.calendar.domain.schedule.repository.dto.LineQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,11 @@ public class ScheduleDiseaseTagRepositoryImpl implements ScheduleDiseaseTagRepos
     @Override
     public List<BubbleQueryDto> findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(Long userId) {
         return scheduleDiseaseTagQuerydslRepository.findBubbleQueryDtoByUserIdWithinAMonthExceptCustomType(userId);
+    }
+
+    @Override
+    public List<LineQueryDto> findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(Long userId) {
+        return scheduleDiseaseTagQuerydslRepository.findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(userId);
     }
 
 

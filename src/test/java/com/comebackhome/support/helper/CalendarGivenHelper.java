@@ -67,7 +67,7 @@ public class CalendarGivenHelper {
                         givenDiseaseTagRequest(CUSTOM,"교통사고")
                 ))
                 .dailyNote("오늘은 조금 괜찮아진 것 같네요.")
-                .localDate(LocalDate.now())
+                .scheduleDate(LocalDate.now())
                 .painType(PainType.GOOD)
                 .build();
     }
@@ -82,7 +82,7 @@ public class CalendarGivenHelper {
     public static Schedule givenSchedule(User user) {
         return Schedule.builder()
                 .user(user)
-                .localDate(LocalDate.now())
+                .scheduleDate(LocalDate.now())
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -92,7 +92,7 @@ public class CalendarGivenHelper {
     public static Schedule givenScheduleBeforeMonth(User user, int month) {
         return Schedule.builder()
                 .user(user)
-                .localDate(LocalDate.now().minusMonths(month))
+                .scheduleDate(LocalDate.now().minusMonths(month))
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -102,7 +102,7 @@ public class CalendarGivenHelper {
     public static Schedule givenScheduleBeforeDay(User user, int day) {
         return Schedule.builder()
                 .user(user)
-                .localDate(LocalDate.now().minusDays(day))
+                .scheduleDate(LocalDate.now().minusDays(day))
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -112,7 +112,7 @@ public class CalendarGivenHelper {
     public static Schedule givenSchedule(User user, LocalDate localDate) {
         return Schedule.builder()
                 .user(user)
-                .localDate(localDate)
+                .scheduleDate(localDate)
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -128,7 +128,7 @@ public class CalendarGivenHelper {
                 .build();
         Schedule schedule = Schedule.builder()
                 .user(user)
-                .localDate(LocalDate.now())
+                .scheduleDate(LocalDate.now())
                 .scheduleDiseaseTagList(List.of(scheduleDiseaseTag))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -140,7 +140,7 @@ public class CalendarGivenHelper {
     public static ScheduleResponseDto givenScheduleResponseDto() {
         return ScheduleResponseDto.builder()
                 .scheduleId(1L)
-                .localDate(LocalDate.now())
+                .scheduleDate(LocalDate.now())
                 .diseaseTagResponseDtoList(List.of(
                         givenDiseaseTagResponseDto(HEAD,"두통"),
                         givenDiseaseTagResponseDto(CUSTOM,"디스크")
@@ -153,7 +153,7 @@ public class CalendarGivenHelper {
     public static ScheduleResponseDto givenScheduleResponseDto(Long scheduleId, LocalDate localDate) {
         return ScheduleResponseDto.builder()
                 .scheduleId(scheduleId)
-                .localDate(localDate)
+                .scheduleDate(localDate)
                 .diseaseTagResponseDtoList(List.of(
                         givenDiseaseTagResponseDto(HEAD,"두통"),
                         givenDiseaseTagResponseDto(CUSTOM,"디스크")

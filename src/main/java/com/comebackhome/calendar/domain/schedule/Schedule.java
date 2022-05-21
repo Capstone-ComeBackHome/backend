@@ -29,7 +29,7 @@ public class Schedule extends BaseEntity {
     private List<ScheduleDiseaseTag> scheduleDiseaseTagList = new ArrayList<>();
 
     @Column(nullable = false)
-    private LocalDate localDate;
+    private LocalDate scheduleDate;
 
     private String dailyNote;
 

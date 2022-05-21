@@ -19,7 +19,7 @@ public class ScheduleResponseDtoTest {
 
         //then
         assertThat(result.getScheduleId()).isEqualTo(schedule.getId());
-        assertThat(result.getLocalDate()).isEqualTo(schedule.getLocalDate());
+        assertThat(result.getScheduleDate()).isEqualTo(schedule.getScheduleDate());
         assertThat(result.getDiseaseTagResponseDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
         assertThat(result.getDailyNote()).isEqualTo(schedule.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(schedule.getPainType().name());

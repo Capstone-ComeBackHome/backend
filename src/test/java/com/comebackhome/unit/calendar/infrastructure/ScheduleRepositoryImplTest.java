@@ -109,7 +109,7 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         assertThat(result.get(0).getScheduleDiseaseTagList().size()).isEqualTo(schedule1.getScheduleDiseaseTagList().size());
         assertThat(result.get(0).getScheduleDiseaseTagList().get(0).getDiseaseTag().getId())
                 .isEqualTo(schedule1.getScheduleDiseaseTagList().get(0).getDiseaseTag().getId());
-        assertThat(result.get(0).getLocalDate()).isEqualTo(schedule1.getLocalDate());
+        assertThat(result.get(0).getScheduleDate()).isEqualTo(schedule1.getScheduleDate());
         assertThat(result.get(0).getUser()).isEqualTo(schedule2.getUser());
     }
 

@@ -22,6 +22,6 @@ public class ScheduleSaveRequestDtoTest {
         assertThat(result.getUser().getId()).isEqualTo(scheduleSaveRequestDto.getUserId());
         assertThat(result.getDailyNote()).isEqualTo(scheduleSaveRequestDto.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(scheduleSaveRequestDto.getPainType());
-        assertThat(result.getLocalDate()).isEqualTo(scheduleSaveRequestDto.getLocalDate());
+        assertThat(result.getScheduleDate()).isEqualTo(scheduleSaveRequestDto.getScheduleDate());
     }
 }

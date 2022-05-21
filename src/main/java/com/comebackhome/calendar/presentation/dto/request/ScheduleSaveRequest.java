@@ -27,7 +27,7 @@ public class ScheduleSaveRequest {
     private PainType painType;
 
     @NotNull(message = "스케줄 날짜를 'yyyy-MM-dd' 형식으로 입력해주세요.")
-    private LocalDate localDate;
+    private LocalDate scheduleDate;
 
     public ScheduleSaveRequestDto toScheduleSaveRequestDto (Long userId){
         return ScheduleSaveRequestDto.builder()
@@ -36,7 +36,7 @@ public class ScheduleSaveRequest {
                         .collect(Collectors.toList()))
                 .dailyNote(dailyNote)
                 .painType(painType)
-                .localDate(localDate)
+                .scheduleDate(scheduleDate)
                 .userId(userId)
                 .build();
     }

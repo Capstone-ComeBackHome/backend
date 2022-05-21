@@ -28,7 +28,7 @@ public class ScheduleDiseaseTagQuerydslRepository {
         )).from(scheduleDiseaseTag)
                 .join(scheduleDiseaseTag.schedule,schedule)
                 .join(scheduleDiseaseTag.diseaseTag, diseaseTag)
-                .where(scheduleDiseaseTag.schedule.localDate.after(LocalDate.now().minusMonths(1).minusDays(1)),
+                .where(scheduleDiseaseTag.schedule.scheduleDate.after(LocalDate.now().minusMonths(1).minusDays(1)),
                         scheduleDiseaseTag.schedule.user.id.eq(userId),
                         scheduleDiseaseTag.diseaseTag.diseaseType.ne(DiseaseType.CUSTOM)
                         )
@@ -37,14 +37,14 @@ public class ScheduleDiseaseTagQuerydslRepository {
 
     public List<LineQueryDto> findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(Long userId) {
         return query.select(Projections.fields(LineQueryDto.class,
-                scheduleDiseaseTag.schedule.localDate.as("scheduleDate"),
+                scheduleDiseaseTag.schedule.scheduleDate.as("scheduleDate"),
                 scheduleDiseaseTag.schedule.painType,
                 scheduleDiseaseTag.diseaseTag.name.as("diseaseName")
                 ))
                 .from(scheduleDiseaseTag)
                 .join(scheduleDiseaseTag.schedule,schedule)
                 .join(scheduleDiseaseTag.diseaseTag, diseaseTag)
-                .where(scheduleDiseaseTag.schedule.localDate.after(LocalDate.now().minusMonths(3).minusDays(1)),
+                .where(scheduleDiseaseTag.schedule.scheduleDate.after(LocalDate.now().minusMonths(3).minusDays(1)),
                         scheduleDiseaseTag.schedule.user.id.eq(userId),
                         scheduleDiseaseTag.diseaseTag.diseaseType.ne(DiseaseType.CUSTOM)
                 )

@@ -43,7 +43,7 @@ public class CalendarFacadeTest {
         assertThat(result.get(0).getPainType()).isEqualTo(dto.get(0).getPainType());
         assertThat(result.get(0).getDailyNote()).isEqualTo(dto.get(0).getDailyNote());
         assertThat(result.get(0).getScheduleId()).isEqualTo(dto.get(0).getScheduleId());
-        assertThat(result.get(0).getLocalDate()).isEqualTo(dto.get(0).getLocalDate());
+        assertThat(result.get(0).getScheduleDate()).isEqualTo(dto.get(0).getScheduleDate());
         assertThat(result.get(0).getDiseaseTagResponseDtoList().size()).isEqualTo(dto.get(0).getDiseaseTagResponseDtoList().size());
     }
 
@@ -58,7 +58,7 @@ public class CalendarFacadeTest {
 
         //then
         assertThat(result.getScheduleId()).isEqualTo(dto.getScheduleId());
-        assertThat(result.getLocalDate()).isEqualTo(dto.getLocalDate());
+        assertThat(result.getScheduleDate()).isEqualTo(dto.getScheduleDate());
         assertThat(result.getDailyNote()).isEqualTo(dto.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(dto.getPainType());
         assertThat(result.getDiseaseTagResponseDtoList()).isEqualTo(dto.getDiseaseTagResponseDtoList());

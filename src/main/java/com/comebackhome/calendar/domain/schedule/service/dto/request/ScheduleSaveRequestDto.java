@@ -20,13 +20,13 @@ public class ScheduleSaveRequestDto {
 
     private PainType painType;
 
-    private LocalDate localDate;
+    private LocalDate scheduleDate;
 
     private Long userId;
 
     public Schedule toEntity(){
         return Schedule.builder()
-                .localDate(localDate)
+                .scheduleDate(scheduleDate)
                 .dailyNote(dailyNote)
                 .painType(painType)
                 .user(User.builder().id(userId).build())

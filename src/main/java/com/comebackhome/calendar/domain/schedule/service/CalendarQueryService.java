@@ -35,7 +35,7 @@ public class CalendarQueryService implements CalendarQueryUseCase{
         return scheduleRepository.findWithScheduleDiseaseTagByYearMonthAndUserId(yearMonth, userId)
                 .parallelStream()
                 .map(ScheduleResponseDto::from)
-                .sorted(Comparator.comparing(ScheduleResponseDto::getLocalDate))
+                .sorted(Comparator.comparing(ScheduleResponseDto::getScheduleDate))
                 .collect(Collectors.toList());
     }
 

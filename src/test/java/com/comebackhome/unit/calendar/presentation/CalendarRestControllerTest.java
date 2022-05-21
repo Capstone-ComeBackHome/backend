@@ -60,7 +60,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                                 fieldWithPath("diseaseTagRequestList[0].name").type(STRING).description("질병 태그 이름"),
                                 fieldWithPath("dailyNote").type(STRING).description("하루 일기").optional(),
                                 fieldWithPath("painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
-                                fieldWithPath("localDate").type(STRING).description("스케줄 날짜")
+                                fieldWithPath("scheduleDate").type(STRING).description("스케줄 날짜")
                         ),
                         responseFields(
                                 voidSuccessDescriptors()
@@ -74,7 +74,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
     void 날짜_없이_스케줄_저장하기_실패() throws Exception{
         // given
         ScheduleSaveRequest scheduleSaveRequest = givenScheduleSaveRequest();
-        scheduleSaveRequest.setLocalDate(null);
+        scheduleSaveRequest.setScheduleDate(null);
         mockingSecurityFilterForLoginUserAnnotation();
 
         // when then docs
@@ -282,7 +282,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         ),
                         responseFields(
                                 fieldWithPath("data.scheduleResponseList[0].scheduleId").type(NUMBER).description("스케줄 ID"),
-                                fieldWithPath("data.scheduleResponseList[0].localDate").type(STRING).description("등록 날짜"),
+                                fieldWithPath("data.scheduleResponseList[0].scheduleDate").type(STRING).description("등록 날짜"),
                                 fieldWithPath("data.scheduleResponseList[0].dailyNote").type(STRING).description("일기").optional(),
                                 fieldWithPath("data.scheduleResponseList[0].painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
                                 fieldWithPath("data.scheduleResponseList[0].diseaseTagResponseList").type(ARRAY).description("태그 리스트"),
@@ -347,7 +347,7 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         ),
                         responseFields(
                                 fieldWithPath("data.scheduleId").type(NUMBER).description("스케줄 Id"),
-                                fieldWithPath("data.localDate").type(STRING).description("스케줄 날짜"),
+                                fieldWithPath("data.scheduleDate").type(STRING).description("스케줄 날짜"),
                                 fieldWithPath("data.diseaseTagResponseList[0].diseaseType").type(STRING).description(generateLinkCode(DISEASE_TYPE)),
                                 fieldWithPath("data.diseaseTagResponseList[0].name").type(STRING).description("질병 이름"),
                                 fieldWithPath("data.dailyNote").type(STRING).description("하루 일기").optional(),

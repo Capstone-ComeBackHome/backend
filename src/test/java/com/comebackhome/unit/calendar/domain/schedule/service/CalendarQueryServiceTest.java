@@ -49,7 +49,7 @@ public class CalendarQueryServiceTest {
         assertThat(result.size()).isEqualTo(2);
         assertThat(result.get(0).getDailyNote()).isEqualTo(scheduleList.get(0).getDailyNote());
         assertThat(result.get(0).getScheduleId()).isEqualTo(scheduleList.get(0).getId());
-        assertThat(result.get(0).getLocalDate()).isEqualTo(scheduleList.get(0).getLocalDate());
+        assertThat(result.get(0).getScheduleDate()).isEqualTo(scheduleList.get(0).getScheduleDate());
         assertThat(result.get(0).getPainType()).isEqualTo(scheduleList.get(0).getPainType().name());
         assertThat(result.get(0).getDiseaseTagResponseDtoList().size()).isEqualTo(scheduleList.get(0).getScheduleDiseaseTagList().size());
 
@@ -68,7 +68,7 @@ public class CalendarQueryServiceTest {
 
         //then
         assertThat(result.getScheduleId()).isEqualTo(schedule.getId());
-        assertThat(result.getLocalDate()).isEqualTo(schedule.getLocalDate());
+        assertThat(result.getScheduleDate()).isEqualTo(schedule.getScheduleDate());
         assertThat(result.getDiseaseTagResponseDtoList().size()).isEqualTo(schedule.getScheduleDiseaseTagList().size());
         assertThat(result.getDailyNote()).isEqualTo(schedule.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(schedule.getPainType().name());

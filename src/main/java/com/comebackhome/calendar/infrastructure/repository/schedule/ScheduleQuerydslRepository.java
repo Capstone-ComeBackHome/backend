@@ -24,7 +24,7 @@ public class ScheduleQuerydslRepository {
                 .leftJoin(schedule.scheduleDiseaseTagList, scheduleDiseaseTag).fetchJoin()
                 .leftJoin(scheduleDiseaseTag.diseaseTag, diseaseTag).fetchJoin()
                 .where(schedule.user.id.eq(userId),
-                        schedule.localDate.between(yearMonth.atDay(1),yearMonth.atEndOfMonth()))
+                        schedule.scheduleDate.between(yearMonth.atDay(1),yearMonth.atEndOfMonth()))
                 .fetch();
     }
 

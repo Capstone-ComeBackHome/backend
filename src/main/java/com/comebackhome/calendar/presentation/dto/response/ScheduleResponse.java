@@ -15,7 +15,7 @@ public class ScheduleResponse {
 
     private Long scheduleId;
 
-    private LocalDate localDate;
+    private LocalDate scheduleDate;
 
     private List<DiseaseTagResponse> diseaseTagResponseList;
 
@@ -26,7 +26,7 @@ public class ScheduleResponse {
     public static ScheduleResponse from(ScheduleResponseDto scheduleResponseDto){
         return ScheduleResponse.builder()
                 .scheduleId(scheduleResponseDto.getScheduleId())
-                .localDate(scheduleResponseDto.getLocalDate())
+                .scheduleDate(scheduleResponseDto.getScheduleDate())
                 .diseaseTagResponseList(scheduleResponseDto.getDiseaseTagResponseDtoList().parallelStream()
                         .map(DiseaseTagResponse::from).collect(Collectors.toList()))
                 .dailyNote(scheduleResponseDto.getDailyNote())

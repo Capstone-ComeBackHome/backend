@@ -22,7 +22,7 @@ public class ScheduleSaveRequestTest {
                 .isEqualTo(scheduleSaveRequest.getDiseaseTagRequestList().size());
         assertThat(result.getDailyNote()).isEqualTo(scheduleSaveRequest.getDailyNote());
         assertThat(result.getPainType()).isEqualTo(scheduleSaveRequest.getPainType());
-        assertThat(result.getLocalDate()).isEqualTo(scheduleSaveRequest.getLocalDate());
+        assertThat(result.getScheduleDate()).isEqualTo(scheduleSaveRequest.getScheduleDate());
         assertThat(result.getUserId()).isEqualTo(1L);
     }
 }

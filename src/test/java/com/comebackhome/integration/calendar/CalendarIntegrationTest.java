@@ -29,7 +29,6 @@ import static com.comebackhome.calendar.domain.diseasetag.DiseaseType.*;
 import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static com.comebackhome.support.helper.UserGivenHelper.givenUser;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -541,7 +540,6 @@ public class CalendarIntegrationTest extends IntegrationTest {
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$.data.bubbleResponseList[0].diseaseType").value("HEAD"))
                 .andExpect(jsonPath("$.data.bubbleResponseList[0].count").value(1))
                 .andExpect(jsonPath("$.data.bubbleResponseList[0].painAverage").value(1.0))
@@ -564,8 +562,95 @@ public class CalendarIntegrationTest extends IntegrationTest {
                         expectCommonSuccess()
                 )
         ;
+    }
+
+    @Test
+    void line_그래프_데이터_조회() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "건망증"));
+        DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
+        DiseaseTag diseaseTag4 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "피부염"));
+        DiseaseTag diseaseTag5 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
+
+        Long scheduleId1 = scheduleRepository.save(givenScheduleBeforeDay(user, 1));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag3.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag4.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag5.getId()));
+
+        Long scheduleId2 = scheduleRepository.save(givenScheduleBeforeDay(user, 2));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId2,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId2,diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId2,diseaseTag3.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId2,diseaseTag5.getId()));
+
+        Long scheduleId3 = scheduleRepository.save(givenScheduleBeforeDay(user, 3));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId3,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId3,diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId3,diseaseTag5.getId()));
+
+        Long scheduleId4 = scheduleRepository.save(givenScheduleBeforeMonth(user, 3));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId4,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId4,diseaseTag5.getId()));
+
+        Long scheduleId5 = scheduleRepository.save(givenScheduleBeforeMonth(user, 4));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId5,diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId5,diseaseTag5.getId()));
+
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/statistics/line")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.top1.length()").value(4))
+                .andExpect(jsonPath("$.data.top1[0].scheduleDate").value(LocalDate.now().minusMonths(3).toString()))
+                .andExpect(jsonPath("$.data.top1[0].diseaseName").value("두통"))
+
+                .andExpect(jsonPath("$.data.top2.length()").value(3))
+                .andExpect(jsonPath("$.data.top2[0].scheduleDate").value(LocalDate.now().minusDays(3).toString()))
+                .andExpect(jsonPath("$.data.top2[0].diseaseName").value("건망증"))
+
+                .andExpect(jsonPath("$.data.top3.length()").value(2))
+                .andExpect(jsonPath("$.data.top3[0].scheduleDate").value(LocalDate.now().minusDays(2).toString()))
+                .andExpect(jsonPath("$.data.top3[0].diseaseName").value("여드름"))
+
+                .andExpect(jsonPath("$.data.before3MonthDate").value(LocalDate.now().minusMonths(3).toString()))
+
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
+        ;
 
     }
 
+    @Test
+    void line_그래프_데이터_조회_단건만_있는_경우() throws Exception{
+        // given
+        User user = userRepository.save(givenUser());
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+
+        Long scheduleId1 = scheduleRepository.save(givenScheduleBeforeDay(user, 1));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(scheduleId1,diseaseTag1.getId()));
+        flushAndClear();
+
+        // when then
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"/statistics/line")
+                .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.top1.length()").value(1))
+                .andExpect(jsonPath("$.data.top1[0].scheduleDate").value(LocalDate.now().minusDays(1).toString()))
+                .andExpect(jsonPath("$.data.top1[0].diseaseName").value("두통"))
+                .andExpectAll(
+                        expectCommonSuccess()
+                )
+        ;
+
+    }
 
 }

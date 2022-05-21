@@ -6,6 +6,7 @@ import com.comebackhome.calendar.domain.schedule.repository.ScheduleDiseaseTagRe
 import com.comebackhome.calendar.domain.schedule.repository.ScheduleRepository;
 import com.comebackhome.calendar.domain.schedule.service.CalendarQueryService;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.LineResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.common.exception.schedule.ScheduleNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenBubbleQueryDtoList;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenSchedule;
+import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -119,5 +119,21 @@ public class CalendarQueryServiceTest {
         assertThat(result.get(5).getCount()).isEqualTo(1);
         assertThat(result.get(5).getPainAverage()).isEqualTo(3.0);
 
+    }
+
+
+    @Test
+    void line_그래프_데이터_가져오기() {
+        //given
+        given(scheduleDiseaseTagRepository.findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(any()))
+                .willReturn(givenLineQueryDtoList());
+
+        //when
+        LineResponseDto result = calendarQueryService.getLineStatisticDate(any());
+
+        //then
+        assertThat(result.getTop1().size()).isEqualTo(4);
+        assertThat(result.getTop2().size()).isEqualTo(3);
+        assertThat(result.getTop3().size()).isEqualTo(2);
     }
 }

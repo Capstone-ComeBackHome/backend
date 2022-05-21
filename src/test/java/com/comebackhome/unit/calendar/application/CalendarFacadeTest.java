@@ -4,6 +4,7 @@ import com.comebackhome.calendar.application.CalendarFacade;
 import com.comebackhome.calendar.domain.schedule.service.CalendarCommandUseCase;
 import com.comebackhome.calendar.domain.schedule.service.CalendarQueryUseCase;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.LineResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenBubbleResponseDtoList;
-import static com.comebackhome.support.helper.CalendarGivenHelper.givenScheduleResponseDto;
+import static com.comebackhome.support.helper.CalendarGivenHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
@@ -75,6 +75,21 @@ public class CalendarFacadeTest {
 
         //then
         assertThat(result).isEqualTo(bubbleResponseDtoList);
+    }
+
+    @Test
+    void line_그래프_데이터_가져오기() {
+        //given
+        LineResponseDto lineResponseDto = givenLineResponseDto();
+        given(calendarQueryUseCase.getLineStatisticDate(any())).willReturn(lineResponseDto);
+
+        //when
+        LineResponseDto result = calendarFacade.getLineStatisticDate(any());
+
+        //then
+        assertThat(result.getTop1()).isEqualTo(lineResponseDto.getTop1());
+        assertThat(result.getTop2()).isEqualTo(lineResponseDto.getTop2());
+        assertThat(result.getTop3()).isEqualTo(lineResponseDto.getTop3());
     }
 
 }

@@ -4,6 +4,7 @@ import com.comebackhome.calendar.domain.diseasetag.DiseaseTag;
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
+import com.comebackhome.calendar.domain.schedule.repository.dto.LineQueryDto;
 import com.comebackhome.calendar.infrastructure.repository.diseasetag.DiseaseTagJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedule.ScheduleJpaRepository;
 import com.comebackhome.calendar.infrastructure.repository.schedulediseasetag.ScheduleDiseaseTagJpaRepository;
@@ -138,7 +139,7 @@ public class ScheduleDiseaseTagRepositoryImplTest extends QuerydslRepositoryTest
     void bubble_그래프_데이터_조회_데이터가_모두_1달_전인_경우() {
         //given
         User user = userJpaRepository.save(givenUser());
-        Schedule schedule = scheduleJpaRepository.save(givenScheduleBeforeTwoMonth(user));
+        Schedule schedule = scheduleJpaRepository.save(givenScheduleBeforeMonth(user,2));
         DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
         DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "여드름"));
         DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(SKIN, "피부염"));
@@ -155,6 +156,32 @@ public class ScheduleDiseaseTagRepositoryImplTest extends QuerydslRepositoryTest
 
         //then
         assertThat(result.size()).isEqualTo(0);
+    }
+
+    @Test
+    void Line_그래프_데이터_조회() {
+        //given
+        User user = userJpaRepository.save(givenUser());
+        DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
+        DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "건망증"));
+        DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
+
+        Schedule schedule = scheduleJpaRepository.save(givenScheduleBeforeMonth(user,1));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule.getId(),diseaseTag3.getId()));
+
+        Schedule schedule2 = scheduleJpaRepository.save(givenScheduleBeforeMonth(user,4));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule2.getId(),diseaseTag1.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule2.getId(),diseaseTag2.getId()));
+        scheduleDiseaseTagJpaRepository.save(ScheduleDiseaseTag.of(schedule2.getId(),diseaseTag3.getId()));
+
+        //when
+        List<LineQueryDto> result
+                = scheduleDiseaseTagRepository.findLineQueryDtoByUserIdWithinThreeMonthExceptCustomType(user.getId());
+
+        //then
+        assertThat(result.size()).isEqualTo(2);
     }
 
 }

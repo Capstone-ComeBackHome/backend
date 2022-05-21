@@ -116,11 +116,11 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
     @Test
     void scheduleId와_userId로_스케줄_찾기() throws Exception{
         //given
-        User user = userJpaRepository.save(givenUser());
         DiseaseTag diseaseTag1 = diseaseTagJpaRepository.save(givenDiseaseTag(HEAD, "두통"));
         DiseaseTag diseaseTag2 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "디스크"));
         DiseaseTag diseaseTag3 = diseaseTagJpaRepository.save(givenDiseaseTag(CUSTOM, "교통사고"));
 
+        User user = userJpaRepository.save(givenUser());
         Schedule schedule = scheduleJpaRepository.save(givenSchedule(user));
         scheduleDiseaseTagJpaRepository.saveAll(List.of(
                 ScheduleDiseaseTag.of(schedule.getId(),diseaseTag1.getId()),
@@ -131,7 +131,8 @@ public class ScheduleRepositoryImplTest extends QuerydslRepositoryTest {
         em.clear();
 
         //when
-        Schedule result = scheduleRepository.findWithScheduleDiseaseTagByIdAndUserId(user.getId(), schedule.getId()).get();
+        Schedule result = scheduleRepository
+                .findWithScheduleDiseaseTagByIdAndUserId(schedule.getId(),user.getId()).get();
 
         //then
         assertThat(result.getId()).isEqualTo(schedule.getId());

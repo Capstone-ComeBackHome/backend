@@ -608,4 +608,58 @@ public class CalendarRestControllerTest extends RestDocsTestSupport {
                         )
                 ));
     }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void 나의_3개월치_line_그래프_데이터_조회() throws Exception{
+        // given
+        mockingSecurityFilterForLoginUserAnnotation();
+        given(calendarFacade.getLineStatisticDate(any())).willReturn(givenLineResponseDto());
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/statistics/line")
+                .header(HttpHeaders.AUTHORIZATION,ACCESS_TOKEN)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(restDocumentationResultHandler.document(
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 타입 Access Token")
+                        ),
+                        responseFields(
+                                fieldWithPath("data.top1").type(ARRAY).description("가장 빈도가 높은 질병 데이터 리스트"),
+                                fieldWithPath("data.top1[0].scheduleDate").type(STRING).description("아팠던 날짜"),
+                                fieldWithPath("data.top1[0].painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
+                                fieldWithPath("data.top1[0].diseaseName").type(STRING).description("질병명"),
+
+                                fieldWithPath("data.top2").type(ARRAY).description("빈도가 두번째로 높은 질병 데이터 리스트"),
+                                fieldWithPath("data.top2[0].scheduleDate").type(STRING).description("아팠던 날짜"),
+                                fieldWithPath("data.top2[0].painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
+                                fieldWithPath("data.top2[0].diseaseName").type(STRING).description("질병명"),
+
+                                fieldWithPath("data.top3").type(ARRAY).description("빈도가 세번째로 높은 질병 데이터 리스트"),
+                                fieldWithPath("data.top3[0].scheduleDate").type(STRING).description("아팠던 날짜"),
+                                fieldWithPath("data.top3[0].painType").type(STRING).description(generateLinkCode(PAIN_TYPE)),
+                                fieldWithPath("data.top3[0].diseaseName").type(STRING).description("질병명"),
+
+                                fieldWithPath("data.before3MonthDate").type(STRING).description("3개월 전 날짜")
+
+                        ).and(successDescriptors())
+                ))
+        ;
+    }
+
+    @Test
+    void 토큰_없이_line_그래프_데이터_조회() throws Exception{
+
+        // when then docs
+        mockMvc.perform(RestDocumentationRequestBuilders.get(URL+"/statistics/line")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andDo(restDocumentationResultHandler.document(
+                        responseFields(
+                                errorDescriptors()
+                        )
+                ));
+    }
+
 }

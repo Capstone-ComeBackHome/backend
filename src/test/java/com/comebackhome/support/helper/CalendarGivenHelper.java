@@ -10,9 +10,11 @@ import com.comebackhome.calendar.domain.schedule.PainType;
 import com.comebackhome.calendar.domain.schedule.Schedule;
 import com.comebackhome.calendar.domain.schedule.ScheduleDiseaseTag;
 import com.comebackhome.calendar.domain.schedule.repository.dto.BubbleQueryDto;
+import com.comebackhome.calendar.domain.schedule.repository.dto.LineQueryDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleModifyRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.request.ScheduleSaveRequestDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.BubbleResponseDto;
+import com.comebackhome.calendar.domain.schedule.service.dto.response.LineResponseDto;
 import com.comebackhome.calendar.domain.schedule.service.dto.response.ScheduleResponseDto;
 import com.comebackhome.calendar.presentation.dto.request.DiseaseTagRequest;
 import com.comebackhome.calendar.presentation.dto.request.ScheduleModifyRequest;
@@ -87,10 +89,20 @@ public class CalendarGivenHelper {
                 .build();
     }
 
-    public static Schedule givenScheduleBeforeTwoMonth(User user) {
+    public static Schedule givenScheduleBeforeMonth(User user, int month) {
         return Schedule.builder()
                 .user(user)
-                .localDate(LocalDate.now().minusMonths(2))
+                .localDate(LocalDate.now().minusMonths(month))
+                .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
+                .dailyNote("오늘은 조금 괜찮아요.")
+                .painType(PainType.GOOD)
+                .build();
+    }
+
+    public static Schedule givenScheduleBeforeDay(User user, int day) {
+        return Schedule.builder()
+                .user(user)
+                .localDate(LocalDate.now().minusDays(day))
                 .scheduleDiseaseTagList(List.of(ScheduleDiseaseTag.of(1L,1L)))
                 .dailyNote("오늘은 조금 괜찮아요.")
                 .painType(PainType.GOOD)
@@ -200,6 +212,41 @@ public class CalendarGivenHelper {
         arr.add(new BubbleQueryDto(PainType.BAD, HEAD));
         arr.add(new BubbleQueryDto(PainType.NORMAL, SKIN));
         return arr;
+    }
+
+    public static LineResponseDto givenLineResponseDto(){
+        List<List<LineQueryDto>> list = new ArrayList<>();
+        list.add(List.of(
+                new LineQueryDto(LocalDate.now().minusDays(3),PainType.BAD,"두통"),
+                new LineQueryDto(LocalDate.now().minusDays(2),PainType.BAD,"두통"),
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"두통")
+        ));
+        list.add(List.of(
+                new LineQueryDto(LocalDate.now().minusDays(2),PainType.BAD,"코막힘"),
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"코막힘")
+        ));
+        list.add(List.of(
+                new LineQueryDto(LocalDate.now(),PainType.BAD,"인후염")
+        ));
+        return LineResponseDto.from(list);
+    }
+
+    public static List<LineQueryDto> givenLineQueryDtoList(){
+        return List.of(
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"두통"),
+                new LineQueryDto(LocalDate.now().minusDays(2),PainType.BAD,"두통"),
+                new LineQueryDto(LocalDate.now().minusDays(3),PainType.BAD,"두통"),
+                new LineQueryDto(LocalDate.now().minusDays(4),PainType.BAD,"두통"),
+
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"코막힘"),
+                new LineQueryDto(LocalDate.now().minusDays(2),PainType.BAD,"코막힘"),
+                new LineQueryDto(LocalDate.now().minusDays(3),PainType.BAD,"코막힘"),
+
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"인후염"),
+                new LineQueryDto(LocalDate.now().minusDays(2),PainType.BAD,"인후염"),
+
+                new LineQueryDto(LocalDate.now().minusDays(1),PainType.BAD,"재채기")
+        );
     }
 
 }

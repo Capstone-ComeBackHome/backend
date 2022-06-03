@@ -182,7 +182,7 @@ public class CalendarIntegrationTest extends IntegrationTest {
         flushAndClear();
 
         // when then
-        mockMvc.perform(MockMvcRequestBuilders.get(URL+"?yearMonth="+ YearMonth.now())
+        mockMvc.perform(MockMvcRequestBuilders.get(URL+"?yearMonth=2022-05")
                 .header(HttpHeaders.AUTHORIZATION,TOKEN_TYPE + createAccessToken(user))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

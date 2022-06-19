@@ -4,16 +4,16 @@ spring:
       client:
         registration:
           google:
-            client-id: 82642993728-0oojjad814iedrvar5fs6vro8av8ljkk.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 아이디
+            client-secret: 비밀
             scope:
               - profile
               - email
 
           naver:
             client-name: Naver
-            client-id: B1ROklT2yyReArghOlll
-            client-secret: 8MoTcOG9cG
+            client-id: 아이디
+            client-secret: 비밀
             #  (== http://localhost:8080/login/oauth2/code/naver)
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization_grant_type: authorization_code
@@ -24,8 +24,8 @@ spring:
 
           kakao:
             client-name: kakao
-            client-id: eba8754dd790ccdbd7dd42db15165dcf
-            client-secret: GJllf3hWGKXRocuEp1EiPP2BHe4P3nRo
+            client-id: 아이디
+            client-secret: 비밀
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             client-authentication-method: POST

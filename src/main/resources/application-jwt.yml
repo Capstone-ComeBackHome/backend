@@ -1,0 +1,8 @@
+jwt:
+  secret-key: test
+  # 6시간
+  access-expiration-time: 21600000
+  # 3일
+  reissue-refresh-time: 259200000
+  # 7일
+  refresh-expiration-time: 604800000
